@@ -56,7 +56,7 @@ sensor:
         unit_of_measurement: °C
         device_class: temperature
         value_template: >
-            {%- if states('sensor.gosford_temp') | float(default=0) > 27 and states('sensor.gosford_humidity') | float(default=0) > 40 -%}
+            {%- if states('sensor.gosford_temp') | float(default='n/a') > 27 and states('sensor.gosford_humidity') | float(default='n/a') > 40 -%}
             {% set T = states('sensor.gosford_temp') | float(default='n/a') %}
             {% set R = states('sensor.gosford_humidity') | float(default='n/a') %}
             {% set c1 = -8.78469475556 %}
@@ -156,7 +156,6 @@ sensor:
         entity_picture_template: >-
           {{ '/local/icons/bom_icons/' ~ states('sensor.kariong_icon_descriptor_6') ~ '.png' }}
 
-# ONLY need these templates if you use the Average sensor
 # ONLY USE ONE bom_today_max below:
       bom_today_max:
         value_template: >
@@ -164,13 +163,12 @@ sensor:
 
 #      bom_today_max:
 #        value_template: >
-#          {%- if states('sensor.kariong_temp_max_0') == 'unknown' -%} 
+#          {%- if states('sensor.kariong_temp_max_0') == 'n/a' -%} 
 #            {{ state_attr('sensor.today_temp_bom', 'max_value') }}
 #          {% else %}
 #            {{ states('sensor.kariong_temp_max_0') }}
 #          {% endif %}
 
-# ONLY need these templates if you use the Average sensor
 # ONLY USE ONE bom_today_min below:
       bom_today_min:
         value_template: >
@@ -178,7 +176,7 @@ sensor:
 
 #      bom_today_min:
 #        value_template: >
-#          {%- if states('sensor.kariong_temp_min_0') == 'unknown' -%} 
+#          {%- if states('sensor.kariong_temp_min_0') == 'n/a' -%} 
 #            {{ state_attr('sensor.today_temp_bom', 'min_value') }}
 #          {% else %}
 #            {{ states('sensor.kariong_temp_min_0') }}
@@ -193,20 +191,11 @@ sensor:
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
 
-# IMPORTANT NOTE IF YOU USE statistics, you must comment out the above average sensor and min/max templates. Both cannot exist
-# You don't need the below templates to extract min/max temp if you use the statistics sensors
+# IMPORTANT NOTE IF YOU USE statistics, you must comment out the above average sensor. Both cannot exist
 #  - platform: statistics
-#    name: today_temp_bom_min
+#    name: today_temp_bom
 #    sampling_size: 150
 #    entity_id: sensor.gosford_temp
-#    state_characteristic: value_min
-#    max_age:
-#      hours: 24
-
-#  - platform: statistics
-#    name: today_temp_bom_max
-#    sampling_size: 150
-#    entity_id: sensor.gosford_temp
-#    state_characteristic: value_max
+#    state_characteristic: mean
 #    max_age:
 #      hours: 24
