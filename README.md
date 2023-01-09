@@ -1,7 +1,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/aes-alienrip/hko-weather-card?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/aes-alienrip/hko-weather-card?style=for-the-badge) ![Maintenance](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 # Custom Animated Weather Card for Hong Kong Observatory
 
-![hko-weather](https://user-images.githubusercontent.com/73251414/150528943-da3b1f38-8c14-46ac-8888-b47f2f354b8d.png)
+![lovelace](https://user-images.githubusercontent.com/73251414/211304886-6abd89f8-e656-43db-b3f2-568e6663ed18.png)
 
 ## IMPORTANT CHANGES
 
@@ -65,10 +65,11 @@ EDIT: Latest HACS version includes a version tag in the resource which will chan
 #### Inside the base configuration file add the following entries:
 ~~~~
 rest: !include rest.yaml
-sensor: !include sensors.yaml
+template: !include template.yaml
 ~~~~
-
+![configuration-yaml](https://user-images.githubusercontent.com/73251414/211303394-c7e7286b-ddcd-457c-a4e8-c64fdc1704f8.png)
 #### Create [rest.yaml](https://raw.githubusercontent.com/aes-alienrip/hko-weather-card/master/rest.yaml) and add the following RESTful sensors:
+![rest-yaml](https://user-images.githubusercontent.com/73251414/211303786-d5854574-48d2-44a4-9ef3-8c62601a82c4.png)
 ~~~~
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc
     scan_interval: 1800
@@ -142,54 +143,102 @@ sensor: !include sensors.yaml
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc
     scan_interval: 1800
     sensor:
-      - name: hko_temperature_hko
-        value_template: '{{ value_json.temperature.data[1].value }}'
-        unit_of_measurement: "°C"
-      - name: hko_humidity
-        value_template: '{{ value_json.humidity.data[0].value }}'
-        unit_of_measurement: "%"
       - name: hko_forecast_icon
         value_template: '{{ value_json.icon[0] }}'
-~~~~
 
-```sensor.hko_temperature_hko``` can change to different weather station according to [HKO API](https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc)
-
-You can replace the value ```[1]``` inside ```value_template: '{{ value_json.temperature.data[1].value }}'``` as the following table:
-~~~~
-0 = 京士柏
-1 ＝ 香港天文台
-2 ＝ 黃竹坑
-3 = 打鼓嶺
-4 = 流浮山
-5 = 大埔
-6 = 沙田
-7 ＝ 屯門
-8 ＝ 將軍澳
-9 ＝ 西貢
-10 ＝ 長洲
-11 ＝ 赤鱲角
-12 ＝ 青衣
-13 ＝ 石崗
-14 ＝ 荃灣可觀
-15 ＝ 荃灣城門谷
-16 ＝ 香港公園
-17 ＝ 筲箕灣
-18 ＝ 九龍城
-19 ＝ 跑馬地
-20 ＝ 黃大仙
-21 ＝ 赤柱
-22 ＝ 觀塘
-23 ＝ 深水埗
-24 ＝ 啟德跑道公園
-25 ＝ 元朗公園
-26 ＝ 大美督
-~~~~
-#### Create [sensors.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/sensors.yaml) and add the following template sensor:
-~~~~
-  - platform: template
-    sensors:
-      hko_current_text:
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_temperature
+        unit_of_measurement: "°C"
         value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_humidity
+        unit_of_measurement: "%"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_pressure
+        unit_of_measurement: "hPa"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm
+    ### Replace "京士柏" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_wind_bearing
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "京士柏" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+      - name: hko_wind_speed
+        unit_of_measurement: "km/h"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "京士柏" in i %}
+              {% set ns.s = i.split(',')[3] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_uvindex
+        unit_of_measurement: "UV"
+        value_template: >-
+          {% set uv = value.split(',') %}
+          {{ uv[2] }}
+~~~~
+#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/template.yaml) and add the following template sensor:
+![template-yaml](https://user-images.githubusercontent.com/73251414/211304125-eeb7cd2d-cf5e-4a9b-a339-80dfc3371e89.png)
+~~~~
+  - sensor:
+      - name: hko_current_text
+        state: >
           {% if is_state("sensor.hko_forecast_icon","50") %} 天晴
           {% elif is_state("sensor.hko_forecast_icon","51") %} 間有陽光
           {% elif is_state("sensor.hko_forecast_icon","52") %} 短暫陽光
@@ -220,6 +269,27 @@ You can replace the value ```[1]``` inside ```value_template: '{{ value_json.tem
           {% elif is_state("sensor.hko_forecast_icon","92") %} 轉涼
           {% elif is_state("sensor.hko_forecast_icon","93") %} 寒冷
           {% endif %}
+
+  - sensor:
+      - name: hko_uvindex_exposure_level
+        state: >
+          {% set uv = states('sensor.hko_uvindex') | float(0) %}
+          {% if uv >= 11 %} 極高
+          {% elif uv >= 8 %} 甚高
+          {% elif uv >= 6 %} 高
+          {% elif uv >= 3 %} 中
+          {% elif uv >= 0 %} 低
+          {% endif %}
+
+  - sensor:
+      - name: hko_apparent_temp
+        unit_of_measurement: "°C"
+        state: >
+          {% set temp = states('sensor.hko_temperature') | float(0) %}
+          {% set humid = states('sensor.hko_humidity') | float(0) %}
+          {% set windspeed = states('sensor.hko_wind_speed') | float(0) %}
+          {% set e = humid / 100 * 6.105 * e**(17.27 * temp / (237.7 + temp)) | float(0) %}
+          {{ (temp * 1.07 + 0.2 * e - 0.65 * windspeed / 3600 * 1000 - 2.7) | round(1, default=0) }}
 ~~~~
 
 #### Then install the icon files
@@ -234,7 +304,7 @@ This structure is after all configuration is done. If you install via HACS you m
 └── ...
 └── configuration.yaml
 └── rest.yaml
-└── sensors.yaml
+└── template.yaml
 └── www
     └── community
         └── hko-weather-card
@@ -251,7 +321,7 @@ This structure is after all configuration is done. If you install via HACS you m
 └── ...
 └── configuration.yaml
 └── rest.yaml
-└── sensors.yaml
+└── template.yaml
 └── www
     └── custom-lovelace
     	└── hko-weather-card.js
@@ -303,7 +373,7 @@ in your configuration.  The card will not work at all if any of these lines are 
 type: custom:hko-weather-card
 entity_current_conditions: sensor.hko_forecast_icon
 entity_current_text: sensor.hko_current_text
-entity_temperature: sensor.hko_temperature_hko
+entity_temperature: sensor.hko_temperature
 entity_humidity: sensor.hko_humidity
 entity_forecast_high_temp_1: sensor.hko_forecast_max_temp_0
 entity_forecast_high_temp_2: sensor.hko_forecast_max_temp_1
@@ -332,12 +402,18 @@ entity_pop_3: sensor.hko_forecast_psr_2
 entity_pop_4: sensor.hko_forecast_psr_3
 entity_pop_5: sensor.hko_forecast_psr_4
 entity_sun: sun.sun
+entity_pressure: sensor.hko_pressure
+entity_wind_speed: sensor.hko_wind_speed
+entity_wind_bearing: sensor.hko_wind_bearing
+entity_apparent_temp: sensor.hko_apparent_temp
+entity_uv_alert_summary: sensor.hko_uvindex_exposure_level
 static_icons: false
 tooltips: true
 time_format: 24
 show_separator: true
 locale: zh
 refresh_interval: 900
+use_old_column_format: true
 ~~~~
 
 **Flags**
