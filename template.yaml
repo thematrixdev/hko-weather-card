@@ -1,7 +1,6 @@
-  - platform: template
-    sensors:
-      hko_current_text:
-        value_template: >-
+  - sensor:
+      - name: hko_current_text
+        state: >
           {% if is_state("sensor.hko_forecast_icon","50") %} 天晴
           {% elif is_state("sensor.hko_forecast_icon","51") %} 間有陽光
           {% elif is_state("sensor.hko_forecast_icon","52") %} 短暫陽光
@@ -32,3 +31,24 @@
           {% elif is_state("sensor.hko_forecast_icon","92") %} 轉涼
           {% elif is_state("sensor.hko_forecast_icon","93") %} 寒冷
           {% endif %}
+
+  - sensor:
+      - name: hko_uvindex_exposure_level
+        state: >
+          {% set uv = states('sensor.hko_uvindex') | float(0) %}
+          {% if uv >= 11 %} 極高
+          {% elif uv >= 8 %} 甚高
+          {% elif uv >= 6 %} 高
+          {% elif uv >= 3 %} 中
+          {% elif uv >= 0 %} 低
+          {% endif %}
+
+  - sensor:
+      - name: hko_apparent_temp
+        unit_of_measurement: "°C"
+        state: >
+          {% set temp = states('sensor.hko_temperature_shatin') | float(0) %}
+          {% set humid = states('sensor.hko_humidity_shatin') | float(0) %}
+          {% set windspeed = states('sensor.hko_wind_speed_shatin') | float(0) %}
+          {% set e = humid / 100 * 6.105 * e**(17.27 * temp / (237.7 + temp)) | float(0) %}
+          {{ (temp * 1.07 + 0.2 * e - 0.65 * windspeed / 3600 * 1000 - 2.7) | round(1, default=0) }}
