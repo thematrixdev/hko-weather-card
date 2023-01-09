@@ -150,3 +150,12 @@
             {% endif %}
           {% endfor %}
           {{ ns.s }}
+
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_uvindex
+        unit_of_measurement: "UV"
+        value_template: >-
+          {% set uv = value.split(',') %}
+          {{ uv[2] }}
