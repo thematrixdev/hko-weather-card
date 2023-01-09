@@ -70,11 +70,83 @@
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc
     scan_interval: 1800
     sensor:
-      - name: hko_temperature_hko
-        value_template: '{{ value_json.temperature.data[1].value }}'
-        unit_of_measurement: "°C"
-      - name: hko_humidity
-        value_template: '{{ value_json.humidity.data[0].value }}'
-        unit_of_measurement: "%"
       - name: hko_forecast_icon
         value_template: '{{ value_json.icon[0] }}'
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_temperature
+        unit_of_measurement: "°C"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_humidity
+        unit_of_measurement: "%"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm
+    ### Replace "天文台" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_pressure
+        unit_of_measurement: "hPa"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "天文台" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm
+    ### Replace "京士柏" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind_uc.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_wind_bearing
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "京士柏" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+      - name: hko_wind_speed
+        unit_of_measurement: "km/h"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "京士柏" in i %}
+              {% set ns.s = i.split(',')[3] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
