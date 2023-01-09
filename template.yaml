@@ -47,8 +47,8 @@
       - name: hko_apparent_temp
         unit_of_measurement: "°C"
         state: >
-          {% set temp = states('sensor.hko_temperature_shatin') | float(0) %}
-          {% set humid = states('sensor.hko_humidity_shatin') | float(0) %}
-          {% set windspeed = states('sensor.hko_wind_speed_shatin') | float(0) %}
+          {% set temp = states('sensor.hko_temperature') | float(0) %}
+          {% set humid = states('sensor.hko_humidity') | float(0) %}
+          {% set windspeed = states('sensor.hko_wind_speed') | float(0) %}
           {% set e = humid / 100 * 6.105 * e**(17.27 * temp / (237.7 + temp)) | float(0) %}
           {{ (temp * 1.07 + 0.2 * e - 0.65 * windspeed / 3600 * 1000 - 2.7) | round(1, default=0) }}
