@@ -133,6 +133,12 @@ class HKOWeatherCard extends LitElement {
       case 'sun_following': return this.sunFollowing;
       case 'custom1': return this.custom1;
       case 'custom2': return this.custom2;
+      case 'custom3': return this.custom3;
+      case 'custom4': return this.custom4;
+      case 'custom5': return this.custom5;
+      case 'custom6': return this.custom6;
+      case 'custom7': return this.custom7;
+      case 'custom8': return this.custom8;
       case 'empty': return html`&nbsp;`;
       case 'remove': return ``;
     }
@@ -140,10 +146,10 @@ class HKOWeatherCard extends LitElement {
     // If no value can be matched pass back a default for the slot
     switch (slot) {
       case 'l1': return this.sunNext;
-      case 'l2': return this.daytimeHigh;
-      case 'l3': return this.daytimeLow;
-      case 'l4': return this.wind;
-      case 'l5': return this.pressure;
+      case 'l2': return this.wind;
+      case 'l3': return this.pressure;
+      case 'l4': return this.daytimeHigh;
+      case 'l5': return this.daytimeLow;
       case 'r1': return this.sunFollowing;
       case 'r2': return this.humidity;
       case 'r3': return this.pop;
@@ -291,9 +297,9 @@ class HKOWeatherCard extends LitElement {
 
   get fireSummary() {
     try {
-      return this.config.entity_fire_danger_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:fire"></ha-icon></span>${this.localeText.fireDanger} <span id="daytime-firedanger-text">${this._hass.states[this.config.entity_fire_danger_summary].state !== 'unknown' ? this._hass.states[this.config.entity_fire_danger_summary].state : 'N/A'}</span></li>` : ``;
+      return this.config.entity_fire_danger_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">${this._hass.states[this.config.entity_fire_danger_summary].state}</span></li>` : ``;
     } catch (e) {
-      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire"></ha-icon></span><span id="daytime-firedanger-text">Config Error</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">Config Error</span></li>`;
     }
   }
 
@@ -354,7 +360,9 @@ class HKOWeatherCard extends LitElement {
       var icon = this.config.custom1_icon ? this.config.custom1_icon : 'mdi:help-box';
       var value = this.config.custom1_value ? this._hass.states[this.config.custom1_value].state : 'unknown';
       var unit = this.config.custom1_units ? this.config.custom1_units : '';
+      if (value !== '') {
       return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-1-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-1-text">Config Error</span></li>`;
     }
@@ -365,25 +373,89 @@ class HKOWeatherCard extends LitElement {
       var icon = this.config.custom2_icon ? this.config.custom2_icon : 'mdi:help-box';
       var value = this.config.custom2_value ? this._hass.states[this.config.custom2_value].state : 'unknown';
       var unit = this.config.custom2_units ? this.config.custom2_units : '';
+      if (value !== '') {
       return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-2-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-2-text">Config Error</span></li>`;
     }
   }
 
-// #####
-// ##### windDirections - returns set of possible wind directions by specified language
-// #####
+  get custom3() {
+    try {
+      var icon = this.config.custom3_icon ? this.config.custom3_icon : 'mdi:help-box';
+      var value = this.config.custom3_value ? this._hass.states[this.config.custom3_value].state : 'unknown';
+      var unit = this.config.custom3_units ? this.config.custom3_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-3-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-3-text">Config Error</span></li>`;
+    }
+  }
 
-  get windDirections() {
-    const windDirections_en = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW','N'];
-    const windDirections_zh = ['北','東北偏北','東北','東北偏東','東','東南偏東','東南','東南偏南','南','西南偏南','西南','西南偏西','西','西北偏西','西北','西北偏北','北'];
+  get custom4() {
+    try {
+      var icon = this.config.custom4_icon ? this.config.custom4_icon : 'mdi:help-box';
+      var value = this.config.custom4_value ? this._hass.states[this.config.custom4_value].state : 'unknown';
+      var unit = this.config.custom4_units ? this.config.custom4_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-4-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-4-text">Config Error</span></li>`;
+    }
+  }
 
-    switch (this.config.locale) {
-      case "zh" :
-        return windDirections_zh;
-      default :
-        return windDirections_en;
+  get custom5() {
+    try {
+      var icon = this.config.custom5_icon ? this.config.custom5_icon : 'mdi:help-box';
+      var value = this.config.custom5_value ? this._hass.states[this.config.custom5_value].state : 'unknown';
+      var unit = this.config.custom5_units ? this.config.custom5_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-5-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-5-text">Config Error</span></li>`;
+    }
+  }
+
+  get custom6() {
+    try {
+      var icon = this.config.custom6_icon ? this.config.custom6_icon : 'mdi:help-box';
+      var value = this.config.custom6_value ? this._hass.states[this.config.custom6_value].state : 'unknown';
+      var unit = this.config.custom6_units ? this.config.custom6_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-6-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-6-text">Config Error</span></li>`;
+    }
+  }
+
+  get custom7() {
+    try {
+      var icon = this.config.custom7_icon ? this.config.custom7_icon : 'mdi:help-box';
+      var value = this.config.custom7_value ? this._hass.states[this.config.custom7_value].state : 'unknown';
+      var unit = this.config.custom7_units ? this.config.custom7_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-7-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-7-text">Config Error</span></li>`;
+    }
+  }
+
+  get custom8() {
+    try {
+      var icon = this.config.custom8_icon ? this.config.custom8_icon : 'mdi:help-box';
+      var value = this.config.custom8_value ? this._hass.states[this.config.custom8_value].state : 'unknown';
+      var unit = this.config.custom8_units ? this.config.custom8_units : '';
+      if (value !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-8-text">${value}</span><span class="unit">${unit}</span></li>`;
+      }
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-8-text">Config Error</span></li>`;
     }
   }
 
@@ -429,64 +501,37 @@ class HKOWeatherCard extends LitElement {
 // #####
 
   get weatherIcons() {
-    var iconStyle = (this.config.old_icon ==="hybrid") ? `hybrid` : (this.config.old_icon ==="false") ? `false` : `true`;
-    var sunny = `sunny-day`;
-    var mostly_clear = `fair-${this.dayOrNight}`;
-    var partlycloudy_day = `cloudy-day-3`;
-    var light_showers = `fair-day-rain`;
-    var showers = `rainy-3`;
-    var cloudy = `cloudy`;
-    var overcast = `overcast`;
-    var light_rain = `rainy-4`;
-    var rainy = `rainy-6`;
-    var pouring = `rainy-8`;
-    var lightning_rainy = `thunderstorms`;
-    var clear_night = `night`;
-    var partlycloudy_night = `cloudy-night-3`;
-    var windy = `wind`;
-    var dry = `dry`;
-    var humid = `humid`;
-    var fog = `fog`;
-    var mist = `mist`;
-    var haze = `haze`;
-    var hot = `hot`;
-    var warm = `warm`;
-    var cool = `cool`;
-    var cold = `cold`;
-    var exceptional = `exceptional`;
-    var partlycloudy = `cloudy-${this.dayOrNight}-3`;
-    var lightning = `thunder`;
     return {
-      '50': sunny,
-      '51': mostly_clear,
-      '52': partlycloudy,
-      '53': light_showers,
-      '54': showers,
-      '60': cloudy,
-      '61': overcast,
-      '62': light_rain,
-      '63': rainy,
-      '64': pouring,
-      '65': lightning_rainy,
-      '70': clear_night,
-      '71': clear_night,
-      '72': clear_night,
-      '73': clear_night,
-      '74': clear_night,
-      '75': clear_night,
-      '76': partlycloudy,
-      '77': mostly_clear,
-      '80': windy,
-      '81': dry,
-      '82': humid,
-      '83': fog,
-      '84': mist,
-      '85': haze,
-      '90': hot,
-      '91': warm,
-      '92': cool,
-      '93': cold,
-      'unavailable': exceptional
+      '50': `sunny-day`,
+      '51': `fair-${this.dayOrNight}`,
+      '52': `cloudy-${this.dayOrNight}-3`,
+      '53': `fair-day-rain`,
+      '54': `rainy-3`,
+      '60': `cloudy`,
+      '61': `overcast`,
+      '62': `rainy-4`,
+      '63': `rainy-6`,
+      '64': `rainy-8`,
+      '65': `thunderstorms`,
+      '70': `moon-new`,
+      '71': `moon-waxing-crescent`,
+      '72': `moon-first-quarter`,
+      '73': `moon-full`,
+      '74': `moon-last-quarter`,
+      '75': `moon-waning-crescent`,
+      '76': `cloudy-${this.dayOrNight}-3`,
+      '77': `fair-${this.dayOrNight}`,
+      '80': `wind`,
+      '81': `dry`,
+      '82': `humid`,
+      '83': `fog`,
+      '84': `mist`,
+      '85': `haze`,
+      '90': `hot`,
+      '91': `warm`,
+      '92': `cool`,
+      '93': `cold`,
+      'unavailable': `exceptional`
     }
   }
 
@@ -597,7 +642,7 @@ class HKOWeatherCard extends LitElement {
   }
 
   get currentWindBearing() {
-    return this.config.entity_wind_bearing ? isNaN(this._hass.states[this.config.entity_wind_bearing].state) ? this._hass.states[this.config.entity_wind_bearing].state : this.windDirections[(Math.round((this._hass.states[this.config.entity_wind_bearing].state / 360) * 16))] : 0;
+    return this._hass.states[this.config.entity_wind_bearing].state;
   }
 
   get currentWindSpeed() {
@@ -792,12 +837,6 @@ style() {
 
       .ha-icon {
         height: 18px;
-        margin-right: 5px;
-        color: var(--paper-item-icon-color);
-      }
-
-      .ha-icon2 {
-        height: 50px;
         margin-right: 5px;
         color: var(--paper-item-icon-color);
       }
@@ -1137,7 +1176,7 @@ style() {
           (this.config.entity_uv_alert ?    `${this._hass.states[this.config.entity_uv_alert].state} `    : ``) + 
           (this.config.entity_fire_danger ? `${this._hass.states[this.config.entity_fire_danger].state}` : ``)
       } catch(e) {}
-      if (this.config.entity_pressure && !this.config.alt_pressure && (root.getElementById("pressure-text") !== null)) try { root.getElementById("pressure-text").textContent = `${this.currentPressure}` } catch(e) {}
+      if (this.config.entity_pressure && !this.config.alt_pressure && (root.getElementById("pressure-text") !== null)) try { root.getElementById("pressure-text").textContent = `${this.currentPressure} ` } catch(e) {}
       if (this.config.entity_humidity && !this.config.alt_humidity && (root.getElementById("humidity-text") !== null)) try { root.getElementById("humidity-text").textContent = `${this.currentHumidity}` } catch(e) {}
       if (this.config.show_beaufort  && !this.config.alt_wind && (root.getElementById("beaufort-km-text") !== null)) try { root.getElementById("beaufort-km-text").textContent =  `Bft: ${this.beaufortWind} - ` } catch(e) {}
       if (this.config.show_beaufort  && !this.config.alt_wind && (root.getElementById("beaufort-kt-text") !== null)) try { root.getElementById("beaufort-kt-text").textContent =  `Bft: ${this.beaufortWindKt} - ` } catch(e) {}
@@ -1145,6 +1184,13 @@ style() {
       if (this.config.entity_pos_1 && (root.getElementById("possible_tomorrow-text") !== null)) try { root.getElementById("possible_tomorrow-text").textContent = `${this._hass.states[this.config.entity_pos_1].state}` } catch(e) {}
       if (this.config.custom1_value && (root.getElementById("custom-1-text") !== null)) try { root.getElementById("custom-1-text").textContent = `${this._hass.states[this.config.custom1_value].state}` } catch(e) {}
       if (this.config.custom2_value && (root.getElementById("custom-2-text") !== null)) try { root.getElementById("custom-2-text").textContent = `${this._hass.states[this.config.custom2_value].state}` } catch(e) {}
+      if (this.config.custom3_value && (root.getElementById("custom-3-text") !== null)) try { root.getElementById("custom-3-text").textContent = `${this._hass.states[this.config.custom3_value].state}` } catch(e) {}
+      if (this.config.custom4_value && (root.getElementById("custom-4-text") !== null)) try { root.getElementById("custom-4-text").textContent = `${this._hass.states[this.config.custom4_value].state}` } catch(e) {}
+      if (this.config.custom5_value && (root.getElementById("custom-5-text") !== null)) try { root.getElementById("custom-5-text").textContent = `${this._hass.states[this.config.custom5_value].state}` } catch(e) {}
+      if (this.config.custom6_value && (root.getElementById("custom-6-text") !== null)) try { root.getElementById("custom-6-text").textContent = `${this._hass.states[this.config.custom6_value].state}` } catch(e) {}
+      if (this.config.custom7_value && (root.getElementById("custom-7-text") !== null)) try { root.getElementById("custom-7-text").textContent = `${this._hass.states[this.config.custom7_value].state}` } catch(e) {}
+      if (this.config.custom8_value && (root.getElementById("custom-8-text") !== null)) try { root.getElementById("custom-8-text").textContent = `${this._hass.states[this.config.custom8_value].state}` } catch(e) {}
+      if (this.config.entity_fire_danger_summary && (root.getElementById("firedanger-text") !== null)) try { root.getElementById("firedanger-text").textContent = `${this._hass.states[this.config.entity_fire_danger_summary].state}` } catch(e) {}
 
 // Alt Text
       if (this.config.alt_sun_next) try { root.getElementById("alt-sun-next").textContent = `${this._hass.states[this.config.alt_sun_next].state}` } catch(e) {}
