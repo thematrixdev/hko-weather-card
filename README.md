@@ -293,7 +293,7 @@ template: !include template.yaml
 ~~~~
 
 #### Then install the icon files
-Please download [hko_weather_icons.zip](https://github.com/aes-alienrip/hko-weather-card/blob/master/hko_weather_icons.zip)
+Please download [hko_weather_icons1.1.4a.zip](https://github.com/aes-alienrip/hko-weather-card/blob/master/weather_icons1.1.4a.zip)
 Put them in ```<config-dir>/www/icons/weather_icons``` and then sub folders ```animated``` and ```static```.  Create the directories if necessary.
 
 You should end up with the following folders:
@@ -487,7 +487,15 @@ show_decimals: false
 | slot_r3                  | **pop**                            | Sets the value used in current conditions slot r3 : See slots for more info |
 | slot_r4                  | **uv_summary**                     | Sets the value used in current conditions slot r4 : See slots for more info |
 | slot_r5                  | **fire_summary**                   | Sets the value used in current conditions slot r5 : See slots for more info |
-| show_decimals            | **false** / true                   | Sets card to render current and apparent temperature to 1 decimal place     | 
+| show_decimals            | **false** / true                   | Sets card to render current temperature to 1 decimal place                  | 
+| show_decimals_apparent   | **false** / true                   | Sets card to render apparent temperature to 1 decimal place                 |
+| show_decimals_pressure   | **0** / 1, 2, 3                    | Sets card to render pressure with specified decimal places.                 |
+| custom1_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom1                                       |
+| custom1_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom1                        |
+| custom1_units            | **""** / string                    | Sets the string to use for the units of slot custom1                        |
+| custom2_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom2                                       |
+| custom2_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom2_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
 
 **Slots**
 --------------------------
@@ -508,6 +516,8 @@ slots (designated r1 - r5).  There are currently 10 possible values that can be 
 - fire_summary
 - possible_today (possible rainfall today)
 - possible_tomorrow (possible rainfall tomorrow)
+- custom1 (populates using config fields custom1_icon, custom1_value and custom1_units)
+- custom2 (populates using config fields custom2_icon, custom2_value and custom2_units)
 - empty (empty slot... the slot below does not rise to fill the space)
 - remove (same as empty but the slot below rises to take the place of the slot)
 
