@@ -40,7 +40,7 @@ class HKOWeatherCard extends LitElement {
     var separator = this.config.show_separator ? html`<hr class=line>` : ``;
     var uv_alert = this.config.entity_uv_alert ? html`${this._hass.states[this.config.entity_uv_alert] !== undefined ? this._hass.states[this.config.entity_uv_alert].state : "UV: Config Error"}` : ``;
     var fire_danger = this.config.entity_fire_danger ? html`${this._hass.states[this.config.entity_fire_danger] !== undefined ? this._hass.states[this.config.entity_fire_danger].state !== "Fire Danger: unknown" ? this._hass.states[this.config.entity_fire_danger].state : "" : "Fire Danger: Config Error"}` : ``;
-    var slot_section = (this.config.use_old_column_format === true) ? html`<ul class="variations-ugly"><li>${this.getSlot().l1}${this.getSlot().l2}${this.getSlot().l3}${this.getSlot().l4}${this.getSlot().l5}</li><li>${this.getSlot().r1}${this.getSlot().r2}${this.getSlot().r3}${this.getSlot().r4}${this.getSlot().r5}</li></ul>` : html`<ul class="variations"><li class="slotlist">${this.getSlot().l1}${this.getSlot().l2}${this.getSlot().l3}${this.getSlot().l4}${this.getSlot().l5}</li><li class="slotlist">${this.getSlot().r1}${this.getSlot().r2}${this.getSlot().r3}${this.getSlot().r4}${this.getSlot().r5}</li></ul>`;
+    var slot_section = (this.config.use_old_column_format === true) ? html`<ul class="variations-ugly"><li>${this.getSlot().l1}${this.getSlot().l2}${this.getSlot().l3}${this.getSlot().l4}${this.getSlot().l5}${this.getSlot().l6}${this.getSlot().l7}${this.getSlot().l8}</li><li>${this.getSlot().r1}${this.getSlot().r2}${this.getSlot().r3}${this.getSlot().r4}${this.getSlot().r5}${this.getSlot().r6}${this.getSlot().r7}${this.getSlot().r8}</li></ul>` : html`<ul class="variations"><li class="slotlist">${this.getSlot().l1}${this.getSlot().l2}${this.getSlot().l3}${this.getSlot().l4}${this.getSlot().l5}${this.getSlot().l6}${this.getSlot().l7}${this.getSlot().l8}</li><li class="slotlist">${this.getSlot().r1}${this.getSlot().r2}${this.getSlot().r3}${this.getSlot().r4}${this.getSlot().r5}${this.getSlot().r6}${this.getSlot().r7}${this.getSlot().r8}</li></ul>`;
 
 // Build HTML
     return html`
@@ -99,11 +99,17 @@ class HKOWeatherCard extends LitElement {
       'r3' : this.slotValue('r3',this.config.slot_r3),
       'r4' : this.slotValue('r4',this.config.slot_r4),
       'r5' : this.slotValue('r5',this.config.slot_r5),
+      'r6' : this.slotValue('r6',this.config.slot_r6),
+      'r7' : this.slotValue('r7',this.config.slot_r7),
+      'r8' : this.slotValue('r8',this.config.slot_r8),
       'l1' : this.slotValue('l1',this.config.slot_l1),
       'l2' : this.slotValue('l2',this.config.slot_l2),
       'l3' : this.slotValue('l3',this.config.slot_l3),
       'l4' : this.slotValue('l4',this.config.slot_l4),
       'l5' : this.slotValue('l5',this.config.slot_l5),
+      'l6' : this.slotValue('l6',this.config.slot_l6),
+      'l7' : this.slotValue('l7',this.config.slot_l7),
+      'l8' : this.slotValue('l8',this.config.slot_l8),
     }
   }
 
@@ -148,13 +154,14 @@ class HKOWeatherCard extends LitElement {
       case 'l1': return this.sunNext;
       case 'l2': return this.wind;
       case 'l3': return this.pressure;
-      case 'l4': return this.daytimeHigh;
-      case 'l5': return this.daytimeLow;
+      case 'l4': return this.rainToday;
+      case 'l5': return this.daytimeHigh;
+      case 'l6': return this.daytimeLow;
       case 'r1': return this.sunFollowing;
       case 'r2': return this.humidity;
-      case 'r3': return this.pop;
-      case 'r4': return this.uvSummary;
-      case 'r5': return this.fireSummary;
+      case 'r3': return this.uvSummary;
+      case 'r4': return this.fireSummary;
+      case 'r5': return this.pop;
     }
   }
 
@@ -361,7 +368,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom1_value ? this._hass.states[this.config.custom1_value].state : 'unknown';
       var unit = this.config.custom1_units ? this.config.custom1_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-1-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-1-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-1-text">Config Error</span></li>`;
@@ -374,7 +381,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom2_value ? this._hass.states[this.config.custom2_value].state : 'unknown';
       var unit = this.config.custom2_units ? this.config.custom2_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-2-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-2-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-2-text">Config Error</span></li>`;
@@ -387,7 +394,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom3_value ? this._hass.states[this.config.custom3_value].state : 'unknown';
       var unit = this.config.custom3_units ? this.config.custom3_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-3-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-3-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-3-text">Config Error</span></li>`;
@@ -400,7 +407,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom4_value ? this._hass.states[this.config.custom4_value].state : 'unknown';
       var unit = this.config.custom4_units ? this.config.custom4_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-4-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-4-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-4-text">Config Error</span></li>`;
@@ -413,7 +420,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom5_value ? this._hass.states[this.config.custom5_value].state : 'unknown';
       var unit = this.config.custom5_units ? this.config.custom5_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-5-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-5-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-5-text">Config Error</span></li>`;
@@ -426,7 +433,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom6_value ? this._hass.states[this.config.custom6_value].state : 'unknown';
       var unit = this.config.custom6_units ? this.config.custom6_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-6-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-6-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-6-text">Config Error</span></li>`;
@@ -439,7 +446,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom7_value ? this._hass.states[this.config.custom7_value].state : 'unknown';
       var unit = this.config.custom7_units ? this.config.custom7_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-7-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-7-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-7-text">Config Error</span></li>`;
@@ -452,7 +459,7 @@ class HKOWeatherCard extends LitElement {
       var value = this.config.custom8_value ? this._hass.states[this.config.custom8_value].state : 'unknown';
       var unit = this.config.custom8_units ? this.config.custom8_units : '';
       if (value !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-8-text">${value}</span><span class="unit">${unit}</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon=${icon}></ha-icon></span><span id="custom-8-text">${value}</span> <span class="unit">${unit}</span></li>`;
       }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:help-box"></ha-icon></span><span id="custom-8-text">Config Error</span></li>`;
