@@ -35,7 +35,7 @@ class HKOWeatherCard extends LitElement {
 //    var icons = this.config.static_icons ? "static" : "animated";
     var currentText = this.config.entity_current_text ? html`<span class="currentText" id="current-text">${this._hass.states[this.config.entity_current_text] !== undefined ? this._hass.states[this.config.entity_current_text].state : "Config Error"}</span>` : ``;
     var apparentTemp = this.config.entity_apparent_temp ? html`<span class="apparent">${this.localeText.feelsLike} <span id="apparent-text">${this.currentApparent}</span>${this.getUOM("temperature")}</span>` : ``;
-    var biggerIcon = this.currentConditions !== undefined ? html`<span class="icon bigger" id="icon-bigger" style="background: none, url(${this._hass.hassUrl("/local/icons/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this.currentConditions] + ".svg")}) no-repeat; background-size: contain;">${this.currentConditions}</span>` : html`<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`;
+    var biggerIcon = this.currentConditions !== undefined ? html`<span class="icon bigger" id="icon-bigger" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this.currentConditions] + ".svg")}) no-repeat; background-size: contain;">${this.currentConditions}</span>` : html`<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`;
     var summary = this.config.entity_daily_summary ? html`${this._hass.states[this.config.entity_daily_summary] !== undefined ? this._hass.states[this.config.entity_daily_summary].state : "Config Error"}` : ``;
     var separator = this.config.show_separator ? html`<hr class=line>` : ``;
     var uv_alert = this.config.entity_uv_alert ? html`${this._hass.states[this.config.entity_uv_alert] !== undefined ? this._hass.states[this.config.entity_uv_alert].state : "UV: Config Error"}` : ``;
@@ -63,7 +63,7 @@ class HKOWeatherCard extends LitElement {
               <span class="dayname" id="fcast-weekday-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}</span>
               <br>${this._hass.states[daily.condition] !== undefined 
                 ? 
-                  html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/icons/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")}) no-repeat; background-size: contain;"></i><br>` 
+                  html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")}) no-repeat; background-size: contain;"></i><br>` 
                 : 
                   html `<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`}
               ${this.config.old_daily_format 
@@ -1127,14 +1127,14 @@ style() {
 // Current Conditions
       root.getElementById("temperature-text").textContent = `${this.currentTemperature}`;
       root.getElementById("icon-bigger").textContent = `${this.currentConditions !== undefined ? this.currentConditions : "Config Error"}`;
-      root.getElementById("icon-bigger").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/icons/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this.currentConditions] + ".svg")})`;
+      root.getElementById("icon-bigger").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this.currentConditions] + ".svg")})`;
 
 // Forecast blocks
       this.forecast.forEach((daily) => {
         root.getElementById("fcast-date-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}`;
         root.getElementById("fcast-weekday-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}`;
         if (this._hass.states[daily.condition] !== undefined) {
-          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/icons/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")})`;
+          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")})`;
         }
         root.getElementById("fcast-high-" + daily.dayIndex).textContent = `${this._hass.states[daily.temphigh] !== undefined ? Math.round(this._hass.states[daily.temphigh].state) : "Config Error"}${this.config.tempformat ? "" : this.getUOM("temperature")}`;
         root.getElementById("fcast-low-" + daily.dayIndex).textContent = `${this._hass.states[daily.templow] !== undefined ? Math.round(this._hass.states[daily.templow].state) : "Config Error"}${this.config.old_daily_format ? this.getUOM("temperature") : this.config.tempformat ? this.getUOM("temperature") : ""}`;
