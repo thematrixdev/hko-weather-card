@@ -46,7 +46,7 @@ rest: !include rest.yaml
 template: !include template.yaml
 ~~~~
 ![configuration-yaml](https://user-images.githubusercontent.com/73251414/211303394-c7e7286b-ddcd-457c-a4e8-c64fdc1704f8.png)
-#### Create [rest.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/rest.yaml) and add the following RESTful sensors:
+#### Create [rest.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/rest.yaml) / [rest-en.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/rest-en.yaml) and add the following RESTful sensors:
 ![rest-yaml](https://user-images.githubusercontent.com/73251414/211303786-d5854574-48d2-44a4-9ef3-8c62601a82c4.png)
 ~~~~
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc
@@ -211,7 +211,7 @@ template: !include template.yaml
           {% set uv = value.split(',') %}
           {{ uv[2] }}
 ~~~~
-#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) and add the following template sensor:
+#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) / [template-en.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template-en.yaml) and add the following template sensor:
 ![template-yaml](https://user-images.githubusercontent.com/73251414/211304125-eeb7cd2d-cf5e-4a9b-a339-80dfc3371e89.png)
 ~~~~
   - sensor:
@@ -274,8 +274,8 @@ template: !include template.yaml
 ~~~~
 └── ...
 └── configuration.yaml
-└── rest.yaml                                ### Create as above manually ###
-└── template.yaml                            ### Create as above manually ###
+└── rest.yaml                       ### Create as above manually (Rename rest-en.yaml to rest.yaml for English) ###
+└── template.yaml                   ### Create as above manually (Rename template-en.yaml to template.yaml for English) ###
 └── www
     └── community
         └── hko-weather-card
