@@ -1,4 +1,4 @@
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/aes-alienrip/hko-weather-card?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/aes-alienrip/hko-weather-card?style=for-the-badge) ![Maintenance](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/aes-alienrip/hko-weather-card?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/aes-alienrip/hko-weather-card?style=for-the-badge) ![Maintenance](https://img.shields.io/maintenance/yes/2023?style=for-the-badge)
 # Custom Animated Weather Card for Hong Kong Observatory
 
 ![lovelace](https://user-images.githubusercontent.com/73251414/211304886-6abd89f8-e656-43db-b3f2-568e6663ed18.png)
@@ -11,7 +11,7 @@ This card is a modification of a fork of [DavidFW1960/bom-weather-card](https://
 
 This card provides MANY additional features as well as compatability with later versions of home assistant.
 New features:
-- Lit 2
+- Lit 3
 - Only use Day time icons for forecast for future days (days 1-5)
 - More icons
 - Adds Locale customisation for number formats
@@ -23,7 +23,7 @@ New features:
 - Removed leading zeros if 12hr time
 - Added Wind Gust
 - Can use different icon sets
-- Added extra (5th) row of slots
+- Added extra (8th) row of slots
 - Added slots (optional) for UV and fire danger ratings
 - Added possibility of rainfall to forecast
 
@@ -46,7 +46,7 @@ rest: !include rest.yaml
 template: !include template.yaml
 ~~~~
 ![configuration-yaml](https://user-images.githubusercontent.com/73251414/211303394-c7e7286b-ddcd-457c-a4e8-c64fdc1704f8.png)
-#### Create [rest.yaml](https://raw.githubusercontent.com/aes-alienrip/hko-weather-card/master/rest.yaml) and add the following RESTful sensors:
+#### Create [rest.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/rest.yaml) and add the following RESTful sensors:
 ![rest-yaml](https://user-images.githubusercontent.com/73251414/211303786-d5854574-48d2-44a4-9ef3-8c62601a82c4.png)
 ~~~~
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc
@@ -211,7 +211,7 @@ template: !include template.yaml
           {% set uv = value.split(',') %}
           {{ uv[2] }}
 ~~~~
-#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/template.yaml) and add the following template sensor:
+#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) and add the following template sensor:
 ![template-yaml](https://user-images.githubusercontent.com/73251414/211304125-eeb7cd2d-cf5e-4a9b-a339-80dfc3371e89.png)
 ~~~~
   - sensor:
