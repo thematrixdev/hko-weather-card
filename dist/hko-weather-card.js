@@ -1,11 +1,11 @@
 import {
   LitElement,
   html,
-} from "https://unpkg.com/lit-element@3.2.0/lit-element.js?module";
+} from "https://unpkg.com/lit-element@3.3.2/lit-element.js?module";
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.1.4       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.1.5       `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -304,7 +304,10 @@ class HKOWeatherCard extends LitElement {
 
   get fireSummary() {
     try {
-      return this.config.entity_fire_danger_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">${this._hass.states[this.config.entity_fire_danger_summary].state}</span></li>` : ``;
+      var fireSummaryState = this.config.entity_fire_danger_summary ? this._hass.states[this.config.entity_fire_danger_summary].state : 'unknown' ? this._hass.states[this.config.entity_fire_danger_summary].state : 'N/A';
+      if (fireSummaryState !== '') {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">${fireSummaryState}</span></li>`;
+      }
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">Config Error</span></li>`;
     }
