@@ -1,0 +1,56 @@
+# https://www.hko.gov.hk/textonly/v2/explain/wxicon_e.htm
+  - sensor:
+      - name: hko_current_text
+        state: >
+          {% if is_state("sensor.hko_forecast_icon","50") %} Sunny
+          {% elif is_state("sensor.hko_forecast_icon","51") %} Sunny Periods
+          {% elif is_state("sensor.hko_forecast_icon","52") %} Sunny Intervals
+          {% elif is_state("sensor.hko_forecast_icon","53") %} Sunny Periods with A Few Showers
+          {% elif is_state("sensor.hko_forecast_icon","54") %} Sunny Intervals with Showers
+          {% elif is_state("sensor.hko_forecast_icon","60") %} Cloudy
+          {% elif is_state("sensor.hko_forecast_icon","61") %} Overcast
+          {% elif is_state("sensor.hko_forecast_icon","62") %} Light Rain
+          {% elif is_state("sensor.hko_forecast_icon","63") %} Rain
+          {% elif is_state("sensor.hko_forecast_icon","64") %} Heavy Rain
+          {% elif is_state("sensor.hko_forecast_icon","65") %} Thunderstorms
+          {% elif is_state("sensor.hko_forecast_icon","70") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","71") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","72") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","73") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","74") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","75") %} Fine
+          {% elif is_state("sensor.hko_forecast_icon","76") %} Mainly Cloudy
+          {% elif is_state("sensor.hko_forecast_icon","77") %} Mainly Fine
+          {% elif is_state("sensor.hko_forecast_icon","80") %} Windy
+          {% elif is_state("sensor.hko_forecast_icon","81") %} Dry
+          {% elif is_state("sensor.hko_forecast_icon","82") %} Humid
+          {% elif is_state("sensor.hko_forecast_icon","83") %} Fog
+          {% elif is_state("sensor.hko_forecast_icon","84") %} Mist
+          {% elif is_state("sensor.hko_forecast_icon","85") %} Haze
+          {% elif is_state("sensor.hko_forecast_icon","90") %} Hot
+          {% elif is_state("sensor.hko_forecast_icon","91") %} Warm
+          {% elif is_state("sensor.hko_forecast_icon","92") %} Cool
+          {% elif is_state("sensor.hko_forecast_icon","93") %} Cold
+          {% endif %}
+
+# https://www.hko.gov.hk/en/wxinfo/uvinfo/uvinfo.html
+  - sensor:
+      - name: hko_uvindex_exposure_level
+        state: >
+          {% set uv = states('sensor.hko_uvindex') | float(0) %}
+          {% if uv >= 11 %} Extreme
+          {% elif uv >= 8 %} Very high
+          {% elif uv >= 6 %} High
+          {% elif uv >= 3 %} Moderate
+          {% elif uv >= 0 %} Low
+          {% endif %}
+
+  - sensor:
+      - name: hko_apparent_temp
+        unit_of_measurement: "°C"
+        state: >
+          {% set temp = states('sensor.hko_temperature') | float(0) %}
+          {% set humid = states('sensor.hko_humidity') | float(0) %}
+          {% set windspeed = states('sensor.hko_wind_speed') | float(0) %}
+          {% set e = humid / 100 * 6.105 * e**(17.27 * temp / (237.7 + temp)) | float(0) %}
+          {{ (temp * 1.07 + 0.2 * e - 0.65 * windspeed / 3600 * 1000 - 2.7) | round(1, default=0) }}
