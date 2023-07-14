@@ -27,9 +27,6 @@ New features:
 - Added slots (optional) for UV and fire danger ratings
 - Added possibility of rainfall to forecast
 
-NOTE: This card REQUIRES any weather component that can provide the required sensors.
-Parsing a non existant sensor to the card will cause the card to fail to display!
-
 The Weather Card provides current and forecast weather conditions using HA sensors. You configure the card by passing in sensor entities from the weather component.
 
 The card is very customizable.  You can configure many aspects of it's look and feel as well as which specific content to show by passing in customization flags and defining optional sensors.  Content can also be rearranged if desired.
@@ -38,29 +35,10 @@ Hovering over a forecast day will display the daily weather summary in a tooltip
 
 # **Installation**
 --------------------------
-## EASY Way? use HACS
-This plugin is now part of the default HACS store. You should not need to add it manually. Add this repo https://github.com/aes-alienrip/hko-weather-card
+## Use HACS
+Add this repo https://github.com/aes-alienrip/hko-weather-card
 
 Install card from HACS as per other plugins. Note that you must add this card as a module to the resources section as per the instructions when you install the card.
-
-NOTE: Home Assistant caches stuff in a way that seems particularly hard to break some times and HACS makes this worse unfortunately.
-The rule of thumb is that when you install a new version you MUST break the cache in order for HA to load the new card. This is fairly easy to do.
-In CHROME open up the Dev Tools by pressing F12
-Then right click on the refresh icon in the task bar (see graphic) and you will see a menu of options. Select Empty cache and hard reload from the options. It is the only option with no shortcut!
-
-![image](hard-reload.png)
-
-You then need to press either CTRL+R OR CTRL+F5 at least TWICE. Then check the version in the same dev-tools. It will look something like this:
-
-![image](version.png)
-
-The first time you do the CTRL+F5 you might find that the version will again change back to the previous version but a second refresh will fix it.
-
-EDIT: Latest HACS version includes a version tag in the resource which will change when you update the card so the caching fix described above is no longer necessary! Yay!
-
-## HARD Way? manual installation as follows:
-1. Add ```hko-weather-card.js``` to your ```<config-dir>/www/custom-lovelace/``` directory.  If you don't have this directory (this is your first custom card), you will need to create it.
-2. Add ```/local/hko-weather-card/bom-weather-card.js?v=0.90a``` type js to resources. You must increment or use a different version number for every update to break the caching of the card and make it use the new version.
 
 #### Inside the base configuration file add the following entries:
 ~~~~
@@ -292,73 +270,28 @@ template: !include template.yaml
           {{ (temp * 1.07 + 0.2 * e - 0.65 * windspeed / 3600 * 1000 - 2.7) | round(1, default=0) }}
 ~~~~
 
-#### Then install the icon files
-Please download [hko_weather_icons1.1.4a.zip](https://github.com/aes-alienrip/hko-weather-card/blob/master/weather_icons1.1.4a.zip)
-Put them in ```<config-dir>/www/icons/weather_icons``` and then sub folders ```animated``` and ```static```.  Create the directories if necessary.
-
-You should end up with the following folders:
-This structure is after all configuration is done. If you install via HACS you must still configure the yaml and icons manually.
-
-#### HACS:-
+#### File Structure
 ~~~~
 └── ...
 └── configuration.yaml
-└── rest.yaml
-└── template.yaml
+└── rest.yaml                                ### Create as above manually ###
+└── template.yaml                            ### Create as above manually ###
 └── www
     └── community
         └── hko-weather-card
+            └── weather_icons
+		└── animated
+		└── static
             └── hko-weather-card.js
             └── hko-weather-card.js.gz
-    └── icons
-	└── weather_icons
-		└── animated     ### Containing the animated icons from hko_weather_icons.zip animated directory
-		└── static       ### Containing the static icons from hko_weather_icons.zip static directory
+
 ~~~~
 
-#### MANUAL INSTALL:-
-~~~~
-└── ...
-└── configuration.yaml
-└── rest.yaml
-└── template.yaml
-└── www
-    └── custom-lovelace
-    	└── hko-weather-card.js
-    └── icons
-	└── weather_icons
-		└── animated     ### Containing the animated icons from hko_weather_icons.zip animated directory
-		└── static       ### Containing the static icons from hko_weather_icons.zip static directory
-~~~~
-This structure is after all configuration is done. You must still configure the yaml and icons manually.
-
-#### IF YOU USE the SAMBA addon in Home Assistant, the ICON directory will be hidden by default. Go to the configuration of the addon and remove the exclusion of icons and restart the addon otherwise you can't create the directory.
+All configuration is done. You must still configure the yaml manually.
 
 # **Configuration**
 --------------------------
-1. Add the card reference to resources
-If you installed using HACS, the resources should be updated automatically (see below)
-
-**Note: Ensure type is set to module and not js**
-**Note: /local/ points to the ```<config-dir>/www/``` dir.**
-**Note: /hacsfiles/ points to the ```<config-dir>/www/community/``` dir.**
-
-Note that neither /local/ of /hacsfiles/ physically exist! The directory structure is as per above.
-
-For a HACS Installation:
-~~~~
-resources:
-- url: /hacsfiles/hko-weather-card/hko-weather-card.js
-type: module
-~~~~
-
-For the manual installation:
-~~~~
-resources:
-- url: /local/custom-lovelace/hko-weather-card.js?v=0.1
-type: module
-~~~~
-2. Add the card definition: You can add this card from the card picker but need to configure the entities and flags in YAML. There are required / optional and flag entries.
+Add the card definition: You can add this card from the card picker but need to configure the entities and flags in YAML. There are required / optional and flag entries.
 This card has been added to the custom-card-picker in Lovelace
 	
 ![image](card-picker.png)
@@ -496,6 +429,26 @@ show_decimals: false
 | custom2_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom2                                       |
 | custom2_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
 | custom2_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom3_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom3                                       |
+| custom3_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom3_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom4_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom4                                       |
+| custom4_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom4_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom5_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom5                                       |
+| custom5_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom5_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom6_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom6                                       |
+| custom6_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom6_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom7_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom7                                       |
+| custom7_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom7_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+| custom8_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom8                                       |
+| custom8_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom2                        |
+| custom8_units            | **""** / string                    | Sets the string to use for the units of slot custom2                        |
+
+
 
 **Slots**
 --------------------------
@@ -518,6 +471,12 @@ slots (designated r1 - r5).  There are currently 10 possible values that can be 
 - possible_tomorrow (possible rainfall tomorrow)
 - custom1 (populates using config fields custom1_icon, custom1_value and custom1_units)
 - custom2 (populates using config fields custom2_icon, custom2_value and custom2_units)
+- custom3 (populates using config fields custom3_icon, custom2_value and custom3_units)
+- custom4 (populates using config fields custom4_icon, custom2_value and custom4_units)
+- custom5 (populates using config fields custom5_icon, custom2_value and custom5_units)
+- custom6 (populates using config fields custom6_icon, custom2_value and custom6_units)
+- custom7 (populates using config fields custom7_icon, custom2_value and custom7_units)
+- custom8 (populates using config fields custom8_icon, custom2_value and custom8_units)
 - empty (empty slot... the slot below does not rise to fill the space)
 - remove (same as empty but the slot below rises to take the place of the slot)
 
