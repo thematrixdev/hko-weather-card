@@ -1,0 +1,161 @@
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=en
+    scan_interval: 1800
+    sensor:
+      - name: hko_forecast_summary
+        value_template: '{{ value_json.forecastDesc }}'
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=tc
+    scan_interval: 1800
+    sensor:
+      - name: hko_forecast_max_temp_0
+        value_template: '{{ value_json.weatherForecast[0].forecastMaxtemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_max_temp_1
+        value_template: '{{ value_json.weatherForecast[1].forecastMaxtemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_max_temp_2
+        value_template: '{{ value_json.weatherForecast[2].forecastMaxtemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_max_temp_3
+        value_template: '{{ value_json.weatherForecast[3].forecastMaxtemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_max_temp_4
+        value_template: '{{ value_json.weatherForecast[4].forecastMaxtemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_min_temp_0
+        value_template: '{{ value_json.weatherForecast[0].forecastMintemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_min_temp_1
+        value_template: '{{ value_json.weatherForecast[1].forecastMintemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_min_temp_2
+        value_template: '{{ value_json.weatherForecast[2].forecastMintemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_min_temp_3
+        value_template: '{{ value_json.weatherForecast[3].forecastMintemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_min_temp_4
+        value_template: '{{ value_json.weatherForecast[4].forecastMintemp.value }}'
+        unit_of_measurement: "°C"
+      - name: hko_forecast_icon_0
+        value_template: '{{ value_json.weatherForecast[0].ForecastIcon }}'
+      - name: hko_forecast_icon_1
+        value_template: '{{ value_json.weatherForecast[1].ForecastIcon }}'
+      - name: hko_forecast_icon_2
+        value_template: '{{ value_json.weatherForecast[2].ForecastIcon }}'
+      - name: hko_forecast_icon_3
+        value_template: '{{ value_json.weatherForecast[3].ForecastIcon }}'
+      - name: hko_forecast_icon_4
+        value_template: '{{ value_json.weatherForecast[4].ForecastIcon }}'
+      - name: hko_forecast_summary_0
+        value_template: '{{ value_json.weatherForecast[0].forecastWeather }}'
+      - name: hko_forecast_summary_1
+        value_template: '{{ value_json.weatherForecast[1].forecastWeather }}'
+      - name: hko_forecast_summary_2
+        value_template: '{{ value_json.weatherForecast[2].forecastWeather }}'
+      - name: hko_forecast_summary_3
+        value_template: '{{ value_json.weatherForecast[3].forecastWeather }}'
+      - name: hko_forecast_summary_4
+        value_template: '{{ value_json.weatherForecast[4].forecastWeather }}'
+      - name: hko_forecast_psr_0
+        value_template: '{{ value_json.weatherForecast[0].PSR }}'
+      - name: hko_forecast_psr_1
+        value_template: '{{ value_json.weatherForecast[1].PSR }}'
+      - name: hko_forecast_psr_2
+        value_template: '{{ value_json.weatherForecast[2].PSR }}'
+      - name: hko_forecast_psr_3
+        value_template: '{{ value_json.weatherForecast[3].PSR }}'
+      - name: hko_forecast_psr_4
+        value_template: '{{ value_json.weatherForecast[4].PSR }}'
+
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en
+    scan_interval: 1800
+    sensor:
+      - name: hko_forecast_icon
+        value_template: '{{ value_json.icon[0] }}'
+
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_temperature
+        unit_of_measurement: "°C"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "HK Observatory" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_rh.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_humidity
+        unit_of_measurement: "%"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "HK Observatory" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_pre.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_pressure
+        unit_of_measurement: "hPa"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "HK Observatory" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_wind.htm
+    ### Replace "King's Park" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_wind_bearing
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "King's Park" in i %}
+              {% set ns.s = i.split(',')[2] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+      - name: hko_wind_speed
+        unit_of_measurement: "km/h"
+        value_template: >-
+          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set ns = namespace(s="") %}
+          {% for i in r %}
+            {% if "King's Park" in i %}
+              {% set ns.s = i.split(',')[3] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.s }}
+
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
+    scan_interval: 900
+    sensor:
+      - name: hko_uvindex
+        unit_of_measurement: "UV"
+        value_template: >-
+          {% set uv = value.split(',') %}
+          {{ uv[2] }}
