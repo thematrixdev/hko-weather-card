@@ -274,8 +274,8 @@ template: !include template.yaml
 ~~~~
 └── ...
 └── configuration.yaml
-└── rest.yaml                       ### Create as above manually (Rename rest-en.yaml to rest.yaml for English) ###
-└── template.yaml                   ### Create as above manually (Rename template-en.yaml to template.yaml for English) ###
+└── rest.yaml                  ### Create as above manually (Rename rest-en.yaml to rest.yaml for EN user) ###
+└── template.yaml              ### Create as above manually (Rename template-en.yaml to template.yaml for EN user) ###
 └── www
     └── community
         └── hko-weather-card
@@ -284,7 +284,6 @@ template: !include template.yaml
 		└── static
             └── hko-weather-card.js
             └── hko-weather-card.js.gz
-
 ~~~~
 
 All configuration is done. You must still configure the yaml manually.
