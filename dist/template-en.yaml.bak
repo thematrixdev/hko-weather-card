@@ -5,8 +5,8 @@
           {% if is_state("sensor.hko_forecast_icon","50") %} Sunny
           {% elif is_state("sensor.hko_forecast_icon","51") %} Sunny Periods
           {% elif is_state("sensor.hko_forecast_icon","52") %} Sunny Intervals
-          {% elif is_state("sensor.hko_forecast_icon","53") %} Sunny Periods with A Few Showers
-          {% elif is_state("sensor.hko_forecast_icon","54") %} Sunny Intervals with Showers
+          {% elif is_state("sensor.hko_forecast_icon","53") %} Light Showers
+          {% elif is_state("sensor.hko_forecast_icon","54") %} Showers
           {% elif is_state("sensor.hko_forecast_icon","60") %} Cloudy
           {% elif is_state("sensor.hko_forecast_icon","61") %} Overcast
           {% elif is_state("sensor.hko_forecast_icon","62") %} Light Rain
