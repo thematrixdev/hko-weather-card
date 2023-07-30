@@ -212,53 +212,7 @@ template: !include template.yaml
           {{ uv[2] }}
 ~~~~
 #### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) / [template-en.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template-en.yaml) and add the following template sensor:
-![template-yaml](https://user-images.githubusercontent.com/73251414/211304125-eeb7cd2d-cf5e-4a9b-a339-80dfc3371e89.png)
 ~~~~
-  - sensor:
-      - name: hko_current_text
-        state: >
-          {% if is_state("sensor.hko_forecast_icon","50") %} 天晴
-          {% elif is_state("sensor.hko_forecast_icon","51") %} 間有陽光
-          {% elif is_state("sensor.hko_forecast_icon","52") %} 短暫陽光
-          {% elif is_state("sensor.hko_forecast_icon","53") %} 晴間驟雨
-          {% elif is_state("sensor.hko_forecast_icon","54") %} 間晴驟雨	
-          {% elif is_state("sensor.hko_forecast_icon","60") %} 多雲
-          {% elif is_state("sensor.hko_forecast_icon","61") %} 密雲
-          {% elif is_state("sensor.hko_forecast_icon","62") %} 微雨
-          {% elif is_state("sensor.hko_forecast_icon","63") %} 雨
-          {% elif is_state("sensor.hko_forecast_icon","64") %} 大雨
-          {% elif is_state("sensor.hko_forecast_icon","65") %} 雷暴
-          {% elif is_state("sensor.hko_forecast_icon","70") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","71") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","72") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","73") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","74") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","75") %} 天色良好
-          {% elif is_state("sensor.hko_forecast_icon","76") %} 大致多雲
-          {% elif is_state("sensor.hko_forecast_icon","77") %} 大致良好
-          {% elif is_state("sensor.hko_forecast_icon","80") %} 大風
-          {% elif is_state("sensor.hko_forecast_icon","81") %} 乾燥
-          {% elif is_state("sensor.hko_forecast_icon","82") %} 潮濕
-          {% elif is_state("sensor.hko_forecast_icon","83") %} 霧
-          {% elif is_state("sensor.hko_forecast_icon","84") %} 薄霧
-          {% elif is_state("sensor.hko_forecast_icon","85") %} 煙霞
-          {% elif is_state("sensor.hko_forecast_icon","90") %} 炎熱
-          {% elif is_state("sensor.hko_forecast_icon","91") %} 回暖
-          {% elif is_state("sensor.hko_forecast_icon","92") %} 轉涼
-          {% elif is_state("sensor.hko_forecast_icon","93") %} 寒冷
-          {% endif %}
-
-  - sensor:
-      - name: hko_uvindex_exposure_level
-        state: >
-          {% set uv = states('sensor.hko_uvindex') | float(0) %}
-          {% if uv >= 11 %} 極高
-          {% elif uv >= 8 %} 甚高
-          {% elif uv >= 6 %} 高
-          {% elif uv >= 3 %} 中
-          {% elif uv >= 0 %} 低
-          {% endif %}
-
   - sensor:
       - name: hko_apparent_temp
         unit_of_measurement: "°C"
@@ -304,7 +258,6 @@ in your configuration.  The card will not work at all if any of these lines are 
 ~~~~
 type: custom:hko-weather-card
 entity_current_conditions: sensor.hko_forecast_icon
-entity_current_text: sensor.hko_current_text
 entity_temperature: sensor.hko_temperature
 entity_humidity: sensor.hko_humidity
 entity_forecast_high_temp_1: sensor.hko_forecast_max_temp_0
@@ -338,7 +291,7 @@ entity_pressure: sensor.hko_pressure
 entity_wind_speed: sensor.hko_wind_speed
 entity_wind_bearing: sensor.hko_wind_bearing
 entity_apparent_temp: sensor.hko_apparent_temp
-entity_uv_alert_summary: sensor.hko_uvindex_exposure_level
+entity_uv_alert_summary: sensor.hko_uvindex
 static_icons: false
 tooltips: true
 time_format: 24
