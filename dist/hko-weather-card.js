@@ -287,12 +287,9 @@ class HKOWeatherCard extends LitElement {
 
   get fireSummary() {
     try {
-      var fireSummaryState = this.config.entity_fire_danger_summary ? this._hass.states[this.config.entity_fire_danger_summary].state : 'unknown' ? this._hass.states[this.config.entity_fire_danger_summary].state : 'N/A';
-      if (fireSummaryState !== '') {
-      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">${fireSummaryState}</span></li>`;
-      }
+      return this.config.entity_fire_danger_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:fire"></ha-icon></span>${this.localeText.fireDanger} <span id="firedanger-text">${this._hass.states[this.config.entity_fire_danger_summary].state !== 'unknown' ? this._hass.states[this.config.entity_fire_danger_summary].state : 'N/A'}</span></li>` : ``;
     } catch (e) {
-      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire-alert"></ha-icon></span><span id="firedanger-text">Config Error</span></li>`;
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:fire"></ha-icon></span><span id="firedanger-text">Config Error</span></li>`;
     }
   }
 
