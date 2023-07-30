@@ -211,7 +211,7 @@ template: !include template.yaml
           {% set uv = value.split(',') %}
           {{ uv[2] }}
 ~~~~
-#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) / [template-en.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template-en.yaml) and add the following template sensor:
+#### Create [template.yaml](https://github.com/aes-alienrip/hko-weather-card/blob/master/dist/template.yaml) and add the following template sensor:
 ~~~~
   - sensor:
       - name: hko_apparent_temp
