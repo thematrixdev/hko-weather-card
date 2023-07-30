@@ -33,7 +33,7 @@ class HKOWeatherCard extends LitElement {
     if (!this.config || !this._hass) return html``;
 //  Handle Configuration Flags
 //    var icons = this.config.static_icons ? "static" : "animated";
-    var currentText = this.config.entity_current_text ? html`<span class="currentText" id="current-text">${this._hass.states[this.config.entity_current_text] !== undefined ? this._hass.states[this.config.entity_current_text].state : "Config Error"}</span>` : ``;
+    var currentText = this.currentCaption !== undefined ? html`<span class="currentText" id="current-text">${this.currentCaption}</span>` : ``;
     var apparentTemp = this.config.entity_apparent_temp ? html`<span class="apparent">${this.localeText.feelsLike} <span id="apparent-text">${this.currentApparent}</span>${this.getUOM("temperature")}</span>` : ``;
     var biggerIcon = this.currentConditions !== undefined ? html`<span class="icon bigger" id="icon-bigger" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this.currentConditions] + ".svg")}) no-repeat; background-size: contain;">${this.currentConditions}</span>` : html`<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`;
     var summary = this.config.entity_daily_summary ? html`${this._hass.states[this.config.entity_daily_summary] !== undefined ? this._hass.states[this.config.entity_daily_summary].state : "Config Error"}` : ``;
@@ -133,7 +133,6 @@ class HKOWeatherCard extends LitElement {
       case 'uv_summary' : return this.uvSummary;
       case 'fire_summary' : return this.fireSummary;
       case 'wind': return this.wind;
-      case 'wind_kt': return this.windKt;
       case 'visibility': return this.visibility;
       case 'sun_next': return this.sunNext;
       case 'sun_following': return this.sunFollowing;
@@ -168,11 +167,7 @@ class HKOWeatherCard extends LitElement {
   get pop() {
     try {
       var intensity = this.config.entity_pop_intensity && !this.config.entity_pop_intensity_rate ? html`<span id="intensity-text"> - ${(Number(this._hass.states[this.config.entity_pop_intensity].state)).toLocaleString()}</span><span class="unit">${this.getUOM('precipitation')}</span>` : this.config.entity_pop_intensity_rate && !this.config.entity_pop_intensity ? html`<span id="intensity-text"> - ${(Number(this._hass.states[this.config.entity_pop_intensity_rate].state)).toLocaleString()}</span><span class="unit">${this.getUOM('intensity')}</span>` : ` Config Error`;
-      if (this.config.alt_pop) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="alt-pop">${this._hass.states[this.config.alt_pop].state}</span></li>`;
-      } else {
-        return this.config.entity_pop ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">${this._hass.states[this.config.entity_pop] !== undefined ? Math.round(this._hass.states[this.config.entity_pop].state) : "Config Error"}</span><span class="unit">%</span><span>${intensity}</span></li>` : ``;
-      }
+      return this.config.entity_pop ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">${this._hass.states[this.config.entity_pop] !== undefined ? Math.round(this._hass.states[this.config.entity_pop].state) : "Config Error"}</span><span class="unit">%</span><span>${intensity}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">Config Error</span></li>`;
     }
@@ -180,11 +175,7 @@ class HKOWeatherCard extends LitElement {
 
   get popforecast() {
     try {
-      if (this.config.alt_pop) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="alt-pop">${this._hass.states[this.config.alt_pop].state}</span></li>`;
-      } else {
-        return this.config.entity_pop && this.config.entity_possible_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">${Math.round(this._hass.states[this.config.entity_pop].state)}</span><span class="unit">%</span><span> - <span id="pop-text-today">${this._hass.states[this.config.entity_possible_today].state}</span></span><span class="unit">${this.getUOM('precipitation')}</span></li>` : ``;
-      }
+      return this.config.entity_pop && this.config.entity_possible_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">${Math.round(this._hass.states[this.config.entity_pop].state)}</span><span class="unit">%</span><span> - <span id="pop-text-today">${this._hass.states[this.config.entity_possible_today].state}</span></span><span class="unit">${this.getUOM('precipitation')}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-rainy"></ha-icon></span><span id="pop-text">Config Error</span></li>`;
     }
@@ -216,11 +207,7 @@ class HKOWeatherCard extends LitElement {
 
   get humidity() {
     try {
-      if (this.config.alt_humidity) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:water-percent"></ha-icon></span><span id="alt-humidity">${this._hass.states[this.config.alt_humidity].state}</span></li>`;
-      } else {
-        return this.config.entity_humidity ? html`<li><span class="ha-icon"><ha-icon icon="mdi:water-percent"></ha-icon></span><span id="humidity-text">${this.currentHumidity}</span><span class="unit">%</span></li>` : ``;
-      }
+      return this.config.entity_humidity ? html`<li><span class="ha-icon"><ha-icon icon="mdi:water-percent"></ha-icon></span><span id="humidity-text">${this.currentHumidity}</span><span class="unit">%</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:water-percent"></ha-icon></span><span id="humidity-text">Config Error</span></li>`;
     }
@@ -228,11 +215,7 @@ class HKOWeatherCard extends LitElement {
 
   get pressure() {
     try {
-      if (this.config.alt_pressure) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:gauge"></ha-icon></span><span id="alt-pressure">${this._hass.states[this.config.alt_pressure].state}</span></li>`;
-      } else {
-        return this.config.entity_pressure ? html`<li><span class="ha-icon"><ha-icon icon="mdi:gauge"></ha-icon></span><span id="pressure-text">${this.currentPressure} </span><span class="unit">${this.config.pressure_units ? this.config.pressure_units : this.getUOM('air_pressure')}</span></li>` : ``;
-      }
+      return this.config.entity_pressure ? html`<li><span class="ha-icon"><ha-icon icon="mdi:gauge"></ha-icon></span><span id="pressure-text">${this.currentPressure} </span><span class="unit">${this.config.pressure_units ? this.config.pressure_units : this.getUOM('air_pressure')}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:gauge"></ha-icon></span><span id="pressure-text">Config Error</span></li>`;
     }
@@ -296,7 +279,7 @@ class HKOWeatherCard extends LitElement {
 
   get uvSummary() {
     try {
-      return this.config.entity_uv_alert_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:sun-wireless-outline"></ha-icon></span>${this.localeText.uvRating} <span id="daytime-uv-text">${this._hass.states[this.config.entity_uv_alert_summary].state}</span></li>` : ``;
+      return this.config.entity_uv_alert_summary ? html`<li><span class="ha-icon"><ha-icon icon="mdi:sun-wireless-outline"></ha-icon></span>${this.localeText.uvRating} <span id="daytime-uv-text">${this.uvLevel}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:sun-wireless-outline"></ha-icon></span><span id="daytime-uv-text">Config Error</span></li>`;
     }
@@ -317,17 +300,7 @@ class HKOWeatherCard extends LitElement {
     try {
       var windBearing = this.config.entity_wind_bearing ? html`<span id="wind-bearing-text">${this.currentWindBearing}</span>` : ``;
       var beaufortRating = this.config.entity_wind_speed ? html`<span id="beaufort-text">${this.currentBeaufort}</span>` : ``;
-      return this.config.alt_wind ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span id="alt-wind">${this._hass.states[this.config.alt_wind].state}</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit">${this.getUOM('length')}/h</span><span id="wind-gust-text"> (Gust ${this.currentWindGust}</span><span class="unit">${this.getUOM('length')}/h)</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit"> ${this.getUOM('length')}/h</span></li>` : ``;
-    } catch (e) {
-      return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span id="wind-error-text">Config Error</span></li>`;
-    }
-  }
-
-  get windKt() {
-    try {
-      var windBearing = this.config.entity_wind_bearing ? html`<span id="wind-bearing-kt-text">${this.currentWindBearing}</span>` : ``;
-      var beaufortRatingKt = this.config.entity_wind_speed_kt ? html`<span id="beaufort-kt-text">${this.currentBeaufortkt}</span>` : ``;
-      return this.config.entity_wind_bearing && this.config.entity_wind_speed_kt && this.config.entity_wind_gust_kt ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRatingKt}</span><span>${windBearing}</span><span id="wind-speed-kt-text"> ${this.currentWindSpeedKt}</span><span class="unit">kt</span><span id="wind-gust-kt-text"> (Gust ${this.currentWindGustKt}</span><span class="unit">kt)</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed_kt ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRatingKt}</span><span>${windBearing}</span><span id="wind-speed-kt-text">${this.currentWindSpeedKt}</span><span class="unit">kt</span></li>` : ``;
+      return this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit">${this.getUOM('length')}/h</span><span id="wind-gust-text"> ( ${this.localeText.Gust} ${this.currentWindGust}</span><span class="unit">${this.getUOM('length')}/h )</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit"> ${this.getUOM('length')}/h</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span id="wind-error-text">Config Error</span></li>`;
     }
@@ -481,7 +454,8 @@ class HKOWeatherCard extends LitElement {
           maxToday: "最高",
           minToday: "最低",
           Humidity: "濕度",
-          uvRating: "紫外線"
+          uvRating: "紫外線",
+          Gust: "陣風"
         }
       default :
         return {
@@ -491,7 +465,8 @@ class HKOWeatherCard extends LitElement {
           posToday: "Forecast",
           posTomorrow: "Fore Tom",
           uvRating: "UV",
-          fireDanger: "Fire"
+          fireDanger: "Fire",
+          Gust: "Gust"
         }
     }
   }
@@ -513,8 +488,8 @@ class HKOWeatherCard extends LitElement {
   get weatherIcons() {
     return {
       '50': `sunny-day`,
-      '51': `fair-${this.dayOrNight}`,
-      '52': `cloudy-${this.dayOrNight}-3`,
+      '51': `fair-day`,
+      '52': `cloudy-day-3`,
       '53': `fair-day-rain`,
       '54': `rainy-3`,
       '60': `cloudy`,
@@ -529,8 +504,8 @@ class HKOWeatherCard extends LitElement {
       '73': `moon-full`,
       '74': `moon-last-quarter`,
       '75': `moon-waning-crescent`,
-      '76': `cloudy-${this.dayOrNight}-3`,
-      '77': `fair-${this.dayOrNight}`,
+      '76': `cloudy-night-3`,
+      '77': `fair-night`,
       '80': `wind`,
       '81': `dry`,
       '82': `humid`,
@@ -651,24 +626,49 @@ class HKOWeatherCard extends LitElement {
     return this.config.entity_visibility ? (Number(this._hass.states[this.config.entity_visibility].state)).toLocaleString() : 0;
   }
 
+// #####
+// ##### https://www.hko.gov.hk/en/wxinfo/ts/index_wind.htm
+// #####
   get currentWindBearing() {
-    return this._hass.states[this.config.entity_wind_bearing].state;
+    var winDir = this._hass.states[this.config.entity_wind_bearing].state;
+    switch (this.config.locale) {
+    case "zh" :
+    if (this.config.entity_wind_bearing) {
+        if (winDir === "North") return "北";
+        if (winDir === "Northeast") return "東北";
+        if (winDir === "East") return "東";
+        if (winDir === "Southeast") return "東南";
+        if (winDir === "South") return "南";
+        if (winDir === "Southwest") return "西南";
+        if (winDir === "West") return "西";
+        if (winDir === "Northwest") return "西北";
+        if (winDir === "Variable") return "不定";
+        if (winDir === "Calm") return "無風";
+        if (winDir === "N/A") return "維修";
+        }
+    default :
+    if (this.config.entity_wind_bearing) {
+        if (winDir === "North") return "N";
+        if (winDir === "Northeast") return "NE";
+        if (winDir === "East") return "E";
+        if (winDir === "Southeast") return "SE";
+        if (winDir === "South") return "S";
+        if (winDir === "Southwest") return "SW";
+        if (winDir === "West") return "W";
+        if (winDir === "Northwest") return "NW";
+        if (winDir === "Variable") return "VRB";
+        if (winDir === "Calm") return "O";
+        if (winDir === "N/A") return "M";
+        }
+    }
   }
 
   get currentWindSpeed() {
-    return this.config.entity_wind_speed ? Math.round(this._hass.states[this.config.entity_wind_speed].state) : 0;
+    return this.config.entity_wind_speed ? this._hass.states[this.config.entity_wind_speed].state : 0;
   }
 
   get currentWindGust() {
     return this.config.entity_wind_gust ? Math.round(this._hass.states[this.config.entity_wind_gust].state) : 0;
-  }
-
-  get currentWindSpeedKt() {
-    return this.config.entity_wind_speed_kt ? Math.round(this._hass.states[this.config.entity_wind_speed_kt].state) : 0;
-  }
-
-  get currentWindGustKt() {
-    return this.config.entity_wind_gust_kt ? Math.round(this._hass.states[this.config.entity_wind_gust_kt].state) : 0;
   }
 
   get currentApparent() {
@@ -684,11 +684,7 @@ class HKOWeatherCard extends LitElement {
     return this.config.show_beaufort ? html`Bft: ${this.beaufortWind} - ` : ``;
   }
 
-  get currentBeaufortkt() {
-    return this.config.show_beaufort ? html`Bft: ${this.beaufortWindKt} - ` : ``;
-  }
-
-  // #####
+// #####
 // ##### sunSetAndRise: returns set and rise information
 // #####
 
@@ -732,6 +728,99 @@ get sunSet() {
 }
 
 
+get currentCaption() {
+  var cT = this._hass.states[this.config.entity_current_conditions].state;
+  switch (this.config.locale) {
+  case "zh" :
+  if (this.config.entity_current_conditions) {
+      if (cT == 50) return "天晴";
+      if (cT == 51) return "間有陽光";
+      if (cT == 52) return "短暫陽光";
+      if (cT == 53) return "晴間驟雨";
+      if (cT == 54) return "間晴驟雨";
+      if (cT == 60) return "多雲";
+      if (cT == 61) return "密雲";
+      if (cT == 62) return "微雨";
+      if (cT == 63) return "雨";
+      if (cT == 64) return "大雨";
+      if (cT == 65) return "雷暴";
+      if (cT == 70) return "天色良好";
+      if (cT == 71) return "天色良好";
+      if (cT == 72) return "天色良好";
+      if (cT == 73) return "天色良好";
+      if (cT == 74) return "天色良好";
+      if (cT == 75) return "天色良好";
+      if (cT == 76) return "大致多雲";
+      if (cT == 77) return "大致良好";
+      if (cT == 80) return "大風";
+      if (cT == 81) return "乾燥";
+      if (cT == 82) return "潮濕";
+      if (cT == 83) return "霧";
+      if (cT == 84) return "薄霧";
+      if (cT == 85) return "煙霞";
+      if (cT == 90) return "炎熱";
+      if (cT == 91) return "回暖";
+      if (cT == 92) return "轉涼";
+      if (cT == 93) return "寒冷";
+      }
+  default :
+  if (this.config.entity_current_conditions) {
+      if (cT == 50) return "Sunny";
+      if (cT == 51) return "Sunny Periods";
+      if (cT == 52) return "Sunny Intervals";
+      if (cT == 53) return "Light Showers";
+      if (cT == 54) return "Showers";
+      if (cT == 60) return "Cloudy";
+      if (cT == 61) return "Overcast";
+      if (cT == 62) return "Light Rain";
+      if (cT == 63) return "Rain";
+      if (cT == 64) return "Heavy Rain";
+      if (cT == 65) return "Thunderstorms";
+      if (cT == 70) return "Fine";
+      if (cT == 71) return "Fine";
+      if (cT == 72) return "Fine";
+      if (cT == 73) return "Fine";
+      if (cT == 74) return "Fine";
+      if (cT == 75) return "Fine";
+      if (cT == 76) return "Mainly Cloudy";
+      if (cT == 77) return "Mainly Fine";
+      if (cT == 80) return "Windy";
+      if (cT == 81) return "Dry";
+      if (cT == 82) return "Humid";
+      if (cT == 83) return "Fog";
+      if (cT == 84) return "Mist";
+      if (cT == 85) return "Haze";
+      if (cT == 90) return "Hot";
+      if (cT == 91) return "Warm";
+      if (cT == 92) return "Cool";
+      if (cT == 93) return "Cold";
+      }
+  }
+}
+
+get uvLevel() {
+  var uvLV = this._hass.states[this.config.entity_uv_alert_summary].state;
+  switch (this.config.locale) {
+  case "zh" :
+  if (this.config.entity_uv_alert_summary) {
+      if (uvLV >= 11) return "極高";
+      if (uvLV >= 8) return "甚高";
+      if (uvLV >= 6) return "高";
+      if (uvLV >= 3) return "中";
+      if (uvLV >= 0) return "低";
+      }
+  default :
+  if (this.config.entity_uv_alert_summary) {
+      if (uvLV >= 11) return "Extreme";
+      if (uvLV >= 8) return "Very high";
+      if (uvLV >= 6) return "High";
+      if (uvLV >= 3) return "Moderate";
+      if (uvLV >= 0) return "Low";
+      }
+  }
+}
+
+
 // #####
 // ##### beaufortWind - returns the wind speed on the beaufort scale
 // ##### reference https://en.wikipedia.org/wiki/Beaufort_scale
@@ -755,25 +844,6 @@ get beaufortWind() {
         if (WindSpeed >= 6) return 2;
         if (WindSpeed >= 2) return 1;
     }
-  }
-  return 0;
-}
-
-get beaufortWindKt() {
-  var WindSpeedKT = this._hass.states[this.config.entity_wind_speed_kt].state;
-  if (this.config.entity_wind_speed_kt) {
-      if (WindSpeedKT >= 64) return 12;
-      if (WindSpeedKT >= 56) return 11;
-      if (WindSpeedKT >= 48) return 10;
-      if (WindSpeedKT >= 41) return 9;
-      if (WindSpeedKT >= 34) return 8;
-      if (WindSpeedKT >= 28) return 7;
-      if (WindSpeedKT >= 22) return 6;
-      if (WindSpeedKT >= 17) return 5;
-      if (WindSpeedKT >= 11) return 4;
-      if (WindSpeedKT >= 7) return 3;
-      if (WindSpeedKT >= 4) return 2;
-      if (WindSpeedKT >= 1) return 1;
   }
   return 0;
 }
@@ -1147,19 +1217,16 @@ style() {
      });
 
 // Optional Entities
-      if (this.config.entity_current_text && (root.getElementById("current-text") !== null)) try { root.getElementById("current-text").textContent = `${this._hass.states[this.config.entity_current_text].state}` } catch(e) {}
+      if (this.currentCaption && (root.getElementById("current-text") !== null)) try { root.getElementById("current-text").textContent = `${this.currentCaption}` } catch(e) {}
       if (this.config.entity_apparent_temp && (root.getElementById("apparent-text") !== null)) try { root.getElementById("apparent-text").textContent = `${this.currentApparent}` } catch(e) {}
-      if (this.config.entity_wind_bearing && !this.config.alt_wind && (root.getElementById("wind-bearing-text") !== null)) try { root.getElementById("wind-bearing-text").textContent = `${this.currentWindBearing}` } catch(e) {}
-      if (this.config.entity_wind_speed && !this.config.alt_wind && (root.getElementById("wind-speed-text") !== null)) try { root.getElementById("wind-speed-text").textContent = ` ${this.currentWindSpeed}` } catch(e) {}
-      if (this.config.entity_wind_gust && !this.config.alt_wind && (root.getElementById("wind-gust-text") !== null)) try { root.getElementById("wind-gust-next").textContent = ` (Gust ${this.currentWindGust}` } catch(e) {}
-      if (this.config.entity_wind_bearing && !this.config.alt_wind && (root.getElementById("wind-bearing-kt-text") !== null)) try { root.getElementById("wind-bearing-kt-text").textContent = `${this.currentWindBearing}` } catch(e) {}
-      if (this.config.entity_wind_speed_kt && !this.config.alt_wind && (root.getElementById("wind-speed-kt-text") !== null)) try { root.getElementById("wind-speed-kt-text").textContent = ` ${this.currentWindSpeedKt}` } catch(e) {}
-      if (this.config.entity_wind_gust_kt && !this.config.alt_wind && (root.getElementById("wind-gust-kt-text") !== null)) try { root.getElementById("wind-gust-kt-text").textContent = ` (Gust ${this.currentWindGustKt}` } catch(e) {}
+      if (this.config.entity_wind_bearing && (root.getElementById("wind-bearing-text") !== null)) try { root.getElementById("wind-bearing-text").textContent = `${this.currentWindBearing}` } catch(e) {}
+      if (this.config.entity_wind_speed && (root.getElementById("wind-speed-text") !== null)) try { root.getElementById("wind-speed-text").textContent = ` ${this.currentWindSpeed}` } catch(e) {}
+      if (this.config.entity_wind_gust && (root.getElementById("wind-gust-text") !== null)) try { root.getElementById("wind-gust-next").textContent = ` (Gust ${this.currentWindGust}` } catch(e) {}
       if (this.config.entity_visibility && !this.config.alt_visibility && (root.getElementById("visibility-text") !== null)) try { root.getElementById("visibility-text").textContent = `${this.currentVisibility}` } catch(e) {}
       if (this.config.entity_pop_intensity && !this.config.entity_pop_intensity_rate && (root.getElementById("intensity-text") !== null)) try { root.getElementById("intensity-text").textContent = ` - ${(Number(this._hass.states[this.config.entity_pop_intensity].state)).toLocaleString()}` } catch(e) {}
       if (this.config.entity_pop_intensity_rate && !this.config.entity_pop_intensity && (root.getElementById("intensity-text") !== null)) try { root.getElementById("intensity-text").textContent = ` - ${(Number(this._hass.states[this.config.entity_pop_intensity_rate].state)).toLocaleString()}` } catch(e) {}
-      if (this.config.entity_pop && !this.config.alt_pop && (root.getElementById("pop-text") !== null)) try { root.getElementById("pop-text").textContent = `${Math.round(this._hass.states[this.config.entity_pop].state)}` } catch(e) {}
-      if (this.config.entity_pop && this.config.entity_possible_today && !this.config.alt_pop && (root.getElementById("pop-text-today") !== null)) try { root.getElementById("pop-text-today").textContent = `${this._hass.states[this.config.entity_possible_today].state}` } catch(e) {}
+      if (this.config.entity_pop && (root.getElementById("pop-text") !== null)) try { root.getElementById("pop-text").textContent = `${Math.round(this._hass.states[this.config.entity_pop].state)}` } catch(e) {}
+      if (this.config.entity_pop && this.config.entity_possible_today && (root.getElementById("pop-text-today") !== null)) try { root.getElementById("pop-text-today").textContent = `${this._hass.states[this.config.entity_possible_today].state}` } catch(e) {}
       if (this.config.entity_rain_today && (root.getElementById("rain-today-text") !== null)) try { root.getElementById("rain-today-text").textContent = `${this._hass.states[this.config.entity_rain_today].state}` } catch(e) {}
       var places = this.config.show_decimals_today ? 1 : 0;
       if (this.config.entity_daytime_high && !this.config.alt_daytime_high && (root.getElementById("daytime-high-text") !== null)) try { root.getElementById("daytime-high-text").textContent = `${Number(this._hass.states[this.config.entity_daytime_high].state).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places})}` } catch(e) {}
@@ -1186,10 +1253,9 @@ style() {
           (this.config.entity_uv_alert ?    `${this._hass.states[this.config.entity_uv_alert].state} `    : ``) + 
           (this.config.entity_fire_danger ? `${this._hass.states[this.config.entity_fire_danger].state}` : ``)
       } catch(e) {}
-      if (this.config.entity_pressure && !this.config.alt_pressure && (root.getElementById("pressure-text") !== null)) try { root.getElementById("pressure-text").textContent = `${this.currentPressure} ` } catch(e) {}
-      if (this.config.entity_humidity && !this.config.alt_humidity && (root.getElementById("humidity-text") !== null)) try { root.getElementById("humidity-text").textContent = `${this.currentHumidity}` } catch(e) {}
-      if (this.config.show_beaufort  && !this.config.alt_wind && (root.getElementById("beaufort-km-text") !== null)) try { root.getElementById("beaufort-km-text").textContent =  `Bft: ${this.beaufortWind} - ` } catch(e) {}
-      if (this.config.show_beaufort  && !this.config.alt_wind && (root.getElementById("beaufort-kt-text") !== null)) try { root.getElementById("beaufort-kt-text").textContent =  `Bft: ${this.beaufortWindKt} - ` } catch(e) {}
+      if (this.config.entity_pressure && (root.getElementById("pressure-text") !== null)) try { root.getElementById("pressure-text").textContent = `${this.currentPressure} ` } catch(e) {}
+      if (this.config.entity_humidity && (root.getElementById("humidity-text") !== null)) try { root.getElementById("humidity-text").textContent = `${this.currentHumidity}` } catch(e) {}
+      if (this.config.show_beaufort && (root.getElementById("beaufort-km-text") !== null)) try { root.getElementById("beaufort-km-text").textContent =  `Bft: ${this.beaufortWind} - ` } catch(e) {}
       if (this.config.entity_possible_today && (root.getElementById("possible_today-text") !== null)) try { root.getElementById("possible_today-text").textContent = `${this._hass.states[this.config.entity_possible_today].state}` } catch(e) {}
       if (this.config.entity_pos_1 && (root.getElementById("possible_tomorrow-text") !== null)) try { root.getElementById("possible_tomorrow-text").textContent = `${this._hass.states[this.config.entity_pos_1].state}` } catch(e) {}
       if (this.config.custom1_value && (root.getElementById("custom-1-text") !== null)) try { root.getElementById("custom-1-text").textContent = `${this._hass.states[this.config.custom1_value].state}` } catch(e) {}
@@ -1201,14 +1267,11 @@ style() {
       if (this.config.custom7_value && (root.getElementById("custom-7-text") !== null)) try { root.getElementById("custom-7-text").textContent = `${this._hass.states[this.config.custom7_value].state}` } catch(e) {}
       if (this.config.custom8_value && (root.getElementById("custom-8-text") !== null)) try { root.getElementById("custom-8-text").textContent = `${this._hass.states[this.config.custom8_value].state}` } catch(e) {}
       if (this.config.entity_fire_danger_summary && (root.getElementById("firedanger-text") !== null)) try { root.getElementById("firedanger-text").textContent = `${this._hass.states[this.config.entity_fire_danger_summary].state}` } catch(e) {}
+      if (this.config.entity_uv_alert_summary && (root.getElementById("daytime-uv-text") !== null)) try { root.getElementById("daytime-uv-text").textContent = `${this.uvLevel}` } catch(e) {}
 
 // Alt Text
       if (this.config.alt_sun_next) try { root.getElementById("alt-sun-next").textContent = `${this._hass.states[this.config.alt_sun_next].state}` } catch(e) {}
       if (this.config.alt_sun_following) try { root.getElementById("alt-sun-following").textContent = `${this._hass.states[this.config.alt_sun_following].state}` } catch(e) {}
-      if (this.config.alt_pop) try { root.getElementById("alt-pop").textContent = `${this._hass.states[this.config.alt_pop].state}` } catch(e) {}
-      if (this.config.alt_wind) try { root.getElementById("alt-wind").textContent = `${this._hass.states[this.config.alt_wind].state}` } catch(e) {}
-      if (this.config.alt_pressure) try { root.getElementById("alt-pressure").textContent = `${this._hass.states[this.config.alt_pressure].state}` } catch(e) {}
-      if (this.config.alt_humidity) try { root.getElementById("alt-humidity").textContent = `${this._hass.states[this.config.alt_humidity].state}` } catch(e) {}
       if (this.config.alt_daytime_high) try { root.getElementById("alt-daytime-high").textContent = `${this._hass.states[this.config.alt_daytime_high].state}` } catch(e) {}
       if (this.config.alt_visibility) try { root.getElementById("alt-visibility").textContent = `${this._hass.states[this.config.alt_visibility].state}` } catch(e) {}
     }
