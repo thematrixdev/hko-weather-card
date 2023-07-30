@@ -124,9 +124,9 @@ template: !include template.yaml
       - name: hko_forecast_icon
         value_template: '{{ value_json.icon[0] }}'
 
-    ### https://www.hko.gov.hk/tc/wxinfo/ts/index.htm
-    ### Replace "天文台" below with your nearby station
-  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature_uc.csv
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv
     scan_interval: 900
     sensor:
       - name: hko_temperature
@@ -135,15 +135,15 @@ template: !include template.yaml
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if "HK Observatory" in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm
-    ### Replace "天文台" below with your nearby station
-  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity_uc.csv
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_rh.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity.csv
     scan_interval: 900
     sensor:
       - name: hko_humidity
@@ -152,15 +152,15 @@ template: !include template.yaml
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if "HK Observatory" in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm
-    ### Replace "天文台" below with your nearby station
-  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure_uc.csv
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_pre.htm
+    ### Replace "HK Observatory" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure.csv
     scan_interval: 900
     sensor:
       - name: hko_pressure
@@ -169,15 +169,15 @@ template: !include template.yaml
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if "HK Observatory" in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm
-    ### Replace "京士柏" below with your nearby station
-  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind_uc.csv
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_wind.htm
+    ### Replace "King's Park" below with your nearby station
+  - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind.csv
     scan_interval: 900
     sensor:
       - name: hko_wind_bearing
@@ -185,7 +185,7 @@ template: !include template.yaml
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% for i in r %}
-            {% if "京士柏" in i %}
+            {% if "King's Park" in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
@@ -196,7 +196,7 @@ template: !include template.yaml
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% for i in r %}
-            {% if "京士柏" in i %}
+            {% if "King's Park" in i %}
               {% set ns.s = i.split(',')[3] %}
             {% endif %}
           {% endfor %}
