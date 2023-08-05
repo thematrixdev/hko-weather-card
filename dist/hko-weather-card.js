@@ -642,6 +642,16 @@ class HKOWeatherCard extends LitElement {
         if (winDir === "Variable") return "不定";
         if (winDir === "Calm") return "無風";
         if (winDir === "N/A") return "維修";
+        if (winDir === "北") return "北";
+        if (winDir === "東北") return "東北";
+        if (winDir === "東") return "東";
+        if (winDir === "東南") return "東南";
+        if (winDir === "南") return "南";
+        if (winDir === "西南") return "西南";
+        if (winDir === "西") return "西";
+        if (winDir === "西北") return "西北";
+        if (winDir === "風向不定") return "不定";
+        if (winDir === "無風") return "無風";
         }
     default :
     if (this.config.entity_wind_bearing) {
@@ -656,6 +666,16 @@ class HKOWeatherCard extends LitElement {
         if (winDir === "Variable") return "VRB";
         if (winDir === "Calm") return "O";
         if (winDir === "N/A") return "M";
+        if (winDir === "北") return "N";
+        if (winDir === "東北") return "NE";
+        if (winDir === "東") return "E";
+        if (winDir === "東南") return "SE";
+        if (winDir === "南") return "S";
+        if (winDir === "西南") return "SW";
+        if (winDir === "西") return "W";
+        if (winDir === "西北") return "NW";
+        if (winDir === "風向不定") return "VRB";
+        if (winDir === "無風") return "O";
         }
     }
   }
@@ -885,7 +905,7 @@ style() {
   var apparentTopMargin = this.config.apparent_top_margin || "55px";
   var apparentRightPos =  this.config.apparent_right_pos || "0.3em";
   var apparentRightMargin = this.config.apparent_right_margin || "1em";
-  var currentTextTopMargin = this.config.current_text_top_margin || "0.8em";
+  var currentTextTopMargin = this.config.current_text_top_margin || "0.6em";
   var currentTextLeftPos = this.config.current_text_left_pos || "0px";
   var currentTextFontSize = this.config.current_text_font_size || "2em";
   var currentTextWidth = this.config.current_text_width || "100%";
