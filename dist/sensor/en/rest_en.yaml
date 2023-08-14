@@ -3,39 +3,50 @@
     sensor:
       - name: hko_forecast_summary
         value_template: '{{ value_json.forecastDesc }}'
+
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en
     scan_interval: 1800
     sensor:
       - name: hko_forecast_max_temp_0
         value_template: '{{ value_json.weatherForecast[0].forecastMaxtemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_max_temp_1
         value_template: '{{ value_json.weatherForecast[1].forecastMaxtemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_max_temp_2
         value_template: '{{ value_json.weatherForecast[2].forecastMaxtemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_max_temp_3
         value_template: '{{ value_json.weatherForecast[3].forecastMaxtemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_max_temp_4
         value_template: '{{ value_json.weatherForecast[4].forecastMaxtemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_min_temp_0
         value_template: '{{ value_json.weatherForecast[0].forecastMintemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_min_temp_1
         value_template: '{{ value_json.weatherForecast[1].forecastMintemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature        
       - name: hko_forecast_min_temp_2
         value_template: '{{ value_json.weatherForecast[2].forecastMintemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_min_temp_3
         value_template: '{{ value_json.weatherForecast[3].forecastMintemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_min_temp_4
         value_template: '{{ value_json.weatherForecast[4].forecastMintemp.value }}'
         unit_of_measurement: "°C"
+        device_class: temperature
       - name: hko_forecast_icon_0
         value_template: '{{ value_json.weatherForecast[0].ForecastIcon }}'
       - name: hko_forecast_icon_1
@@ -78,6 +89,7 @@
     scan_interval: 900
     sensor:
       - name: hko_temperature_max
+        unique_id: hko_temperature_max
         unit_of_measurement: "°C"
         device_class: temperature
         value_template: >-
@@ -105,11 +117,12 @@
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/en/wxinfo/ts/index.htm
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index.htm ###
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv
     scan_interval: 900
     sensor:
       - name: hko_temperature
+        unique_id: hko_temperature
         unit_of_measurement: "°C"
         device_class: temperature
         value_template: >-
@@ -123,12 +136,12 @@
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/en/wxinfo/ts/index_rh.htm
-    ### Replace "HK Observatory" below with your nearby weather station according to the url above
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_rh.htm ###
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity.csv
     scan_interval: 900
     sensor:
       - name: hko_humidity
+        unique_id: hko_humidity
         unit_of_measurement: "%"
         device_class: humidity
         value_template: >-
@@ -142,11 +155,12 @@
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/en/wxinfo/ts/index_pre.htm
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_pre.htm ###
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure.csv
     scan_interval: 900
     sensor:
       - name: hko_pressure
+        unique_id: hko_pressure
         unit_of_measurement: "hPa"
         device_class: pressure
         value_template: >-
@@ -160,11 +174,12 @@
           {% endfor %}
           {{ ns.s }}
 
-    ### https://www.hko.gov.hk/en/wxinfo/ts/index_wind.htm
+    ### https://www.hko.gov.hk/en/wxinfo/ts/index_wind.htm ###
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind.csv
     scan_interval: 900
     sensor:
       - name: hko_wind_bearing
+        unique_id: hko_wind_bearing
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
@@ -176,6 +191,7 @@
           {% endfor %}
           {{ ns.s }}
       - name: hko_wind_speed
+        unique_id: hko_wind_speed
         unit_of_measurement: "km/h"
         device_class: wind_speed
         value_template: >-
@@ -189,6 +205,7 @@
           {% endfor %}
           {{ ns.s }}
       - name: hko_wind_gust
+        unique_id: hko_wind_gust
         unit_of_measurement: "km/h"
         device_class: wind_speed
         value_template: >-
@@ -206,6 +223,7 @@
     scan_interval: 900
     sensor:
       - name: hko_uvindex
+        unique_id: hko_uvindex
         unit_of_measurement: "UV"
         value_template: >-
           {% set uv = value.split(',') %}
