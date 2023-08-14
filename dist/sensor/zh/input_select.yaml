@@ -2,6 +2,7 @@ input_select:
   hko_wind_station:
     name: HKO Wind Station
     options:
+      - 京士柏
       - 大老山
       - 大美督
       - 大埔滘
@@ -16,7 +17,6 @@ input_select:
       - 沙洲
       - 赤柱
       - 赤鱲角
-      - 京士柏
       - 坪洲
       - 昂坪
       - 長洲
@@ -32,11 +32,11 @@ input_select:
       - 塔門
       - 橫瀾島
       - 濕地公園
-    initial: 京士柏
     icon: mdi:weather-windy
   hko_temperature_station:
     name: HKO Temperature Station
     options:
+      - 天文台
       - 九龍城
       - 上水
       - 大老山
@@ -46,7 +46,6 @@ input_select:
       - 大隴
       - 山頂
       - 元朗公園
-      - 天文台
       - 屯門
       - 北潭涌
       - 打鼓嶺
@@ -76,16 +75,15 @@ input_select:
       - 橫瀾島
       - 濕地公園
       - 觀塘
-    initial: 天文台
     icon: mdi:thermometer
   hko_humidity_station:
     name: HKO Humidity Station
     options:
+      - 天文台
       - 九龍城
       - 上水
       - 大埔
       - 大隴
-      - 天文台
       - 屯門
       - 北潭涌
       - 打鼓嶺
@@ -107,14 +105,13 @@ input_select:
       - 筲箕灣
       - 橫瀾島
       - 濕地公園
-    initial: 天文台
     icon: mdi:water-percent
   hko_pressure_station:
     name: HKO Pressure Station
     options:
+      - 天文台
       - 上水
       - 大埔
-      - 天文台
       - 打鼓嶺
       - 石崗
       - 沙田
@@ -124,5 +121,4 @@ input_select:
       - 流浮山
       - 橫瀾島
       - 濕地公園
-    initial: 天文台
     icon: mdi:gauge
