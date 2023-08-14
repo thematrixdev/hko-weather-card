@@ -32,7 +32,7 @@ input_select:
       - Waglan Island
       - Wetland Park
       - Wong Chuk Hang
-    initial: 京士柏
+    initial: King's Park
     icon: mdi:weather-windy
   hko_temperature_station:
     name: HKO Temperature Station
@@ -107,7 +107,7 @@ input_select:
       - Waglan Island
       - Wetland Park
       - Wong Chuk Hang
-    initial: 天文台
+    initial: HK Observatory
     icon: mdi:water-percent
   hko_pressure_station:
     name: HKO Pressure Station
