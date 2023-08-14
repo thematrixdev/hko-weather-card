@@ -1,3 +1,4 @@
+template:
   - sensor:
       - name: hko_apparent_temp
         unit_of_measurement: "°C"
