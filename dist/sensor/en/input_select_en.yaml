@@ -1,0 +1,128 @@
+input_select:
+  hko_wind_station:
+    name: HKO Wind Station
+    options:
+      - Central Pier
+      - Chek Lap Kok
+      - Cheung Chau
+      - Cheung Chau Beach
+      - Green Island
+      - Hong Kong Sea School
+      - Kai Tak
+      - King's Park
+      - Lamma Island
+      - Lau Fau Shan
+      - Ngong Ping
+      - North Point
+      - Peng Chau
+      - Sai Kung
+      - Sha Chau
+      - Sha Tin
+      - Shek Kong
+      - Stanley
+      - Star Ferry
+      - Ta Kwu Ling
+      - Tai Mei Tuk
+      - Tai Po Kau
+      - Tap Mun
+      - Tate's Cairn
+      - Tseung Kwan O
+      - Tsing Yi
+      - Tuen Mun
+      - Waglan Island
+      - Wetland Park
+      - Wong Chuk Hang
+    initial: 京士柏
+    icon: mdi:weather-windy
+  hko_temperature_station:
+    name: HKO Temperature Station
+    options:
+      - Chek Lap Kok
+      - Cheung Chau
+      - Clear Water Bay
+      - Happy Valley
+      - HK Observatory
+      - HK Park
+      - Kai Tak Runway Park
+      - Kau Sai Chau
+      - King's Park
+      - Kowloon City
+      - Kwun Tong
+      - Lau Fau Shan
+      - Ngong Ping
+      - Pak Tam Chung
+      - Peng Chau
+      - Sai Kung
+      - Sha Tin
+      - Sham Shui Po
+      - Shau Kei Wan
+      - Shek Kong
+      - Sheung Shui
+      - Stanley
+      - Ta Kwu Ling
+      - Tai Lung
+      - Tai Mei Tuk
+      - Tai Mo Shan
+      - Tai Po
+      - Tate's Cairn
+      - The Peak
+      - Tseung Kwan O
+      - Tsing Yi
+      - Tsuen Wan Ho Koon
+      - Tsuen Wan Shing Mun Valley
+      - Tuen Mun
+      - Waglan Island
+      - Wetland Park
+      - Wong Chuk Hang
+      - Wong Tai Sin
+      - Yuen Long Park
+    initial: HK Observatory
+    icon: mdi:thermometer
+  hko_humidity_station:
+    name: HKO Humidity Station
+    options:
+      - Chek Lap Kok
+      - Cheung Chau
+      - Clear Water Bay
+      - HK Observatory
+      - HK Park
+      - Kai Tak Runway Park
+      - Kau Sai Chau
+      - King's Park
+      - Kowloon City
+      - Lau Fau Shan
+      - Pak Tam Chung
+      - Peng Chau
+      - Sai Kung
+      - Sha Tin
+      - Shau Kei Wan
+      - Shek Kong
+      - Sheung Shui
+      - Ta Kwu Ling
+      - Tai Lung
+      - Tai Po
+      - Tseung Kwan O
+      - Tsing Yi
+      - Tuen Mun
+      - Waglan Island
+      - Wetland Park
+      - Wong Chuk Hang
+    initial: 天文台
+    icon: mdi:water-percent
+  hko_pressure_station:
+    name: HKO Pressure Station
+    options:
+      - Chek Lap Kok
+      - Cheung Chau
+      - HK Observatory
+      - Lau Fau Shan
+      - Peng Chau
+      - Sha Tin
+      - Shek Kong
+      - Sheung Shui
+      - Ta Kwu Ling
+      - Tai Po
+      - Waglan Island
+      - Wetland Park
+    initial: HK Observatory
+    icon: mdi:gauge
