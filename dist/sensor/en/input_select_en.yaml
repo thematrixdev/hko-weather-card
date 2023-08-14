@@ -2,6 +2,7 @@ input_select:
   hko_wind_station:
     name: HKO Wind Station
     options:
+      - King's Park
       - Central Pier
       - Chek Lap Kok
       - Cheung Chau
@@ -9,7 +10,6 @@ input_select:
       - Green Island
       - Hong Kong Sea School
       - Kai Tak
-      - King's Park
       - Lamma Island
       - Lau Fau Shan
       - Ngong Ping
@@ -32,16 +32,15 @@ input_select:
       - Waglan Island
       - Wetland Park
       - Wong Chuk Hang
-    initial: King's Park
     icon: mdi:weather-windy
   hko_temperature_station:
     name: HKO Temperature Station
     options:
+      - HK Observatory
       - Chek Lap Kok
       - Cheung Chau
       - Clear Water Bay
       - Happy Valley
-      - HK Observatory
       - HK Park
       - Kai Tak Runway Park
       - Kau Sai Chau
@@ -76,15 +75,14 @@ input_select:
       - Wong Chuk Hang
       - Wong Tai Sin
       - Yuen Long Park
-    initial: HK Observatory
     icon: mdi:thermometer
   hko_humidity_station:
     name: HKO Humidity Station
     options:
+      - HK Observatory
       - Chek Lap Kok
       - Cheung Chau
       - Clear Water Bay
-      - HK Observatory
       - HK Park
       - Kai Tak Runway Park
       - Kau Sai Chau
@@ -107,14 +105,13 @@ input_select:
       - Waglan Island
       - Wetland Park
       - Wong Chuk Hang
-    initial: HK Observatory
     icon: mdi:water-percent
   hko_pressure_station:
     name: HKO Pressure Station
     options:
+      - HK Observatory
       - Chek Lap Kok
       - Cheung Chau
-      - HK Observatory
       - Lau Fau Shan
       - Peng Chau
       - Sha Tin
@@ -124,5 +121,4 @@ input_select:
       - Tai Po
       - Waglan Island
       - Wetland Park
-    initial: HK Observatory
     icon: mdi:gauge
