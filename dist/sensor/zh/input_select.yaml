@@ -1,0 +1,128 @@
+input_select:
+  hko_wind_station:
+    name: HKO Wind Station
+    options:
+      - 大老山
+      - 大美督
+      - 大埔滘
+      - 中環碼頭
+      - 天星碼頭
+      - 屯門
+      - 北角
+      - 打鼓嶺
+      - 石崗
+      - 西貢
+      - 沙田
+      - 沙洲
+      - 赤柱
+      - 赤鱲角
+      - 京士柏
+      - 坪洲
+      - 昂坪
+      - 長洲
+      - 長洲泳灘
+      - 青衣
+      - 青洲
+      - 南丫島
+      - 流浮山
+      - 香港航海學校
+      - 將軍澳
+      - 啟德
+      - 黃竹坑
+      - 塔門
+      - 橫瀾島
+      - 濕地公園
+    initial: 京士柏
+    icon: mdi:weather-windy
+  hko_temperature_station:
+    name: HKO Temperature Station
+    options:
+      - 九龍城
+      - 上水
+      - 大老山
+      - 大美督
+      - 大埔
+      - 大帽山
+      - 大隴
+      - 山頂
+      - 元朗公園
+      - 天文台
+      - 屯門
+      - 北潭涌
+      - 打鼓嶺
+      - 石崗
+      - 西貢
+      - 沙田
+      - 赤柱
+      - 赤鱲角
+      - 京士柏
+      - 坪洲
+      - 昂坪
+      - 長洲
+      - 青衣
+      - 流浮山
+      - 香港公園
+      - 荃灣可觀
+      - 荃灣城門谷
+      - 將軍澳
+      - 啟德跑道公園
+      - 深水埗
+      - 清水灣
+      - 跑馬地
+      - 黃大仙
+      - 黃竹坑
+      - 滘西洲
+      - 筲箕灣
+      - 橫瀾島
+      - 濕地公園
+      - 觀塘
+    initial: 天文台
+    icon: mdi:thermometer
+  hko_humidity_station:
+    name: HKO Humidity Station
+    options:
+      - 九龍城
+      - 上水
+      - 大埔
+      - 大隴
+      - 天文台
+      - 屯門
+      - 北潭涌
+      - 打鼓嶺
+      - 石崗
+      - 西貢
+      - 沙田
+      - 赤鱲角
+      - 京士柏
+      - 坪洲
+      - 長洲
+      - 青衣
+      - 流浮山
+      - 香港公園
+      - 將軍澳
+      - 啟德跑道公園
+      - 清水灣
+      - 黃竹坑
+      - 滘西洲
+      - 筲箕灣
+      - 橫瀾島
+      - 濕地公園
+    initial: 天文台
+    icon: mdi:water-percent
+  hko_pressure_station:
+    name: HKO Pressure Station
+    options:
+      - 上水
+      - 大埔
+      - 天文台
+      - 打鼓嶺
+      - 石崗
+      - 沙田
+      - 赤鱲角
+      - 坪洲
+      - 長洲
+      - 流浮山
+      - 橫瀾島
+      - 濕地公園
+    initial: 天文台
+    icon: mdi:gauge
