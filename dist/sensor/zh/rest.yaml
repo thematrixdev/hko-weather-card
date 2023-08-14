@@ -74,7 +74,6 @@
         value_template: '{{ value_json.icon[0] }}'
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index_max.htm ###
-    ### 根據以上網址查詢鄰近的氣象站取代下面 "天文台" 字串
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_since_midnight_maxmin_uc.csv
     scan_interval: 900
     sensor:
@@ -84,8 +83,9 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_temperature_station') %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
@@ -97,15 +97,15 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_temperature_station') %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[3] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index.htm
-    ### 根據以上網址查詢鄰近的氣象站取代下面 "天文台" 字串
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature_uc.csv
     scan_interval: 900
     sensor:
@@ -115,15 +115,15 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_temperature_station') %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm
-    ### 根據以上網址查詢鄰近的氣象站取代下面 "天文台" 字串
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity_uc.csv
     scan_interval: 900
     sensor:
@@ -133,15 +133,15 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_humidity_station') %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm
-    ### 根據以上網址查詢鄰近的氣象站取代下面 "天文台" 字串
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_pressure_uc.csv
     scan_interval: 900
     sensor:
@@ -151,15 +151,15 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_pressure_station') %}
           {% for i in r %}
-            {% if "天文台" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
           {{ ns.s }}
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm
-    ### 根據以上網址查詢鄰近的氣象站取代下面 "京士柏" 字串
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_10min_wind_uc.csv
     scan_interval: 900
     sensor:
@@ -167,8 +167,9 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_wind_station') %}
           {% for i in r %}
-            {% if "京士柏" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[2] %}
             {% endif %}
           {% endfor %}
@@ -179,8 +180,9 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_wind_station') %}
           {% for i in r %}
-            {% if "京士柏" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[3] %}
             {% endif %}
           {% endfor %}
@@ -191,8 +193,9 @@
         value_template: >-
           {% set r = value.replace('\ufeff', '').split('\n') %}
           {% set ns = namespace(s="") %}
+          {% set stn = states('input_select.hko_wind_station') %}
           {% for i in r %}
-            {% if "京士柏" in i %}
+            {% if stn in i %}
               {% set ns.s = i.split(',')[4] %}
             {% endif %}
           {% endfor %}
