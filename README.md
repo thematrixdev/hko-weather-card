@@ -203,11 +203,11 @@ show_decimals: false
 | summary_top_padding      | **1em** / px or em                 | Sets the gap between the forecast and summary text                          |
 | summary_font_size        | **1em** / px or em                 | Sets the font size for the summary text                                     |
 | slot_l1                  | **sun_next**                       | Sets the value used in current conditions slot l1 : See slots for more info |
-| slot_l2                  | **wind**                           | Sets the value used in current conditions slot l2 : See slots for more info |
-| slot_l3                  | **pressure**                       | Sets the value used in current conditions slot l3 : See slots for more info |
-| slot_l4                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l4 : See slots for more info |
-| slot_l5                  | **daytime_high**                   | Sets the value used in current conditions slot l5 : See slots for more info |
-| slot_l6                  | **daytime_low**                    | Sets the value used in current conditions slot l6 : See slots for more info |
+| slot_l2                  | **maxmin_since_midnight**            | Sets the value used in current conditions slot l2 : See slots for more info |
+| slot_l3                  | **wind**                           | Sets the value used in current conditions slot l3 : See slots for more info |
+| slot_l4                  | **pressure**                       | Sets the value used in current conditions slot l4 : See slots for more info |
+| slot_l5                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l5 : See slots for more info |
+| slot_l6                  |                                    | Sets the value used in current conditions slot l6 : See slots for more info |
 | slot_l7                  |                                    | Sets the value used in current conditions slot l7 : See slots for more info |
 | slot_l8                  |                                    | Sets the value used in current conditions slot l8 : See slots for more info |
 | slot_r1                  | **sun_following**                  | Sets the value used in current conditions slot r1 : See slots for more info |
@@ -254,6 +254,7 @@ The current condition columns are specified by 'slots'.  There are 8 left column
 slots (designated r1 - r8).  There are currently 16 possible values that can be assigned to a slot.  These are:
 - daytime_high
 - daytime_low
+- maxmin_since_midnight (max and min temperature since midnight)
 - wind
 - visibility
 - sun_next (the next sun event ... sunset or sunrise)
