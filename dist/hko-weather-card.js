@@ -1,11 +1,11 @@
 import {
   LitElement,
   html,
-} from "https://unpkg.com/lit-element@3.3.2/lit-element.js?module";
+} from "https://unpkg.com/lit-element@3.3.3/lit-element.js?module";
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.1.5       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.1.7       `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -128,6 +128,7 @@ class HKOWeatherCard extends LitElement {
       case 'pressure': return this.pressure;
       case 'daytime_high': return this.daytimeHigh;
       case 'daytime_low': return this.daytimeLow;
+      case 'maxmin_since_midnight': return this.MaxMinsinceMidnight;
       case 'temp_next': return this.tempNext;
       case 'temp_following': return this.tempFollowing;
       case 'uv_summary' : return this.uvSummary;
@@ -151,11 +152,10 @@ class HKOWeatherCard extends LitElement {
     // If no value can be matched pass back a default for the slot
     switch (slot) {
       case 'l1': return this.sunNext;
-      case 'l2': return this.wind;
-      case 'l3': return this.pressure;
-      case 'l4': return this.rainToday;
-      case 'l5': return this.daytimeHigh;
-      case 'l6': return this.daytimeLow;
+      case 'l2': return this.MaxMinsinceMidnight;
+      case 'l3': return this.wind;
+      case 'l4': return this.pressure;
+      case 'l5': return this.rainToday;
       case 'r1': return this.sunFollowing;
       case 'r2': return this.humidity;
       case 'r3': return this.uvSummary;
@@ -223,11 +223,7 @@ class HKOWeatherCard extends LitElement {
 
   get daytimeHigh() {
     try {
-      if (this.config.alt_daytime_high) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span><span id="alt-daytime-high">${this._hass.states[this.config.alt_daytime_high].state}</span></li>`;
-      } else {
-        return this.config.entity_daytime_high && this.config.show_decimals_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span>${this.localeText.maxToday} <span id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span><span>${this.getUOM('temperature')}</span></li>` : this.config.entity_daytime_high && !this.config.show_decimals_today ?html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span>${this.localeText.maxToday} <span id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state).toFixed(0)).toLocaleString()}</span><span>${this.getUOM('temperature')}</span></li>` : ``;
-      }
+      return this.config.entity_daytime_high && this.config.show_decimals_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span>${this.localeText.maxToday} <span id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span><span>${this.getUOM('temperature')}</span></li>` : this.config.entity_daytime_high && !this.config.show_decimals_today ?html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span>${this.localeText.maxToday} <span id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state).toFixed(0)).toLocaleString()}</span><span>${this.getUOM('temperature')}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-high"></ha-icon></span><span id="daytime-high-text">Config Error</span></li>`;
     }
@@ -235,13 +231,17 @@ class HKOWeatherCard extends LitElement {
 
   get daytimeLow() {
     try {
-      if (this.config.alt_daytime_low) {
-        return html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span><span id="alt-daytime-low">${this._hass.states[this.config.alt_daytime_low].state}</span></li>`;
-      } else {
-        return this.config.entity_daytime_low && this.config.show_decimals_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span>${this.localeText.minToday} <span id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span><span>${this.getUOM('temperature')}</span></li>` : this.config.entity_daytime_low && !this.config.show_decimals_today ?html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span>${this.localeText.minToday} <span id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state).toFixed(0)).toLocaleString()}</span><span> ${this.getUOM('temperature')}</span></li>` : ``;
-      }
+      return this.config.entity_daytime_low && this.config.show_decimals_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span>${this.localeText.minToday} <span id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span><span>${this.getUOM('temperature')}</span></li>` : this.config.entity_daytime_low && !this.config.show_decimals_today ?html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span>${this.localeText.minToday} <span id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state).toFixed(0)).toLocaleString()}</span><span>${this.getUOM('temperature')}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer-low"></ha-icon></span><span id="daytime-low-text">Config Error</span></li>`;
+    }
+  }
+
+  get MaxMinsinceMidnight() {
+    try {
+      return this.config.entity_daytime_high && this.config.entity_daytime_low && this.config.show_decimals_today ? html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer"></ha-icon></span><span class="lowTemp" id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span> / <span class="highTemp" id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state)).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1})}</span><span class="unit">${this.getUOM('temperature')}</span></li>` : this.config.entity_daytime_high && this.config.entity_daytime_low && !this.config.show_decimals_today ?html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer"></ha-icon></span><span class="lowTemp" id="daytime-low-text">${(Number(this._hass.states[this.config.entity_daytime_low].state).toFixed(0)).toLocaleString()}</span> / <span class="highTemp" id="daytime-high-text">${(Number(this._hass.states[this.config.entity_daytime_high].state).toFixed(0)).toLocaleString()}</span><span class="unit">${this.getUOM('temperature')}</span></li>` : ``;
+    } catch (e) {
+      return html`<li><span class="ha-icon"><ha-icon icon="mdi:thermometer"></ha-icon></span><span>Config Error</span></li>`;
     }
   }
 
@@ -305,7 +305,7 @@ class HKOWeatherCard extends LitElement {
 
   get visibility() {
     try {
-      return this.config.alt_visibility ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-fog"></ha-icon></span><span id="alt-visibility">${this._hass.states[this.config.alt_visibility].state}</span></li>` : this.config.entity_visibility ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-fog"></ha-icon></span><span id="visibility-text">${this.currentVisibility}</span><span class="unit"> ${this.getUOM('length')}</span></li>` : ``;
+      return this.config.entity_visibility ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-fog"></ha-icon></span><span id="visibility-text">${this.currentVisibility}</span><span class="unit"> ${this.getUOM('length')}</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-fog"></ha-icon></span><span id="visibility-text">Config Error</span></li>`;
     }
@@ -313,11 +313,7 @@ class HKOWeatherCard extends LitElement {
 
   get sunNext() {
     try {
-      if (this.config.alt_sun_next) {
-        return html`<li><span id="alt-sun-next">${this._hass.states[this.config.alt_sun_next].state}</span></li>`;
-      } else {
-        return this.config.entity_sun ? this.sunSet.next : "";
-      }
+      return this.config.entity_sun ? this.sunSet.next : "";
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-sunset"></ha-icon></span><span id="sun-next-text">Config Error</span></li>`;
     }
@@ -325,11 +321,7 @@ class HKOWeatherCard extends LitElement {
 
   get sunFollowing() {
     try {
-      if (this.config.alt_sun_following) {
-        return html`<li><span id="alt-sun-following">${this._hass.states[this.config.alt_sun_following].state}</span></li>`;
-      } else {
-        return this.config.entity_sun ? this.sunSet.following : "";
-      }
+      return this.config.entity_sun ? this.sunSet.following : "";
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-sunset"></ha-icon></span><span id="sun-following-text">Config Error</span></li>`;
     }
@@ -1239,15 +1231,15 @@ style() {
       if (this.config.entity_wind_bearing && (root.getElementById("wind-bearing-text") !== null)) try { root.getElementById("wind-bearing-text").textContent = `${this.currentWindBearing}` } catch(e) {}
       if (this.config.entity_wind_speed && (root.getElementById("wind-speed-text") !== null)) try { root.getElementById("wind-speed-text").textContent = ` ${this.currentWindSpeed}` } catch(e) {}
       if (this.config.entity_wind_gust && (root.getElementById("wind-gust-text") !== null)) try { root.getElementById("wind-gust-next").textContent = ` (Gust ${this.currentWindGust}` } catch(e) {}
-      if (this.config.entity_visibility && !this.config.alt_visibility && (root.getElementById("visibility-text") !== null)) try { root.getElementById("visibility-text").textContent = `${this.currentVisibility}` } catch(e) {}
+      if (this.config.entity_visibility && (root.getElementById("visibility-text") !== null)) try { root.getElementById("visibility-text").textContent = `${this.currentVisibility}` } catch(e) {}
       if (this.config.entity_pop_intensity && !this.config.entity_pop_intensity_rate && (root.getElementById("intensity-text") !== null)) try { root.getElementById("intensity-text").textContent = ` - ${(Number(this._hass.states[this.config.entity_pop_intensity].state)).toLocaleString()}` } catch(e) {}
       if (this.config.entity_pop_intensity_rate && !this.config.entity_pop_intensity && (root.getElementById("intensity-text") !== null)) try { root.getElementById("intensity-text").textContent = ` - ${(Number(this._hass.states[this.config.entity_pop_intensity_rate].state)).toLocaleString()}` } catch(e) {}
       if (this.config.entity_pop && (root.getElementById("pop-text") !== null)) try { root.getElementById("pop-text").textContent = `${Math.round(this._hass.states[this.config.entity_pop].state)}` } catch(e) {}
       if (this.config.entity_pop && this.config.entity_possible_today && (root.getElementById("pop-text-today") !== null)) try { root.getElementById("pop-text-today").textContent = `${this._hass.states[this.config.entity_possible_today].state}` } catch(e) {}
       if (this.config.entity_rain_today && (root.getElementById("rain-today-text") !== null)) try { root.getElementById("rain-today-text").textContent = `${this._hass.states[this.config.entity_rain_today].state}` } catch(e) {}
       var places = this.config.show_decimals_today ? 1 : 0;
-      if (this.config.entity_daytime_high && !this.config.alt_daytime_high && (root.getElementById("daytime-high-text") !== null)) try { root.getElementById("daytime-high-text").textContent = `${Number(this._hass.states[this.config.entity_daytime_high].state).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places})}` } catch(e) {}
-      if (this.config.entity_daytime_low && !this.config.alt_daytime_low && (root.getElementById("daytime-low-text") !== null)) try { root.getElementById("daytime-low-text").textContent = `${Number(this._hass.states[this.config.entity_daytime_low].state).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places})}` } catch(e) {}
+      if (this.config.entity_daytime_high && (root.getElementById("daytime-high-text") !== null)) try { root.getElementById("daytime-high-text").textContent = `${Number(this._hass.states[this.config.entity_daytime_high].state).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places})}` } catch(e) {}
+      if (this.config.entity_daytime_low && (root.getElementById("daytime-low-text") !== null)) try { root.getElementById("daytime-low-text").textContent = `${Number(this._hass.states[this.config.entity_daytime_low].state).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places})}` } catch(e) {}
       if (this.config.entity_temp_next && (root.getElementById("temp-next-text") !== null)) try { 
         root.getElementById("temp-next-text").textContent = `${this.tempNextText}`;
         root.getElementById("temp-next-icon").icon = `${this.tempNextIcon}`;
@@ -1256,11 +1248,11 @@ style() {
         root.getElementById("temp-following-text").textContent = `${this.tempFollowingText}`;
         root.getElementById("temp-following-icon").icon = `${this.tempFollowingIcon}`;
       } catch(e) {}
-      if (this.config.entity_sun && !this.config.alt_sun_next && (root.getElementById("sun-next-text") !== null)) try { 
+      if (this.config.entity_sun && (root.getElementById("sun-next-text") !== null)) try { 
         root.getElementById("sun-next-text").textContent = `${this.sunSet.nextText}`;
         root.getElementById("sun-next-icon").icon = `${this.sunSet.nextIcon}`;
       } catch(e) {}
-      if (this.config.entity_sun && !this.config.alt_sun_following && (root.getElementById("sun-following-text") !== null)) try { 
+      if (this.config.entity_sun && (root.getElementById("sun-following-text") !== null)) try { 
         root.getElementById("sun-following-text").textContent = `${this.sunSet.followingText}`;
         root.getElementById("sun-following-icon").icon = `${this.sunSet.followingIcon}`;
       } catch(e) {}
@@ -1286,11 +1278,6 @@ style() {
       if (this.config.entity_fire_danger_summary && (root.getElementById("firedanger-text") !== null)) try { root.getElementById("firedanger-text").textContent = `${this._hass.states[this.config.entity_fire_danger_summary].state}` } catch(e) {}
       if (this.config.entity_uv_alert_summary && (root.getElementById("daytime-uv-text") !== null)) try { root.getElementById("daytime-uv-text").textContent = `${this.uvLevel}` } catch(e) {}
 
-// Alt Text
-      if (this.config.alt_sun_next) try { root.getElementById("alt-sun-next").textContent = `${this._hass.states[this.config.alt_sun_next].state}` } catch(e) {}
-      if (this.config.alt_sun_following) try { root.getElementById("alt-sun-following").textContent = `${this._hass.states[this.config.alt_sun_following].state}` } catch(e) {}
-      if (this.config.alt_daytime_high) try { root.getElementById("alt-daytime-high").textContent = `${this._hass.states[this.config.alt_daytime_high].state}` } catch(e) {}
-      if (this.config.alt_visibility) try { root.getElementById("alt-visibility").textContent = `${this._hass.states[this.config.alt_visibility].state}` } catch(e) {}
     }
   }
 
