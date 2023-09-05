@@ -204,7 +204,11 @@ rest:
               {% set ns.s = i.split(',')[3] %}
             {% endif %}
           {% endfor %}
-          {{ ns.s }}
+          {% if is_number(ns.s) %}
+            {{ ns.s }}
+          {% else %}
+            {{ 0 }}
+          {% endif %}
       - name: hko_wind_gust
         unique_id: hko_wind_gust
         unit_of_measurement: "km/h"
@@ -218,7 +222,11 @@ rest:
               {% set ns.s = i.split(',')[4] %}
             {% endif %}
           {% endfor %}
-          {{ ns.s }}
+          {% if is_number(ns.s) %}
+            {{ ns.s }}
+          {% else %}
+            {{ 0 }}
+          {% endif %}
 
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
     scan_interval: 900
