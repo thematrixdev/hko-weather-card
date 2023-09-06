@@ -97,14 +97,34 @@ Required entries must be present
 in your configuration.  The card will not work at all if any of these lines are missing.
 ~~~~
 type: custom:hko-weather-card
-entity_current_conditions: sensor.hko_forecast_icon
+locale: zh
+static_icons: false
+tooltips: true
+refresh_interval: 30
+show_separator: true
+time_format: locale
+use_old_column_format: true
+show_decimals: false
+show_decimals_apparent: false
+show_decimals_today: true
+show_decimals_pressure: 1
 entity_temperature: sensor.hko_temperature
+entity_daytime_high: sensor.hko_temperature_max
+entity_daytime_low: sensor.hko_temperature_min
 entity_humidity: sensor.hko_humidity
+entity_wind_bearing: sensor.hko_wind_bearing
+entity_wind_speed: sensor.hko_wind_speed
+entity_wind_gust: sensor.hko_wind_gust
+entity_apparent_temp: sensor.hko_apparent_temp
+entity_sun: sun.sun
+entity_uv_alert_summary: sensor.hko_uvindex
+entity_pressure: sensor.hko_pressure
 entity_forecast_high_temp_1: sensor.hko_forecast_max_temp_0
 entity_forecast_high_temp_2: sensor.hko_forecast_max_temp_1
 entity_forecast_high_temp_3: sensor.hko_forecast_max_temp_2
 entity_forecast_high_temp_4: sensor.hko_forecast_max_temp_3
 entity_forecast_high_temp_5: sensor.hko_forecast_max_temp_4
+entity_current_conditions: sensor.hko_forecast_icon
 entity_forecast_icon_1: sensor.hko_forecast_icon_0
 entity_forecast_icon_2: sensor.hko_forecast_icon_1
 entity_forecast_icon_3: sensor.hko_forecast_icon_2
@@ -126,19 +146,6 @@ entity_pop_2: sensor.hko_forecast_psr_1
 entity_pop_3: sensor.hko_forecast_psr_2
 entity_pop_4: sensor.hko_forecast_psr_3
 entity_pop_5: sensor.hko_forecast_psr_4
-entity_sun: sun.sun
-entity_pressure: sensor.hko_pressure
-entity_wind_speed: sensor.hko_wind_speed
-entity_wind_bearing: sensor.hko_wind_bearing
-entity_apparent_temp: sensor.hko_apparent_temp
-entity_uv_alert_summary: sensor.hko_uvindex
-static_icons: false
-tooltips: true
-time_format: 24
-show_separator: true
-locale: zh
-refresh_interval: 900
-use_old_column_format: true
 ~~~~
 
 **Flags**
@@ -186,7 +193,7 @@ show_decimals: false
 | temp_font_weight         | **300** / numeric value            | Sets the font weight of the Temperature.                                    |
 | temp_font_size           | **4em** / em value                 | Sets the font size of the Temperature.                                      |
 | temp_right_pos           | **0.85em** / px or em value        | Sets the right position of the Temperature.                                 |
-| temp_uom_top_margin      | **-3px** / px or em value         | Sets the top margin of the Temperature Unit of Meaure.                      |
+| temp_uom_top_margin      | **-3px** / px or em value         | Sets the top margin of the Temperature Unit of Meaure.                       |
 | temp_uom_right_margin    | **4px** / px or em value           | Sets the right margin of the Temperature Unit of Measure.                   |
 | apparent_top_margin      | **45px** / px or em value          | Sets the top margin of the apparent (feels Like) temperature                |
 | apparent_right_pos       | **1em** / px or em value           | Sets the right position of the apparent (feels Like) temperature            |
@@ -203,7 +210,7 @@ show_decimals: false
 | summary_top_padding      | **1em** / px or em                 | Sets the gap between the forecast and summary text                          |
 | summary_font_size        | **1em** / px or em                 | Sets the font size for the summary text                                     |
 | slot_l1                  | **sun_next**                       | Sets the value used in current conditions slot l1 : See slots for more info |
-| slot_l2                  | **maxmin_since_midnight**            | Sets the value used in current conditions slot l2 : See slots for more info |
+| slot_l2                  | **maxmin_since_midnight**          | Sets the value used in current conditions slot l2 : See slots for more info |
 | slot_l3                  | **wind**                           | Sets the value used in current conditions slot l3 : See slots for more info |
 | slot_l4                  | **pressure**                       | Sets the value used in current conditions slot l4 : See slots for more info |
 | slot_l5                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l5 : See slots for more info |
@@ -218,8 +225,10 @@ show_decimals: false
 | slot_r6                  |                                    | Sets the value used in current conditions slot r6 : See slots for more info |
 | slot_r7                  |                                    | Sets the value used in current conditions slot r7 : See slots for more info |
 | slot_r8                  |                                    | Sets the value used in current conditions slot r8 : See slots for more info |
+| use_old_column_format    | **false** / true                   | Moves the right column to the right edge (not recommended)                  |
 | show_decimals            | **false** / true                   | Sets card to render current temperature to 1 decimal place                  | 
 | show_decimals_apparent   | **false** / true                   | Sets card to render apparent temperature to 1 decimal place                 |
+| show_decimals_today      | **false** / true                   | Sets card to render todays min and max temperatures to 1 decimal place.     |
 | show_decimals_pressure   | **0** / 1, 2, 3                    | Sets card to render pressure with specified decimal places.                 |
 | custom1_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom1                                       |
 | custom1_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom1                        |
