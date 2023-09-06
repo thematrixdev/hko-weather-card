@@ -2,6 +2,7 @@ template:
     ### https://www.hko.gov.hk/textonly/v2/explain/wxicon_e.htm ###
   - sensor:
       - name: hko_current_text
+        unique_id: hko_current_text
         state: >
           {% if is_state("sensor.hko_forecast_icon","50") %} Sunny
           {% elif is_state("sensor.hko_forecast_icon","51") %} Sunny Periods
@@ -37,6 +38,7 @@ template:
     ### https://www.hko.gov.hk/en/wxinfo/uvinfo/uvinfo.html ###
   - sensor:
       - name: hko_uvindex_exposure_level
+        unique_id: hko_uvindex_exposure_level
         state: >
           {% set uv = states('sensor.hko_uvindex') | float(0) %}
           {% if uv >= 11 %} Extreme
@@ -46,8 +48,10 @@ template:
           {% elif uv >= 0 %} Low
           {% endif %}
 
+    ### https://www.cwb.gov.tw/Data/knowledge/announce/service12.pdf ###
   - sensor:
       - name: hko_apparent_temp
+        unique_id: hko_apparent_temp
         unit_of_measurement: "°C"
         state: >
           {% set temp = states('sensor.hko_temperature') | float(0) %}
