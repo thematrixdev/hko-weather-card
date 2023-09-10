@@ -297,7 +297,7 @@ class HKOWeatherCard extends LitElement {
     try {
       var windBearing = this.config.entity_wind_bearing ? html`<span id="wind-bearing-text">${this.currentWindBearing}</span>` : ``;
       var beaufortRating = this.config.entity_wind_speed ? html`<span id="beaufort-text">${this.currentBeaufort}</span>` : ``;
-      return this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit">${this.getUOM('length')}/h</span><span id="wind-gust-text"> ( ${this.localeText.Gust} ${this.currentWindGust}</span><span class="unit">${this.getUOM('length')}/h )</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit"> ${this.getUOM('length')}/h</span></li>` : ``;
+      return this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s">${this.getUOM('length')}/h</span><span id="wind-gust-text"> ( ${this.localeText.Gust} ${this.currentWindGust}</span><span class="unit">${this.getUOM('length')}/h )</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s"> ${this.getUOM('length')}/h</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span id="wind-error-text">Config Error</span></li>`;
     }
@@ -598,7 +598,7 @@ class HKOWeatherCard extends LitElement {
   }
 
   get currentPressure() {
-    var places = this.config.show_decimals_pressure ? Math.max(Math.min(this.config.show_decimals_pressure, 3) ,0) : 0;
+    var places = this.config.show_decimals_pressure ? 1 : 0;
     return this.config.entity_pressure ? (Number(this._hass.states[this.config.entity_pressure].state)).toLocaleString(undefined, {minimumFractionDigits: places, maximumFractionDigits: places}) : 0;
   }
 
@@ -1014,6 +1014,10 @@ style() {
 
       .unit {
         font-size: 1em;
+      }
+
+      .unit-s {
+        font-size: 0.8em;
       }
 
       .summary {
