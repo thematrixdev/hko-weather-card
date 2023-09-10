@@ -17,7 +17,7 @@ New features:
 - Adds Locale customisation for number formats
 - Added to card-picker in Lovelace
 - Added option to show minimum or maximum first in forecast
-- Added option to show 1 decimal place to temperatures
+- Added option to show 1 decimal place to temperatures, apparent temperature, todays max/min, and pressure
 - Show rainfall as an intensity or absolute number
 - Removed leading zeros if 12hr time
 - Added Wind Gust
@@ -228,8 +228,8 @@ show_decimals: false
 | use_old_column_format    | **false** / true                   | Moves the right column to the right edge (not recommended)                  |
 | show_decimals            | **false** / true                   | Sets card to render current temperature to 1 decimal place                  | 
 | show_decimals_apparent   | **false** / true                   | Sets card to render apparent temperature to 1 decimal place                 |
-| show_decimals_today      | **false** / true                   | Sets card to render todays min and max temperatures to 1 decimal place.     |
-| show_decimals_pressure   | **0** / 1, 2, 3                    | Sets card to render pressure with specified decimal places.                 |
+| show_decimals_today      | **false** / true                   | Sets card to render todays min and max temperatures to 1 decimal place      |
+| show_decimals_pressure   | **false** / true                   | Sets card to render pressure to 1 decimal place                             |
 | custom1_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom1                                       |
 | custom1_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom1                        |
 | custom1_units            | **""** / string                    | Sets the string to use for the units of slot custom1                        |
