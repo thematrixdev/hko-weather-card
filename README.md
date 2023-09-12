@@ -1,7 +1,13 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/aes-alienrip/hko-weather-card?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/aes-alienrip/hko-weather-card?style=for-the-badge) ![Maintenance](https://img.shields.io/maintenance/yes/2023?style=for-the-badge)
-# Custom Animated Weather Card for Hong Kong Observatory
+# Hong Kong Observatory Weather Card
 
 ![lovelace](https://user-images.githubusercontent.com/73251414/211304886-6abd89f8-e656-43db-b3f2-568e6663ed18.png)
+
+## Buy me a coffee
+
+Buy me a coffee to support my work on this lovelace card
+
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/aesalienrip)
 
 ## IMPORTANT CHANGES
 
