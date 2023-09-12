@@ -5,7 +5,7 @@ import {
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.1.7       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.1.7b       `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -297,7 +297,7 @@ class HKOWeatherCard extends LitElement {
     try {
       var windBearing = this.config.entity_wind_bearing ? html`<span id="wind-bearing-text">${this.currentWindBearing}</span>` : ``;
       var beaufortRating = this.config.entity_wind_speed ? html`<span id="beaufort-text">${this.currentBeaufort}</span>` : ``;
-      return this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s">${this.getUOM('length')}/h</span><span id="wind-gust-text"> ( ${this.localeText.Gust} ${this.currentWindGust}</span><span class="unit-s">${this.getUOM('length')}/h )</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s"> ${this.getUOM('length')}/h</span></li>` : ``;
+      return this.config.entity_wind_bearing && this.config.entity_wind_speed && this.config.entity_wind_gust ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s">${this.getUOM('length')}/h</span><span id="wind-gust-text"> ( ${this.localeText.Gust} ${this.currentWindGust}</span><span class="unit-s">${this.getUOM('length')}/h )</span></li>` : this.config.entity_wind_bearing && this.config.entity_wind_speed ? html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span>${beaufortRating}</span><span>${windBearing}</span><span id="wind-speed-text"> ${this.currentWindSpeed}</span><span class="unit-s">${this.getUOM('length')}/h</span></li>` : ``;
     } catch (e) {
       return html`<li><span class="ha-icon"><ha-icon icon="mdi:weather-windy"></ha-icon></span><span id="wind-error-text">Config Error</span></li>`;
     }
@@ -475,36 +475,65 @@ class HKOWeatherCard extends LitElement {
 // #####
 
   get weatherIcons() {
+    var sunny_icon = `sunny` ;
+    var sunny_periods_icon = `sunny-periods` ;
+    var sunny_intervals_icon = `cloudy-day-3` ;
+    var light_showers_icon = `light-showers` ;
+    var showers_icon = `showers` ;
+    var cloudy_icon = `cloudy` ;
+    var overcast_icon = `overcast` ;
+    var light_rain_icon = `light-rain` ;
+    var rain_icon = `rain` ;
+    var heavy_rain_icon = `heavy-rain` ;
+    var thunderstorms_icon = `thunderstorms` ;
+    var moon_new_icon = `moon-new` ;
+    var moon_waxing_crescent_icon = `moon-waxing-crescent` ;
+    var moon_first_quarter_icon = `moon-first-quarter` ;
+    var moon_full_icon = `moon-full` ;
+    var moon_last_quarter_icon = `moon-last-quarter` ;
+    var moon_waning_crescent_icon = `moon-waning-crescent` ;
+    var mainly_cloudy_icon = `cloudy-night-3` ;
+    var mainly_fine_icon = `mainly-fine` ;
+    var windy_icon = `windy` ;
+    var dry_icon = `dry` ;
+    var humid_icon = `humid` ;
+    var fog_icon = `fog` ;
+    var mist_icon = `mist` ;
+    var haze_icon = `haze` ;
+    var hot_icon = `hot` ;
+    var warm_icon = `warm` ;
+    var cool_icon = `cool` ;
+    var cold_icon = `cold` ;
     return {
-      '50': `sunny-day`,
-      '51': `fair-day`,
-      '52': `cloudy-day-3`,
-      '53': `fair-day-rain`,
-      '54': `rainy-3`,
-      '60': `cloudy`,
-      '61': `overcast`,
-      '62': `rainy-4`,
-      '63': `rainy-6`,
-      '64': `rainy-8`,
-      '65': `thunderstorms`,
-      '70': `moon-new`,
-      '71': `moon-waxing-crescent`,
-      '72': `moon-first-quarter`,
-      '73': `moon-full`,
-      '74': `moon-last-quarter`,
-      '75': `moon-waning-crescent`,
-      '76': `cloudy-night-3`,
-      '77': `fair-night`,
-      '80': `wind`,
-      '81': `dry`,
-      '82': `humid`,
-      '83': `fog`,
-      '84': `mist`,
-      '85': `haze`,
-      '90': `hot`,
-      '91': `warm`,
-      '92': `cool`,
-      '93': `cold`,
+      '50': sunny_icon,
+      '51': sunny_periods_icon,
+      '52': sunny_intervals_icon,
+      '53': light_showers_icon,
+      '54': showers_icon,
+      '60': cloudy_icon,
+      '61': overcast_icon,
+      '62': light_rain_icon,
+      '63': rain_icon,
+      '64': heavy_rain_icon,
+      '65': thunderstorms_icon,
+      '70': moon_new_icon,
+      '71': moon_waxing_crescent_icon,
+      '72': moon_first_quarter_icon,
+      '73': moon_full_icon,
+      '74': moon_last_quarter_icon,
+      '75': moon_waning_crescent_icon,
+      '76': mainly_cloudy_icon,
+      '77': mainly_fine_icon,
+      '80': windy_icon,
+      '81': dry_icon,
+      '82': humid_icon,
+      '83': fog_icon,
+      '84': mist_icon,
+      '85': haze_icon,
+      '90': hot_icon,
+      '91': warm_icon,
+      '92': cool_icon,
+      '93': cold_icon,
       'unavailable': `exceptional`
     }
   }
