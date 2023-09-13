@@ -237,3 +237,21 @@ rest:
         value_template: >-
           {% set uv = value.split(',') %}
           {{ uv[2] }}
+
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=tc
+    scan_interval: 300
+    sensor:
+      - name: hko_warnsum
+        value_template: ""
+        json_attributes:
+          - "WFIRE"
+          - "WFROST"
+          - "WHOT"
+          - "WCOLD"
+          - "WMSGNL"
+          - "WRAIN"
+          - "WFNTSA"
+          - "WL"
+          - "WTCSGNL"
+          - "WTMW"
+          - "WTS"
