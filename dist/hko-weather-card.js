@@ -63,7 +63,7 @@ class HKOWeatherCard extends LitElement {
               <span class="dayname" id="fcast-weekday-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}</span>
               <br>${this._hass.states[daily.condition] !== undefined 
                 ? 
-                  html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")}) no-repeat; background-size: contain;"></i><br>` 
+                  html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day").replace("-ts", "")}) no-repeat; background-size: contain;"></i><br>` 
                 : 
                   html `<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`}
               ${this.config.old_daily_format 
@@ -431,6 +431,15 @@ class HKOWeatherCard extends LitElement {
     }
   }
 
+  get wts() {
+    try {
+      var warnsum = this.config.entity_warnsum ? this._hass.states[this.config.entity_warnsum].attributes : 'unknown' ? this._hass.states[this.config.entity_warnsum].attributes : 'N/A';
+      if (warnsum.WTS.actionCode !== "CANCEL") {
+      return true;
+      }
+    } catch (e) {}
+  }
+
 // #####
 // ##### feelsLikeText returns set of possible "Feels Like" text by specified language
 // #####
@@ -476,15 +485,15 @@ class HKOWeatherCard extends LitElement {
 
   get weatherIcons() {
     var sunny_icon = `sunny` ;
-    var sunny_periods_icon = `sunny-periods` ;
-    var sunny_intervals_icon = `cloudy-day-3` ;
-    var light_showers_icon = `light-showers` ;
-    var showers_icon = `showers` ;
-    var cloudy_icon = `cloudy` ;
-    var overcast_icon = `overcast` ;
-    var light_rain_icon = `light-rain` ;
-    var rain_icon = `rain` ;
-    var heavy_rain_icon = `heavy-rain` ;
+    var sunny_periods_icon = (this.wts === true) ? `sunny-periods-ts` : `sunny-periods` ;
+    var sunny_intervals_icon = (this.wts === true) ? `cloudy-day-3-ts` : `cloudy-day-3` ;
+    var light_showers_icon = (this.wts === true) ? `light-showers-ts` : `light-showers` ;
+    var showers_icon = (this.wts === true) ? `showers-ts` : `showers` ;
+    var cloudy_icon = (this.wts === true) ? `cloudy-ts` : `cloudy` ;
+    var overcast_icon = (this.wts === true) ? `overcast-ts` : `overcast` ;
+    var light_rain_icon = (this.wts === true) ? `light-rain-ts` : `light-rain` ;
+    var rain_icon = (this.wts === true) ? `rain-ts` : `rain` ;
+    var heavy_rain_icon = (this.wts === true) ? `heavy-rain-ts` : `heavy-rain` ;
     var thunderstorms_icon = `thunderstorms` ;
     var moon_new_icon = `moon-new` ;
     var moon_waxing_crescent_icon = `moon-waxing-crescent` ;
@@ -492,14 +501,14 @@ class HKOWeatherCard extends LitElement {
     var moon_full_icon = `moon-full` ;
     var moon_last_quarter_icon = `moon-last-quarter` ;
     var moon_waning_crescent_icon = `moon-waning-crescent` ;
-    var mainly_cloudy_icon = `cloudy-night-3` ;
-    var mainly_fine_icon = `mainly-fine` ;
+    var mainly_cloudy_icon = (this.wts === true) ? `cloudy-night-3-ts` : `cloudy-night-3` ;
+    var mainly_fine_icon = (this.wts === true) ? `mainly-fine-ts` : `mainly-fine` ;
     var windy_icon = `windy` ;
     var dry_icon = `dry` ;
     var humid_icon = `humid` ;
-    var fog_icon = `fog` ;
-    var mist_icon = `mist` ;
-    var haze_icon = `haze` ;
+    var fog_icon = (this.wts === true) ? `fog-ts` : `fog` ;
+    var mist_icon = (this.wts === true) ? `mist-ts` : `mist` ;
+    var haze_icon = (this.wts === true) ? `haze-ts` : `haze` ;
     var hot_icon = `hot` ;
     var warm_icon = `warm` ;
     var cool_icon = `cool` ;
@@ -1249,7 +1258,7 @@ style() {
         root.getElementById("fcast-date-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}`;
         root.getElementById("fcast-weekday-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}`;
         if (this._hass.states[daily.condition] !== undefined) {
-          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day")})`;
+          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day").replace("-ts", "")})`;
         }
         root.getElementById("fcast-high-" + daily.dayIndex).textContent = `${this._hass.states[daily.temphigh] !== undefined ? Math.round(this._hass.states[daily.temphigh].state) : "Config Error"}${this.config.tempformat ? "" : this.getUOM("temperature")}`;
         root.getElementById("fcast-low-" + daily.dayIndex).textContent = `${this._hass.states[daily.templow] !== undefined ? Math.round(this._hass.states[daily.templow].state) : "Config Error"}${this.config.old_daily_format ? this.getUOM("temperature") : this.config.tempformat ? this.getUOM("temperature") : ""}`;
