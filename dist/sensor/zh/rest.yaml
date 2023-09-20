@@ -78,6 +78,46 @@ rest:
         value_template: '{{ value_json.weatherForecast[3].PSR }}'
       - name: hko_forecast_psr_4
         value_template: '{{ value_json.weatherForecast[4].PSR }}'
+      - name: hko_forecast_max_rh_0
+        value_template: '{{ value_json.weatherForecast[0].forecastMaxrh.value }}'
+        unit_of_measurement: "%"
+        device_class: humidity
+      - name: hko_forecast_max_rh_1
+        value_template: '{{ value_json.weatherForecast[1].forecastMaxrh.value }}'
+        unit_of_measurement: "%"
+        device_class: humidity
+      - name: hko_forecast_max_rh_2
+        value_template: '{{ value_json.weatherForecast[2].forecastMaxrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
+      - name: hko_forecast_max_rh_3
+        value_template: '{{ value_json.weatherForecast[3].forecastMaxrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
+      - name: hko_forecast_max_rh_4
+        value_template: '{{ value_json.weatherForecast[4].forecastMaxrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
+      - name: hko_forecast_min_rh_0
+        value_template: '{{ value_json.weatherForecast[0].forecastMinrh.value }}'
+        unit_of_measurement: "%"
+        device_class: humidity
+      - name: hko_forecast_min_rh_1
+        value_template: '{{ value_json.weatherForecast[1].forecastMinrh.value }}'
+        unit_of_measurement: "%"
+        device_class: humidity
+      - name: hko_forecast_min_rh_2
+        value_template: '{{ value_json.weatherForecast[2].forecastMinrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
+      - name: hko_forecast_min_rh_3
+        value_template: '{{ value_json.weatherForecast[3].forecastMinrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
+      - name: hko_forecast_min_rh_4
+        value_template: '{{ value_json.weatherForecast[4].forecastMinrh.value }}'
+        device_class: humidity
+        unit_of_measurement: "%"
 
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc
     scan_interval: 1800
