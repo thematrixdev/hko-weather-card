@@ -5,7 +5,7 @@ import {
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.1.8a       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.1.9       `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
