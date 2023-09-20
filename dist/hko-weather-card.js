@@ -5,7 +5,7 @@ import {
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.1.7b       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.1.8a       `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -75,7 +75,7 @@ class HKOWeatherCard extends LitElement {
                       html`<span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}</span> / <span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}°C</span>`
                     :
                       html`<span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}</span> / <span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}°C</span>`}
-              ${html`<br><span class="rh" id="fcast-rhlow-${daily.dayIndex}">${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Err"}</span> - <span class="rh" id="fcast-rhhigh-${daily.dayIndex}">${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Err"}%</span>`}
+              ${this.config.entity_forecast_high_rh_1 && this.config.entity_forecast_high_rh_2 && this.config.entity_forecast_high_rh_3 && this.config.entity_forecast_high_rh_4 && this.config.entity_forecast_high_rh_5 && this.config.entity_forecast_low_rh_1 && this.config.entity_forecast_low_rh_2 && this.config.entity_forecast_low_rh_3 && this.config.entity_forecast_low_rh_4 && this.config.entity_forecast_low_rh_5 ? html`<br><span class="rh" id="fcast-rhlow-${daily.dayIndex}">${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Err"}</span> - <span class="rh" id="fcast-rhhigh-${daily.dayIndex}">${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Err"}%</span>` : ``}
               ${this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5 ? html`<br><span class="${this.config.locale.includes("zh") ? "pop" : "pop-s"}" id="fcast-pop-${daily.dayIndex}">${this._hass.states[daily.pop] ? this._hass.states[daily.pop].state : "Err"}</span>` : ``}
               <div class="fcasttooltiptext" id="fcast-summary-${daily.dayIndex}">${ this.config.tooltips ? this._hass.states[daily.summary] !== undefined ? this._hass.states[daily.summary].state : "Config Error" : ""}</div>
             </div>`)}
@@ -1029,7 +1029,7 @@ style() {
       }
 
       .pop {
-        font-weight: 400;
+        font-weight: 1em;
         color: var(--primary-text-color);
       }
 
@@ -1039,7 +1039,7 @@ style() {
       }
 
       .rh {
-        font-weight: 400;
+        font-weight: 1em;
         color: var(--primary-text-color);
       }
 
@@ -1094,7 +1094,7 @@ style() {
         float: left;
         text-align: center;
         color: var(--primary-text-color);
-        border-right: .1em solid #d9d9d9;
+        border-right: 0.1em solid #d9d9d9;
         line-height: 1.5;
         box-sizing: border-box;
         margin-top: 1em;
@@ -1275,10 +1275,12 @@ style() {
         if (this._hass.states[daily.condition] !== undefined) {
           root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day").replace("-wraina", "").replace("-wrainr", "").replace("-wrainb", "").replace("-wts", "")})`;
         }
-        root.getElementById("fcast-temphigh-" + daily.dayIndex).textContent = `${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Config Error"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "" : "°C"}`;
-        root.getElementById("fcast-templow-" + daily.dayIndex).textContent = `${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Config Error"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "°C" : ""}`;
-        root.getElementById("fcast-rhhigh-" + daily.dayIndex).textContent = `${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Config Error"}%`;
-        root.getElementById("fcast-rhlow-" + daily.dayIndex).textContent = `${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Config Error"}`;
+        root.getElementById("fcast-temphigh-" + daily.dayIndex).textContent = `${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "" : "°C"}`;
+        root.getElementById("fcast-templow-" + daily.dayIndex).textContent = `${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "°C" : ""}`;
+        if (this.config.entity_forecast_high_rh_1 && this.config.entity_forecast_high_rh_2 && this.config.entity_forecast_high_rh_3 && this.config.entity_forecast_high_rh_4 && this.config.entity_forecast_high_rh_5 && this.config.entity_forecast_low_rh_1 && this.config.entity_forecast_low_rh_2 && this.config.entity_forecast_low_rh_3 && this.config.entity_forecast_low_rh_4 && this.config.entity_forecast_low_rh_5) try {
+        root.getElementById("fcast-rhhigh-" + daily.dayIndex).textContent = `${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Err"}%`;
+        root.getElementById("fcast-rhlow-" + daily.dayIndex).textContent = `${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Err"}`;
+        } catch(e) {}
         if (this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5) root.getElementById("fcast-pop-" + daily.dayIndex).textContent = `${this._hass.states[daily.pop] !== undefined ? this._hass.states[daily.pop].state : "Err"}`;
         root.getElementById("fcast-summary-" + daily.dayIndex).textContent = `${this._hass.states[daily.summary] !== undefined ? this._hass.states[daily.summary].state : "Err"}`;
      });
