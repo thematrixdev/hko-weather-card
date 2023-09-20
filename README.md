@@ -91,6 +91,7 @@ Installation is done. You must still configure the yaml manually.
 2. Select your nearby Weather Station ([Temperature](https://www.hko.gov.hk/tc/wxinfo/ts/index.htm), [Humidity](https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm), [Pressure](https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm), [Wind](https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm)) from Input Select helper<br>
    Developer Tools -> STATES -> Entity -> Search for "input_select.hko"<br>
 ![input_select_helper](https://github.com/aes-alienrip/hko-weather-card/assets/73251414/ec18c43d-8bad-4818-82ab-04e1db3b539f)<br>
+
 3. Add the card definition: You can add this card from the card picker but need to configure the entities and flags in YAML. There are required / optional and flag entries.
 This card has been added to the custom-card-picker in Lovelace
 ![image](card-picker.png)
@@ -103,7 +104,7 @@ Required entries must be present
 in your configuration.  The card will not work at all if any of these lines are missing.
 ~~~~
 type: custom:hko-weather-card
-locale: zh
+locale: zh-hk
 static_icons: false
 tooltips: true
 refresh_interval: 30
@@ -113,7 +114,8 @@ use_old_column_format: true
 show_decimals: false
 show_decimals_apparent: false
 show_decimals_today: true
-show_decimals_pressure: 1
+show_decimals_pressure: true
+entity_sun: sun.sun
 entity_temperature: sensor.hko_temperature
 entity_daytime_high: sensor.hko_temperature_max
 entity_daytime_low: sensor.hko_temperature_min
@@ -122,14 +124,8 @@ entity_wind_bearing: sensor.hko_wind_bearing
 entity_wind_speed: sensor.hko_wind_speed
 entity_wind_gust: sensor.hko_wind_gust
 entity_apparent_temp: sensor.hko_apparent_temp
-entity_sun: sun.sun
 entity_uv_alert_summary: sensor.hko_uvindex
 entity_pressure: sensor.hko_pressure
-entity_forecast_high_temp_1: sensor.hko_forecast_max_temp_0
-entity_forecast_high_temp_2: sensor.hko_forecast_max_temp_1
-entity_forecast_high_temp_3: sensor.hko_forecast_max_temp_2
-entity_forecast_high_temp_4: sensor.hko_forecast_max_temp_3
-entity_forecast_high_temp_5: sensor.hko_forecast_max_temp_4
 entity_current_conditions: sensor.hko_forecast_icon
 entity_forecast_icon_1: sensor.hko_forecast_icon_0
 entity_forecast_icon_2: sensor.hko_forecast_icon_1
@@ -141,17 +137,32 @@ entity_forecast_low_temp_2: sensor.hko_forecast_min_temp_1
 entity_forecast_low_temp_3: sensor.hko_forecast_min_temp_2
 entity_forecast_low_temp_4: sensor.hko_forecast_min_temp_3
 entity_forecast_low_temp_5: sensor.hko_forecast_min_temp_4
+entity_forecast_high_temp_1: sensor.hko_forecast_max_temp_0
+entity_forecast_high_temp_2: sensor.hko_forecast_max_temp_1
+entity_forecast_high_temp_3: sensor.hko_forecast_max_temp_2
+entity_forecast_high_temp_4: sensor.hko_forecast_max_temp_3
+entity_forecast_high_temp_5: sensor.hko_forecast_max_temp_4
+entity_pop_1: sensor.hko_forecast_psr_0
+entity_pop_2: sensor.hko_forecast_psr_1
+entity_pop_3: sensor.hko_forecast_psr_2
+entity_pop_4: sensor.hko_forecast_psr_3
+entity_pop_5: sensor.hko_forecast_psr_4
 entity_daily_summary: sensor.hko_forecast_summary
 entity_summary_1: sensor.hko_forecast_summary_0
 entity_summary_2: sensor.hko_forecast_summary_1
 entity_summary_3: sensor.hko_forecast_summary_2
 entity_summary_4: sensor.hko_forecast_summary_3
 entity_summary_5: sensor.hko_forecast_summary_4
-entity_pop_1: sensor.hko_forecast_psr_0
-entity_pop_2: sensor.hko_forecast_psr_1
-entity_pop_3: sensor.hko_forecast_psr_2
-entity_pop_4: sensor.hko_forecast_psr_3
-entity_pop_5: sensor.hko_forecast_psr_4
+entity_forecast_high_rh_1: sensor.hko_forecast_max_rh_0
+entity_forecast_high_rh_2: sensor.hko_forecast_max_rh_1
+entity_forecast_high_rh_3: sensor.hko_forecast_max_rh_2
+entity_forecast_high_rh_4: sensor.hko_forecast_max_rh_3
+entity_forecast_high_rh_5: sensor.hko_forecast_max_rh_4
+entity_forecast_low_rh_1: sensor.hko_forecast_min_rh_0
+entity_forecast_low_rh_2: sensor.hko_forecast_min_rh_1
+entity_forecast_low_rh_3: sensor.hko_forecast_min_rh_2
+entity_forecast_low_rh_4: sensor.hko_forecast_min_rh_3
+entity_forecast_low_rh_5: sensor.hko_forecast_min_rh_4
 ~~~~
 
 **Flags**
@@ -179,7 +190,7 @@ show_decimals: false
 --------------------------
 | Flag                     | Values                             | Usage                                                                       |
 |--------------------------|------------------------------------|-----------------------------------------------------------------------------|
-| locale                   | **en** / zh                        | Sets locale display of day names and time formats                           |
+| locale                   | **en** / zh-hk / zh-cn / zh        | Sets locale display of day names and time formats                           |
 | static_icons             | true / **false**                   | Switches between static (true) and animated (false) icons                   |
 | tooltips                 | true / **false**                   | Enables tooltips that show daily forecast summary                           |
 | tooltip_width            | **110**                            | Sets the width of the tooltip in px                                         |
@@ -281,7 +292,6 @@ slots (designated r1 - r8).  There are currently 16 possible values that can be 
 - uv_summary
 - fire_summary
 - possible_today (possible rainfall today)
-- possible_tomorrow (possible rainfall tomorrow)
 - custom1 (populates using config fields custom1_icon, custom1_value and custom1_units)
 - custom2 (populates using config fields custom2_icon, custom2_value and custom2_units)
 - custom3 (populates using config fields custom3_icon, custom3_value and custom3_units)
