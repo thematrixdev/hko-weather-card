@@ -16,7 +16,7 @@
                 <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10"/>
             </g>
             <g class="am-weather-moon-star-2">
-                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="translate(25,10)"/>
+                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="scale(0.6), translate(0,10)"/>
             </g>
             <g class="am-weather-moon">
                 <circle cx="0" cy="0" fill="orange" r="9.8" stroke="orange" stroke-width="2" transform="translate(14.5,13)"/>
