@@ -77,15 +77,52 @@
       -ms-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
 }
+
+@keyframes am-weather-moon-star-3 {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.am-weather-moon-star-3 {
+  -webkit-animation-name: am-weather-moon-star-3;
+     -moz-animation-name: am-weather-moon-star-3;
+      -ms-animation-name: am-weather-moon-star-3;
+          animation-name: am-weather-moon-star-3;
+  -webkit-animation-delay: 7s;
+     -moz-animation-delay: 7s;
+      -ms-animation-delay: 7s;
+          animation-delay: 7s;
+  -webkit-animation-duration: 4.5s;
+     -moz-animation-duration: 4.5s;
+      -ms-animation-duration: 4.5s;
+          animation-duration: 4.5s;
+  -webkit-animation-timing-function: linear;
+     -moz-animation-timing-function: linear;
+      -ms-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
         ]]></style>
     </defs>
     <g id="moon-full">
         <g transform="translate(20,15)">
             <g class="am-weather-moon-star-1">
-                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10"/>
+                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="scale(1), translate(1,-1)"/>
             </g>
             <g class="am-weather-moon-star-2">
-                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="translate(25,10)"/>
+                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="scale(1),translate(0,20)"/>
+            </g>
+            <g class="am-weather-moon-star-3">
+                <polygon fill="orange" points="3.3,1.5 4,2.7 5.2,3.3 4,4 3.3,5.2 2.7,4 1.5,3.3 2.7,2.7" stroke="none" stroke-miterlimit="10" transform="scale(0.6),translate(40,35)"/>
             </g>
             <g class="am-weather-moon">
                 <circle cx="0" cy="0" fill="orange" r="9.8" stroke="orange" stroke-width="2" transform="translate(14.5,13)"/>
