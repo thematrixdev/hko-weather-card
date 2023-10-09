@@ -3,7 +3,9 @@ rest:
     scan_interval: 1800
     sensor:
       - name: hko_forecast_summary
-        value_template: '{{ value_json.forecastDesc }}'
+        value_template: ""
+        json_attributes:
+          - forecastDesc
 
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en
     scan_interval: 1800
