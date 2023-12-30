@@ -134,7 +134,7 @@ rest:
         unit_of_measurement: "°C"
         device_class: temperature
         value_template: >-
-          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set r = value.replace('\ufeff', '').replace('/', '').replace('*', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% set stn = states('input_select.hko_temperature_station') %}
           {% for i in r %}
@@ -148,7 +148,7 @@ rest:
         unit_of_measurement: "°C"
         device_class: temperature
         value_template: >-
-          {% set r = value.replace('\ufeff', '').split('\n') %}
+          {% set r = value.replace('\ufeff', '').replace('/', '').replace('*', '').split('\n') %}
           {% set ns = namespace(s="") %}
           {% set stn = states('input_select.hko_temperature_station') %}
           {% for i in r %}
@@ -295,3 +295,11 @@ rest:
           - "WTCSGNL"
           - "WTMW"
           - "WTS"
+
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=tc
+    scan_interval: 300
+    sensor:
+      - name: hko_warninginfo
+        value_template: ""
+        json_attributes:
+          - "details"
