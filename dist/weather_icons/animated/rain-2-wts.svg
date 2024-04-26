@@ -68,10 +68,10 @@
      -moz-animation-name: am-weather-rain;
       -ms-animation-name: am-weather-rain;
           animation-name: am-weather-rain;
-  -webkit-animation-duration: 15s;
-     -moz-animation-duration: 15s;
-      -ms-animation-duration: 15s;
-          animation-duration: 15s;
+  -webkit-animation-duration: 9s;
+     -moz-animation-duration: 9s;
+      -ms-animation-duration: 9s;
+          animation-duration: 9s;
   -webkit-animation-timing-function: linear;
      -moz-animation-timing-function: linear;
       -ms-animation-timing-function: linear;
@@ -91,10 +91,10 @@
      -moz-animation-delay: 0.25s;
       -ms-animation-delay: 0.25s;
           animation-delay: 0.25s;
-  -webkit-animation-duration: 15s;
-     -moz-animation-duration: 15s;
-      -ms-animation-duration: 15s;
-          animation-duration: 15s;
+  -webkit-animation-duration: 9s;
+     -moz-animation-duration: 9s;
+      -ms-animation-duration: 9s;
+          animation-duration: 9s;
   -webkit-animation-timing-function: linear;
      -moz-animation-timing-function: linear;
       -ms-animation-timing-function: linear;
@@ -261,10 +261,9 @@
     </defs>
     <g id="rain-2-wts">
         <g transform="translate(31,46), rotate(10)">
-            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-dasharray="1.4,4" stroke-linecap="round" stroke-width="2" transform="translate(-6,1)" x1="0" x2="0" y1="0" y2="8"/>
-            <line class="am-weather-rain-2" fill="none" stroke="#91C0F8" stroke-dasharray="1.4,4" stroke-linecap="round" stroke-width="2" transform="translate(-2,0)" x1="0" x2="0" y1="0" y2="8"/>
-            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-dasharray="1.4,4" stroke-linecap="round" stroke-width="2" transform="translate(2,0)" x1="0" x2="0" y1="0" y2="8"/>
-            <line class="am-weather-rain-2" fill="none" stroke="#91C0F8" stroke-dasharray="1.4,4" stroke-linecap="round" stroke-width="2" transform="translate(6,-1)" x1="0" x2="0" y1="0" y2="8"/>
+            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-dasharray="3,4" stroke-linecap="round" stroke-width="2" transform="translate(-5,1)" x1="0" x2="0" y1="0" y2="8"/>
+            <line class="am-weather-rain-2" fill="none" stroke="#91C0F8" stroke-dasharray="3,4" stroke-linecap="round" stroke-width="2" transform="translate(0,-1)" x1="0" x2="0" y1="0" y2="8"/>
+            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-dasharray="3,4" stroke-linecap="round" stroke-width="2" transform="translate(5,0)" x1="0" x2="0" y1="0" y2="8"/>
         </g>
         <g transform="translate(20,10)">
             <g class="am-weather-cloud-2">
