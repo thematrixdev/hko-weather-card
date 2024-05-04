@@ -1,7 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/aes-alienrip/hko-weather-card?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/aes-alienrip/hko-weather-card?style=for-the-badge) ![Maintenance](https://img.shields.io/maintenance/yes/2023?style=for-the-badge)
 # Hong Kong Observatory Weather Card
-
-![lovelace](https://user-images.githubusercontent.com/73251414/211304886-6abd89f8-e656-43db-b3f2-568e6663ed18.png)
+![hko_weather_card](https://github.com/aes-alienrip/hko-weather-card/assets/73251414/3ca0d5d4-02e1-42cb-a1e2-d7e315a6026d)
 
 ## Buy me a coffee
 
@@ -29,8 +28,9 @@ New features:
 - Added Wind Gust
 - Can use different icon sets
 - Added extra (8th) row of slots
-- Added slots (optional) for UV and fire danger ratings
+- Added slots (optional) for UV ratings
 - Added possibility of rainfall to forecast
+- Added Warning Icon and Info
 
 The Weather Card provides current and forecast weather conditions using HA sensors. You configure the card by passing in sensor entities from the weather component.
 
@@ -116,6 +116,8 @@ show_decimals_apparent: false
 show_decimals_today: true
 show_decimals_pressure: true
 entity_sun: sun.sun
+entity_warnsum: sensor.hko_warnsum
+entity_warninginfo: sensor.hko_warninginfo
 entity_temperature: sensor.hko_temperature
 entity_daytime_high: sensor.hko_temperature_max
 entity_daytime_low: sensor.hko_temperature_min
@@ -237,8 +239,7 @@ show_decimals: false
 | slot_r1                  | **sun_following**                  | Sets the value used in current conditions slot r1 : See slots for more info |
 | slot_r2                  | **humidity**                       | Sets the value used in current conditions slot r2 : See slots for more info |
 | slot_r3                  | **uv_summary**                     | Sets the value used in current conditions slot r3 : See slots for more info |
-| slot_r4                  | **fire_summary**                   | Sets the value used in current conditions slot r4 : See slots for more info |
-| slot_r5                  | **pop**                            | Sets the value used in current conditions slot r5 : See slots for more info |
+| slot_r4                  | **pop**                            | Sets the value used in current conditions slot r5 : See slots for more info |
 | slot_r6                  |                                    | Sets the value used in current conditions slot r6 : See slots for more info |
 | slot_r7                  |                                    | Sets the value used in current conditions slot r7 : See slots for more info |
 | slot_r8                  |                                    | Sets the value used in current conditions slot r8 : See slots for more info |
@@ -290,7 +291,6 @@ slots (designated r1 - r8).  There are currently 16 possible values that can be 
 - humidity
 - pressure
 - uv_summary
-- fire_summary
 - possible_today (possible rainfall today)
 - custom1 (populates using config fields custom1_icon, custom1_value and custom1_units)
 - custom2 (populates using config fields custom2_icon, custom2_value and custom2_units)
