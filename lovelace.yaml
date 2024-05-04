@@ -11,6 +11,8 @@ show_decimals_apparent: false
 show_decimals_today: true
 show_decimals_pressure: true
 entity_sun: sun.sun
+entity_warnsum: sensor.hko_warnsum
+entity_warninginfo: sensor.hko_warninginfo
 entity_temperature: sensor.hko_temperature
 entity_daytime_high: sensor.hko_temperature_max
 entity_daytime_low: sensor.hko_temperature_min
