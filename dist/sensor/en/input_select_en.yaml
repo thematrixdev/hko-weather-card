@@ -122,3 +122,43 @@ input_select:
       - Waglan Island
       - Wetland Park
     icon: mdi:gauge
+  hko_rainfall_station:
+    name: HKO Rainfall Station
+    options:
+      - Hong Kong Observatory
+      - Broadcast Drive
+      - Cheung Chau
+      - Cheung Ching
+      - Clear Water Bay
+      - Happy Valley
+      - Hong Kong International Airport
+      - Kai Tak
+      - Kau Sai Chau
+      - King’s Park
+      - Kwun Tong
+      - Lau Fau Shan
+      - Magazine Gap
+      - Ngong Ping
+      - Pak Tam Chung
+      - Peng Chau
+      - Sai Kung
+      - San Po Kong
+      - Sha Tin
+      - Sham Shui Po
+      - Shau Kei Wan
+      - Shek Kong
+      - Sheung Shui
+      - Shui Pin Wai
+      - Stanley
+      - Ta Kwu Ling
+      - Tai Lung
+      - Tai Mei Tuk
+      - Tai Po Market
+      - The Peak
+      - Tseung Kwan O
+      - Tsuen Wan Ho Koon
+      - Tuen Mun
+      - Waglan Island
+      - Wetland Park
+      - Wong Chuk Hang
+    icon: mdi:weather-rainy
