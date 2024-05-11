@@ -275,6 +275,22 @@ rest:
             {{ 0 }}
           {% endif %}
 
+  - resource: https://data.weather.gov.hk/weatherAPI/opendata/hourlyRainfall.php?lang=en
+    scan_interval: 900
+    sensor:
+      - name: hko_hourlyrainfall
+        unique_id: hko_hourlyrainfall
+        unit_of_measurement: "mm/h"
+        device_class: precipitation_intensity
+        value_template: >-
+          {% set r = value_json.hourlyRainfall %}
+          {% set stn = states('input_select.hko_rainfall_station') %}
+          {% for i in r %}
+            {% if i.automaticWeatherStation == stn %}
+              {{ i.value }}
+            {% endif %}
+          {% endfor %}
+
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
     scan_interval: 900
     sensor:
