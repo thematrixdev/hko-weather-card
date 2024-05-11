@@ -48,7 +48,7 @@ template:
           {% elif uv >= 0 %} Low
           {% endif %}
 
-    ### https://www.cwb.gov.tw/Data/knowledge/announce/service12.pdf ###
+    ### https://www.cwa.gov.tw/Data/knowledge/announce/service12.pdf ###
   - sensor:
       - name: hko_apparent_temp
         unique_id: hko_apparent_temp
