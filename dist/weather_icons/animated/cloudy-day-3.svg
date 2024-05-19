@@ -125,9 +125,9 @@
 }
         ]]></style>
     </defs>
-    <g id="cloudy-day-3">
+    <g id="cloudy-day">
         <g transform="translate(20,10)">
-            <g transform="translate(0,16)">
+            <g transform="translate(2,16)">
                 <g class="am-weather-sun">
                     <g>
                         <line fill="none" stroke="orange" stroke-linecap="round" stroke-width="2" transform="translate(0,9)" x1="0" x2="0" y1="0" y2="3"/>
