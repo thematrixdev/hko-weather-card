@@ -125,40 +125,22 @@ input_select:
   hko_rainfall_station:
     name: HKO Rainfall Station
     options:
-      - Hong Kong Observatory
-      - Broadcast Drive
-      - Cheung Chau
-      - Cheung Ching
-      - Clear Water Bay
-      - Happy Valley
-      - Hong Kong International Airport
-      - Kai Tak
-      - Kau Sai Chau
-      - King’s Park
+      - Yau Tsim Mong
+      - Central & Western District
+      - Eastern District
+      - Islands District
+      - Kowloon City
+      - Kwai Tsing
       - Kwun Tong
-      - Lau Fau Shan
-      - Magazine Gap
-      - Ngong Ping
-      - Pak Tam Chung
-      - Peng Chau
+      - North District
       - Sai Kung
-      - San Po Kong
       - Sha Tin
       - Sham Shui Po
-      - Shau Kei Wan
-      - Shek Kong
-      - Sheung Shui
-      - Shui Pin Wai
-      - Stanley
-      - Ta Kwu Ling
-      - Tai Lung
-      - Tai Mei Tuk
-      - Tai Po Market
-      - The Peak
-      - Tseung Kwan O
-      - Tsuen Wan Ho Koon
+      - Southern District
+      - Tai Po
+      - Tsuen Wan
       - Tuen Mun
-      - Waglan Island
-      - Wetland Park
-      - Wong Chuk Hang
+      - Wan Chai
+      - Wong Tai Sin
+      - Yuen Long
     icon: mdi:weather-rainy
