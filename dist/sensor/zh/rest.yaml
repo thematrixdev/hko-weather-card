@@ -1,12 +1,12 @@
 rest:
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc
-    scan_interval: 1800
+    scan_interval: 900
     sensor:
       - name: hko_forecast_summary
         value_template: '{{ value_json.forecastDesc }}'
 
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=tc
-    scan_interval: 1800
+    scan_interval: 900
     sensor:
       - name: hko_forecast_max_temp_0
         value_template: '{{ value_json.weatherForecast[0].forecastMaxtemp.value }}'
@@ -120,10 +120,22 @@ rest:
         unit_of_measurement: "%"
 
   - resource: https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc
-    scan_interval: 1800
+    scan_interval: 900
     sensor:
       - name: hko_forecast_icon
         value_template: '{{ value_json.icon[0] }}'
+      - name: hko_rainfall
+        unique_id: hko_rainfall
+        unit_of_measurement: "mm/h"
+        device_class: precipitation_intensity
+        value_template: >-
+          {% set r = value_json.rainfall.data %}
+          {% set stn = states('input_select.hko_rainfall_station') %}
+          {% for i in r %}
+            {% if i.place == stn %}
+              {{ i.max }}
+            {% endif %}
+          {% endfor %}
 
     ### https://www.hko.gov.hk/tc/wxinfo/ts/index_max.htm ###
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_since_midnight_maxmin_uc.csv
@@ -267,22 +279,6 @@ rest:
           {% else %}
             {{ 0 }}
           {% endif %}
-
-  - resource: https://data.weather.gov.hk/weatherAPI/opendata/hourlyRainfall.php?lang=tc
-    scan_interval: 900
-    sensor:
-      - name: hko_hourlyrainfall
-        unique_id: hko_hourlyrainfall
-        unit_of_measurement: "mm/h"
-        device_class: precipitation_intensity
-        value_template: >-
-          {% set r = value_json.hourlyRainfall %}
-          {% set stn = states('input_select.hko_rainfall_station') %}
-          {% for i in r %}
-            {% if i.automaticWeatherStation == stn %}
-              {{ i.value }}
-            {% endif %}
-          {% endfor %}
 
   - resource: https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_15min_uvindex.csv
     scan_interval: 900
