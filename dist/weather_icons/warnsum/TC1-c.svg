@@ -1,0 +1,20 @@
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="64"
+    height="64"
+    viewbox="0 0 64 64">
+    <defs>
+      <linearGradient id="num" gradientTransform="rotate(90)">
+        <stop offset="20%"  stop-color="#FFFF84"/>
+        <stop offset="80%" stop-color="#FFFF0A"/>
+      </linearGradient>
+      <linearGradient id="text" gradientTransform="rotate(90)">
+        <stop offset="20%"  stop-color="#999999"/>
+        <stop offset="80%" stop-color="#606060"/>
+      </linearGradient>
+    </defs>
+<polygon fill="url(#text)" points="38.4 18.3 4.3 18.3 4.3 25.755 16.404 25.755 16.404 46.9 26.928 46.9 26.928 25.755 38.4 25.755 38.4 18.3"></polygon>
+<path fill="url(#num)" stroke="url(#num)" stroke-linejoin="round" stroke-linecap="round" stroke-width="1" d="M 57.6 46.9 L 53.108 46.9 L 53.108 29.436 C 51.842 30.159 50.446 30.79 48.946 31.32 C 47.468 31.874 45.913 32.35 44.3 32.737 L 44.3 30.092 C 46.655 29.42 48.841 28.54 50.785 27.481 C 52.368 26.644 53.679 25.634 54.657 24.5 L 57.6 24.5 L 57.6 46.9 Z"></path>
+</svg>
