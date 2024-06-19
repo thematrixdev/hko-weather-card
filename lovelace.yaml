@@ -4,6 +4,9 @@ static_icons: false
 tooltips: true
 refresh_interval: 30
 show_separator: true
+hide_slot_section: false
+hide_forecast_section: false
+hide_summary_section: false
 time_format: locale
 use_old_column_format: true
 show_decimals: false
@@ -23,6 +26,7 @@ entity_wind_gust: sensor.hko_wind_gust
 entity_apparent_temp: sensor.hko_apparent_temp
 entity_uv_alert_summary: sensor.hko_uvindex
 entity_pressure: sensor.hko_pressure
+entity_rain_today: sensor.hko_rainfall
 entity_current_conditions: sensor.hko_forecast_icon
 entity_forecast_icon_1: sensor.hko_forecast_icon_0
 entity_forecast_icon_2: sensor.hko_forecast_icon_1
