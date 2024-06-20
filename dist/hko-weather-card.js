@@ -1,11 +1,11 @@
 import {
   LitElement,
   html,
-} from "https://esm.run/lit-element@4.0.5/lit-element.js?module";
+} from "https://esm.run/lit-element@4.0.6/lit-element.js?module";
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.2.0       `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.2.1   `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -40,9 +40,9 @@ class HKOWeatherCard extends LitElement {
       ` : html`
       <span class="icon bigger" id="icon-bigger" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + "exceptional.svg")}) no-repeat; background-size: contain;"></span>`;
     var summary = this.config.entity_daily_summary ? html`${this._hass.states[this.config.entity_daily_summary].attributes.forecastDesc !== undefined ? this._hass.states[this.config.entity_daily_summary].attributes.forecastDesc : this._hass.states[this.config.entity_daily_summary] !== undefined ? this._hass.states[this.config.entity_daily_summary].state : "Config Error"}` : ``;
-    var separator = this.config.show_separator ? html`<hr class=line>` : ``;
+    var separator = this.config.show_separator ? html`<hr class="line">` : html`<hr class="hiddenline">`;
     var uv_alert = this.config.entity_uv_alert ? html`${this._hass.states[this.config.entity_uv_alert] !== undefined ? this._hass.states[this.config.entity_uv_alert].state : "UV: Config Error"}` : ``;
-    var slot_section = (this.config.use_old_column_format === true) ? html`
+    var slot_section = (this.config.hide_slot_section === true) ? `` : (this.config.use_old_column_format === true) ? html`
       <ul class="variations-ugly">
         <li>${this.getSlot().l1}${this.getSlot().l2}${this.getSlot().l3}${this.getSlot().l4}${this.getSlot().l5}${this.getSlot().l6}${this.getSlot().l7}${this.getSlot().l8}</li>
         <li>${this.getSlot().r1}${this.getSlot().r2}${this.getSlot().r3}${this.getSlot().r4}${this.getSlot().r5}${this.getSlot().r6}${this.getSlot().r7}${this.getSlot().r8}</li>
@@ -54,6 +54,38 @@ class HKOWeatherCard extends LitElement {
       </ul>`;
     var warninginfo = this.config.entity_warninginfo ? html`${this.warninginfo5}${this.warninginfo4}${this.warninginfo3}${this.warninginfo2}${this.warninginfo1}${this.warninginfo0}` : ``;
     var topbar = html`<span class="topbar">${warninginfo} ${apparentTemp}</span>`;
+    var forecast_section = (this.config.hide_forecast_section === true) ? `` : html`
+      <div class="forecast clear">
+        ${this.forecast.map(daily => html`
+          <div class="day fcasttooltip">
+            <span class="dayname" id="fcast-date-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}</span><br>
+            <span class="dayname" id="fcast-weekday-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}</span>
+            <br>${this._hass.states[daily.condition] !== undefined 
+              ? 
+                html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg")}) no-repeat; background-size: contain;"></i><br>`
+              : 
+                html`<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`}
+            ${this.config.old_daily_format 
+              ? 
+                html`<span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : 'Err'}°C</span><br><span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : 'Err'}°C</span>`
+              : 
+                this.config.tempformat === "highlow"
+                  ?
+                    html`<span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}</span> / <span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}°C</span>`
+                  :
+                    html`<span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}</span> / <span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}°C</span>`}
+            ${this.config.entity_forecast_high_rh_1 && this.config.entity_forecast_high_rh_2 && this.config.entity_forecast_high_rh_3 && this.config.entity_forecast_high_rh_4 && this.config.entity_forecast_high_rh_5 && this.config.entity_forecast_low_rh_1 && this.config.entity_forecast_low_rh_2 && this.config.entity_forecast_low_rh_3 && this.config.entity_forecast_low_rh_4 && this.config.entity_forecast_low_rh_5 
+              ? 
+                html`<br><span class="rh" id="fcast-rhlow-${daily.dayIndex}">${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Err"}</span> - <span class="rh" id="fcast-rhhigh-${daily.dayIndex}">${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Err"}%</span>`
+              : ``}
+            ${this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5 ? html`<br><span class="${this.config.locale.includes("zh") ? "pop" : "pop-s"}" id="fcast-pop-${daily.dayIndex}">${this._hass.states[daily.pop] ? this._hass.states[daily.pop].state : "Err"}</span>` : ``}
+          <div class="fcasttooltiptext" id="fcast-summary-${daily.dayIndex}">${ this.config.tooltips ? this._hass.states[daily.summary] !== undefined ? this._hass.states[daily.summary].state : "Config Error" : ""}</div>
+          </div>`)}
+      </div>`;
+    var summary_section = (this.config.hide_summary_section === true) ? `` : html`
+      <div class="summary clear" id="daily-summary-text">
+        ${summary} ${uv_alert}
+      </div>`;
 
 // Build HTML
     return html`
@@ -63,42 +95,15 @@ class HKOWeatherCard extends LitElement {
       <ha-card class = "card">
         <div>
           ${biggerIcon}
+          ${this.tcwsIcon}
           <span class="temp" id="temperature-text">${this.currentTemperature}</span><span class="tempc">°C</span>
           ${currentText}
           ${topbar}
         </div>
         ${separator}
         <span>${slot_section}</span>
-        <div class="forecast clear">
-          ${this.forecast.map(daily => html`
-            <div class="day fcasttooltip">
-              <span class="dayname" id="fcast-date-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}</span><br>
-              <span class="dayname" id="fcast-weekday-${daily.dayIndex}">${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}</span>
-              <br>${this._hass.states[daily.condition] !== undefined 
-                ? 
-                  html`<i class="icon" id="fcast-icon-${daily.dayIndex}" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day").replace("-wraina", "").replace("-wrainr", "").replace("-wrainb", "").replace("-wts", "")}) no-repeat; background-size: contain;"></i><br>`
-                : 
-                  html `<div class="eicon"><ha-icon style="top: 50%; margin: 0; -ms-transform: translateY(-50%); transform: translateY(-50%);" icon="mdi:alert"></ha-icon></div>`}
-              ${this.config.old_daily_format 
-                ? 
-                  html`<span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : 'Err'}°C</span><br><span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : 'Err'}°C</span>`
-                : 
-                  this.config.tempformat === "highlow"
-                    ?
-                      html`<span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}</span> / <span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}°C</span>`
-                    :
-                      html`<span class="lowTemp" id="fcast-templow-${daily.dayIndex}">${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}</span> / <span class="highTemp" id="fcast-temphigh-${daily.dayIndex}">${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}°C</span>`}
-              ${this.config.entity_forecast_high_rh_1 && this.config.entity_forecast_high_rh_2 && this.config.entity_forecast_high_rh_3 && this.config.entity_forecast_high_rh_4 && this.config.entity_forecast_high_rh_5 && this.config.entity_forecast_low_rh_1 && this.config.entity_forecast_low_rh_2 && this.config.entity_forecast_low_rh_3 && this.config.entity_forecast_low_rh_4 && this.config.entity_forecast_low_rh_5 
-                ? 
-                  html`<br><span class="rh" id="fcast-rhlow-${daily.dayIndex}">${this._hass.states[daily.rhlow] !== undefined ? this._hass.states[daily.rhlow].state : "Err"}</span> - <span class="rh" id="fcast-rhhigh-${daily.dayIndex}">${this._hass.states[daily.rhhigh] !== undefined ? this._hass.states[daily.rhhigh].state : "Err"}%</span>`
-                : ``}
-              ${this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5 ? html`<br><span class="${this.config.locale.includes("zh") ? "pop" : "pop-s"}" id="fcast-pop-${daily.dayIndex}">${this._hass.states[daily.pop] ? this._hass.states[daily.pop].state : "Err"}</span>` : ``}
-              <div class="fcasttooltiptext" id="fcast-summary-${daily.dayIndex}">${ this.config.tooltips ? this._hass.states[daily.summary] !== undefined ? this._hass.states[daily.summary].state : "Config Error" : ""}</div>
-            </div>`)}
-          </div>
-        <div class="summary clear" id="daily-summary-text">
-          ${summary} ${uv_alert}
-          </div>
+        ${forecast_section}
+        ${summary_section}
       </ha-card>
     `;
   }
@@ -167,11 +172,27 @@ class HKOWeatherCard extends LitElement {
       case 'l2': return this.MaxMinsinceMidnight;
       case 'l3': return this.wind;
       case 'l4': return this.pressure;
-      case 'l5': return this.rainToday;
       case 'r1': return this.sunFollowing;
       case 'r2': return this.humidity;
       case 'r3': return this.uvSummary;
-      case 'r4': return this.pop;
+      case 'r4': return this.rainToday;
+    }
+  }
+
+  get tcwsIcon() {
+    try {
+      var entity = this._hass.states[this.config.entity_warnsum].attributes.WTCSGNL
+      if (entity !== undefined) {
+        return html`<span class="tcws" id="tcws-icon" style="background: none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[entity.code] + this.tcwsStyle + ".svg")}) no-repeat; background-size: contain;"></span>`;
+      } else {}
+    } catch (e) {}
+  }
+
+  get tcwsStyle() {
+    switch (this.config.tcws_style) {
+      case "og": return "";
+      case "grey": return "-g";
+      default: return "-c";
     }
   }
 
@@ -180,8 +201,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[0]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-0-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-0-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-0-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-0-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -191,8 +212,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[1]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-1-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-1-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-1-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-1-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -202,8 +223,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[2]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-2-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-2-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-2-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-2-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -213,8 +234,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[3]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-3-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-3-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-3-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-3-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -224,8 +245,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[4]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-4-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-4-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-4-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-4-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -235,8 +256,8 @@ class HKOWeatherCard extends LitElement {
       var entity = this._hass.states[this.config.entity_warninginfo].attributes.details[5]
       if (entity.warningStatementCode !== undefined) {
         if (!entity.warningStatementCode.includes("TC")) {
-          return html`<span class="warninfotooltip"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}" id="warning-5-icon"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-5-text">${entity.contents}</span></span>`;
-        } else { return ``; }
+          return html`<span class="warninfotooltip" id="warning-5-icon"><span class="${entity.contents[0].includes(this.localeText.Cancel) ? "cancel" : ""}"><span class="${entity.contents[1] !== undefined ? entity.contents[1].includes(this.localeText.Cancel) ? "cancel" : "" : ""}">${this.warningIcons[entity.subtype !== undefined ? entity.subtype : entity.warningStatementCode]}</span></span><span class="warninfotooltiptext" id="warning-5-text">${entity.contents}</span></span>`;
+        } else {}
       }
     } catch (e) {}
   }
@@ -534,20 +555,22 @@ class HKOWeatherCard extends LitElement {
 
   get wts() {
     try {
-      var warnsum = this.config.entity_warnsum ? this._hass.states[this.config.entity_warnsum].attributes : 'unknown' ? this._hass.states[this.config.entity_warnsum].attributes : 'N/A';
-      if (warnsum.WTS.actionCode !== "CANCEL") {
-      return "-wts";
+      var warnsum = this._hass.states[this.config.entity_warnsum].attributes.WTS;
+      if (warnsum.actionCode !== "CANCEL") {
+        return "-wts";
       } else { return ""; }
     } catch (e) { return ""; }
   }
 
   get wrain() {
     try {
-      var warnsum = this.config.entity_warnsum ? this._hass.states[this.config.entity_warnsum].attributes : 'unknown' ? this._hass.states[this.config.entity_warnsum].attributes : 'N/A';
-      if (warnsum.WRAIN.actionCode !== "CANCEL") {
-        if (warnsum.WRAIN.code === "WRAINA") { return "-wraina"; }
-        if (warnsum.WRAIN.code === "WRAINR") { return "-wrainr"; }
-        if (warnsum.WRAIN.code === "WRAINB") { return "-wrainb"; }
+      var warnsum = this._hass.states[this.config.entity_warnsum].attributes.WRAIN;
+      if (warnsum.actionCode !== "CANCEL") {
+        switch (warnsum.code) {
+          case "WRAINA": return "-wraina";
+          case "WRAINR": return "-wrainr";
+          case "WRAINB": return "-wrainb";
+        }
       } else { return ""; }
     } catch (e) { return ""; }
   }
@@ -1021,10 +1044,10 @@ style() {
   var tooltipBorderColor = this.config.tooltip_border_color || "rgb(255,161,0)";
   var tooltipBorderWidth = this.config.tooltip_border_width || "1";
   var tooltipCaretSize = this.config.tooltip_caret_size || "5";
-  var tooltipWidth = this.config.tooltip_width || "110";
+  var tooltipWidth = this.config.tooltip_width || "110px";
   var tooltipLeftOffset = this.config.tooltip_left_offset || "-12";
   var tooltipVisible = this.config.tooltips ? "visible" : "hidden";
-  var warntooltipWidth = this.config.warntooltip_width || "200";
+  var warntooltipWidth = this.config.warntooltip_width || "200px";
   var tempTopMargin = this.config.temp_top_margin || "9px";
   var tempFontWeight = this.config.temp_font_weight || "300";
   var tempFontSize = this.config.temp_font_size || "4em";
@@ -1041,11 +1064,20 @@ style() {
   var currentTextAlignment = this.config.current_text_alignment || "center";
   var largeIconTopMargin = this.config.large_icon_top_margin || "-3em";
   var largeIconLeftPos = this.config.large_icon_left_pos || "0px";
-  var currentDataTopMargin = this.config.current_data_top_margin ? this.config.current_data_top_margin : this.config.show_separator ? "0em" : "10em";
+  var currentDataTopMargin = this.config.current_data_top_margin ? this.config.current_data_top_margin : this.config.show_separator ? "0em" : "0.5em";
   var separatorTopMargin = this.config.separator_top_margin || "6em";
   var summaryTopPadding = this.config.summary_top_padding || "1em";
   var summaryFontSize = this.config.summary_font_size || "1em";
   var warnsumIconMargin = this.config.warnsum_icon_margin || "0px";
+  var tcwsWidth = this.config.tcws_width || "40px";
+  var tcwsHeight = this.config.tcws_height || "40px";
+  var tcwsTopMargin = this.config.tcws_top_margin || "40px";
+  var tcwsLeftPos =  this.config.tcws_left_pos || "0em";
+  var tcwsLeftMargin = this.config.tcws_left_margin || "8.2em";
+  var oldDailyFormatHeight = this.config.old_daily_format === true ? 1.5 : 0;
+  var popHeight = this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5 ? 1.5 : 0;
+  var rhHeight = this.config.entity_forecast_high_rh_1 && this.config.entity_forecast_high_rh_2 && this.config.entity_forecast_high_rh_3 && this.config.entity_forecast_high_rh_4 && this.config.entity_forecast_high_rh_5 && this.config.entity_forecast_low_rh_1 && this.config.entity_forecast_low_rh_2 && this.config.entity_forecast_low_rh_3 && this.config.entity_forecast_low_rh_4 && this.config.entity_forecast_low_rh_5 ? 1.5 : 0;
+  var forecastHeight = this.config.forecast_height ? this.config.forecast_height : 9.9 + oldDailyFormatHeight + popHeight + rhHeight;
 
   return html`
       .clear {
@@ -1072,6 +1104,12 @@ style() {
         margin-top: ${separatorTopMargin};
         margin-left: 0.3em;
         margin-right: 0.3em;
+      }
+
+      .hiddenline {
+        margin-top: ${separatorTopMargin};
+        margin-bottom: 0em;
+        opacity: 0;
       }
 
       .temp {
@@ -1171,7 +1209,7 @@ style() {
       .forecast {
         width: 100%;
         margin: 0 auto;
-        height: 9em;
+        height: ${forecastHeight}em;
       }
 
       .day {
@@ -1216,8 +1254,8 @@ style() {
       }
 
       .icon {
-        width: 50px;
-        height: 50px;
+        width: 55px;
+        height: 55px;
         margin: auto;
         display: inline-block;
         background-size: contain;
@@ -1231,6 +1269,15 @@ style() {
         height: 50px;
         margin: 0px;
         padding: 6px 12px 0px;
+      }
+
+      .tcws {
+        width: ${tcwsWidth};
+        height: ${tcwsHeight};
+        margin-top: ${tcwsTopMargin};
+        position: absolute;
+        left: ${tcwsLeftPos};
+        margin-left: ${tcwsLeftMargin};
       }
 
       .ha-icon-yellow {
@@ -1288,7 +1335,7 @@ style() {
 
       .fcasttooltip .fcasttooltiptext {
         visibility: hidden;
-        width: ${tooltipWidth}px;
+        width: ${tooltipWidth};
         background-color: ${tooltipBGColor};
         color: ${tooltipFGColor};
         text-align: center;
@@ -1328,7 +1375,7 @@ style() {
 
       .warninfotooltip .warninfotooltiptext {
         visibility: hidden;
-        width: ${warntooltipWidth}px;
+        width: ${warntooltipWidth};
         background-color: ${tooltipBGColor};
         color: ${tooltipFGColor};
         text-align: center;
@@ -1439,7 +1486,7 @@ style() {
         root.getElementById("fcast-date-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}`;
         root.getElementById("fcast-weekday-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}`;
         if (this._hass.states[daily.condition] !== undefined) {
-          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg").replace("-night", "-day").replace("-wraina", "").replace("-wrainr", "").replace("-wrainb", "").replace("-wts", "")})`;
+          root.getElementById("fcast-icon-" + daily.dayIndex).style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/" + (this.config.static_icons ? "static" : "animated") + "/" + this.weatherIcons[this._hass.states[daily.condition].state] + ".svg")})`;
         }
         root.getElementById("fcast-temphigh-" + daily.dayIndex).textContent = `${this._hass.states[daily.temphigh] !== undefined ? this._hass.states[daily.temphigh].state : "Err"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "" : "°C"}`;
         root.getElementById("fcast-templow-" + daily.dayIndex).textContent = `${this._hass.states[daily.templow] !== undefined ? this._hass.states[daily.templow].state : "Err"}${this.config.old_daily_format ? "°C" : this.config.tempformat === "highlow" ? "°C" : ""}`;
@@ -1489,17 +1536,18 @@ style() {
       if (this.config.entity_humidity && (root.getElementById("humidity-text") !== null)) try { root.getElementById("humidity-text").textContent = `${this.currentHumidity}` } catch(e) {}
       if (this.config.show_beaufort && (root.getElementById("beaufort-text") !== null)) try { root.getElementById("beaufort-text").textContent =  `Bft: ${this.currentBeaufort} - ` } catch(e) {}
       if (this.config.entity_possible_today && (root.getElementById("possible_today-text") !== null)) try { root.getElementById("possible_today-text").textContent = `${this._hass.states[this.config.entity_possible_today].state}` } catch(e) {}
-      if (this.config.custom1_value && (root.getElementById("custom-1-text") !== null)) try { root.getElementById("custom-1-text").textContent = `${this._hass.states[this.config.custom1_value].state}` } catch(e) {}
-      if (this.config.custom2_value && (root.getElementById("custom-2-text") !== null)) try { root.getElementById("custom-2-text").textContent = `${this._hass.states[this.config.custom2_value].state}` } catch(e) {}
-      if (this.config.custom3_value && (root.getElementById("custom-3-text") !== null)) try { root.getElementById("custom-3-text").textContent = `${this._hass.states[this.config.custom3_value].state}` } catch(e) {}
-      if (this.config.custom4_value && (root.getElementById("custom-4-text") !== null)) try { root.getElementById("custom-4-text").textContent = `${this._hass.states[this.config.custom4_value].state}` } catch(e) {}
-      if (this.config.custom5_value && (root.getElementById("custom-5-text") !== null)) try { root.getElementById("custom-5-text").textContent = `${this._hass.states[this.config.custom5_value].state}` } catch(e) {}
-      if (this.config.custom6_value && (root.getElementById("custom-6-text") !== null)) try { root.getElementById("custom-6-text").textContent = `${this._hass.states[this.config.custom6_value].state}` } catch(e) {}
-      if (this.config.custom7_value && (root.getElementById("custom-7-text") !== null)) try { root.getElementById("custom-7-text").textContent = `${this._hass.states[this.config.custom7_value].state}` } catch(e) {}
-      if (this.config.custom8_value && (root.getElementById("custom-8-text") !== null)) try { root.getElementById("custom-8-text").textContent = `${this._hass.states[this.config.custom8_value].state}` } catch(e) {}
       if (this.config.entity_uv_alert_summary && (root.getElementById("daytime-uv-text") !== null)) try { root.getElementById("daytime-uv-text").textContent = `${this.uvLevel}` } catch(e) {}
+      for (let i = 1; i <= 8; i++) {
+        const value = this.config[`custom${i}_value`];
+        const text = root.getElementById(`custom-${i}-text`);
+        if (value && text !== null) try {
+          text.textContent = `${this._hass.states[value].state}`;
+        } catch (e) {}
+      }
 
 // WarningInfo
+      var wtcsgnl = this._hass.states[this.config.entity_warnsum].attributes.WTCSGNL;
+      if (this.config.entity_warnsum && (root.getElementById("tcws-icon") !== null)) try { root.getElementById("tcws-icon").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[wtcsgnl.code] + this.tcwsStyle + ".svg")})`; } catch(e) {}
       var details = this._hass.states[this.config.entity_warninginfo].attributes.details;
       if (this.config.entity_warninginfo && (root.getElementById("warning-0-icon") !== null)) try { root.getElementById("warning-0-icon").icon = `${details[0].subtype !== undefined ? this.warningIcons[details[0].subtype] : this.warningIcons[details[0].warningStatementCode]}` } catch(e) {}
       if (this.config.entity_warninginfo && (root.getElementById("warning-1-icon") !== null)) try { root.getElementById("warning-1-icon").icon = `${details[1].subtype !== undefined ? this.warningIcons[details[1].subtype] : this.warningIcons[details[1].warningStatementCode]}` } catch(e) {}
