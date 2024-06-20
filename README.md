@@ -89,7 +89,7 @@ Installation is done. You must still configure the yaml manually.
 1. Load new YAML configurations in Quick reload
 ![restart-home-assistant](https://github.com/aes-alienrip/hko-weather-card/assets/73251414/8b016035-cb5b-4ba0-89c7-648612342221)
 
-2. Select your nearby Weather Station ([Temperature](https://www.hko.gov.hk/tc/wxinfo/ts/index.htm), [Humidity](https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm), [Pressure](https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm), [Wind](https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm)) from Input Select helper<br>
+2. Select your nearby Weather Station ([Temperature](https://www.hko.gov.hk/tc/wxinfo/ts/index.htm), [Humidity](https://www.hko.gov.hk/tc/wxinfo/ts/index_rh.htm), [Pressure](https://www.hko.gov.hk/tc/wxinfo/ts/index_pre.htm), [Wind](https://www.hko.gov.hk/tc/wxinfo/ts/index_wind.htm), [Rainfall](https://upload.wikimedia.org/wikipedia/commons/f/fc/Map_of_Hong_Kong_18_Districts_zh.svg) / [Rainfall_en](https://upload.wikimedia.org/wikipedia/commons/f/fe/Map_of_Hong_Kong_18_Districts_en.svg)) from Input Select helper<br>
    Developer Tools -> STATES -> Entity -> Search for "input_select.hko"<br>
 ![HKO_Weather_Station](https://github.com/aes-alienrip/hko-weather-card/assets/73251414/2d68dffc-3cc7-458b-bf3f-b00bfbf5b002)<br>
 
