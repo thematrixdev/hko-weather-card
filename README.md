@@ -199,13 +199,13 @@ show_decimals: false
 |--------------------------|------------------------------------|-----------------------------------------------------------------------------|
 | locale                   | **en** / zh-hk / zh-cn / zh        | Sets locale display of day names and time formats                           |
 | time_format              | **locale** / 12 / 24               | Sets the format sunset and sunrise times. locale format is the default.     |
-| refresh_interval         | **30** / Integer value             | Sets the nuber of seconds between card value refreshes                      |
+| refresh_interval         | **30** / Integer value             | Sets the number of seconds between card value refreshes                     |
 | static_icons             | true / **false**                   | Switches between static (true) and animated (false) icons                   |
-| show_separator           | **true** / false                   | Shows separator between Current Conditions Section and Slot Section         |
+| show_separator           | **true** / false                   | Shows separator between Main Section and Slot Section                       |
 | separator_top_margin     | **6em** / px or em value           | Sets the top margin of the separator line                                   |
-| hide_slot_section        | true / **false**                   | Hide Slot Section, See Sections for more info                               |
-| hide_forecast_section    | true / **false**                   | Hide Forecast Section, See Sections for more info                           |
-| hide_summary_section     | true / **false**                   | Hide Summary Section, See Sections for more info                            |
+| hide_slot_section        | true / **false**                   | Hide Slot Section, See [Sections](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#sections) for more info                               |
+| hide_forecast_section    | true / **false**                   | Hide Forecast Section, See [Sections](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#sections) for more info                           |
+| hide_summary_section     | true / **false**                   | Hide Summary Section, See [Sections](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#sections) for more info                            |
 | show_decimals            | **false** / true                   | Sets card to render current temperature to 1 decimal place                  | 
 | show_decimals_apparent   | **false** / true                   | Sets card to render apparent temperature to 1 decimal place                 |
 | show_decimals_today      | **false** / true                   | Sets card to render todays min and max temperatures to 1 decimal place      |
@@ -214,22 +214,22 @@ show_decimals: false
 | tempformat               | highlow / **noentry**              | Any setting for this flag will trigger the option to show max/min in daily  |
 | old_daily_format         | true / **false**                   | Sets the format of the daily high & low temps to be stacked (old format)    |
 | use_old_column_format    | false / **true**                   | Moves the right column to the right edge in Slot Section                    |
-| slot_l1                  | **sun_next**                       | Sets the value used in current conditions slot l1 : See slots for more info |
-| slot_l2                  | **maxmin_since_midnight**          | Sets the value used in current conditions slot l2 : See slots for more info |
-| slot_l3                  | **wind**                           | Sets the value used in current conditions slot l3 : See slots for more info |
-| slot_l4                  | **pressure**                       | Sets the value used in current conditions slot l4 : See slots for more info |
-| slot_l5                  |                                    | Sets the value used in current conditions slot l5 : See slots for more info |
-| slot_l6                  |                                    | Sets the value used in current conditions slot l6 : See slots for more info |
-| slot_l7                  |                                    | Sets the value used in current conditions slot l7 : See slots for more info |
-| slot_l8                  |                                    | Sets the value used in current conditions slot l8 : See slots for more info |
-| slot_r1                  | **sun_following**                  | Sets the value used in current conditions slot r1 : See slots for more info |
-| slot_r2                  | **humidity**                       | Sets the value used in current conditions slot r2 : See slots for more info |
-| slot_r3                  | **uv_summary**                     | Sets the value used in current conditions slot r3 : See slots for more info |
-| slot_r4                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l4 : See slots for more info |
-| slot_r5                  |                                    | Sets the value used in current conditions slot r5 : See slots for more info |
-| slot_r6                  |                                    | Sets the value used in current conditions slot r6 : See slots for more info |
-| slot_r7                  |                                    | Sets the value used in current conditions slot r7 : See slots for more info |
-| slot_r8                  |                                    | Sets the value used in current conditions slot r8 : See slots for more info |
+| slot_l1                  | **sun_next**                       | Sets the value used in current conditions slot l1 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l2                  | **maxmin_since_midnight**          | Sets the value used in current conditions slot l2 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l3                  | **wind**                           | Sets the value used in current conditions slot l3 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l4                  | **pressure**                       | Sets the value used in current conditions slot l4 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l5                  |                                    | Sets the value used in current conditions slot l5 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l6                  |                                    | Sets the value used in current conditions slot l6 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l7                  |                                    | Sets the value used in current conditions slot l7 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_l8                  |                                    | Sets the value used in current conditions slot l8 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r1                  | **sun_following**                  | Sets the value used in current conditions slot r1 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r2                  | **humidity**                       | Sets the value used in current conditions slot r2 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r3                  | **uv_summary**                     | Sets the value used in current conditions slot r3 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r4                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l4 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r5                  |                                    | Sets the value used in current conditions slot r5 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r6                  |                                    | Sets the value used in current conditions slot r6 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r7                  |                                    | Sets the value used in current conditions slot r7 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
+| slot_r8                  |                                    | Sets the value used in current conditions slot r8 : See [Slots](https://github.com/aes-alienrip/hko-weather-card/blob/master/README.md#slots) for more info |
 | custom1_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom1                                       |
 | custom1_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom1                        |
 | custom1_units            | **""** / string                    | Sets the string to use for the units of slot custom1                        |
@@ -296,6 +296,7 @@ slots (designated r1 - r8).  There are currently 16 possible values that can be 
 - daytime_high
 - daytime_low
 - maxmin_since_midnight (max and min temperature since midnight)
+- rainfall (Rainfall in the past hour from automatic weather station)
 - wind
 - visibility
 - sun_next (the next sun event ... sunset or sunrise)
