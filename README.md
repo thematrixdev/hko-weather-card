@@ -203,9 +203,9 @@ show_decimals: false
 | static_icons             | true / **false**                   | Switches between static (true) and animated (false) icons                   |
 | show_separator           | **true** / false                   | Shows separator between Current Conditions Section and Slot Section         |
 | separator_top_margin     | **6em** / px or em value           | Sets the top margin of the separator line                                   |
-| hide_slot_section        | true / **false**                   | Hide Slot Section                                                           |
-| hide_forecast_section    | true / **false**                   | Hide Forecast Section                                                       |
-| hide_summary_section     | true / **false**                   | Hide Summary Section                                                        |
+| hide_slot_section        | true / **false**                   | Hide Slot Section, See Sections for more info                               |
+| hide_forecast_section    | true / **false**                   | Hide Forecast Section, See Sections for more info                           |
+| hide_summary_section     | true / **false**                   | Hide Summary Section, See Sections for more info                            |
 | show_decimals            | **false** / true                   | Sets card to render current temperature to 1 decimal place                  | 
 | show_decimals_apparent   | **false** / true                   | Sets card to render apparent temperature to 1 decimal place                 |
 | show_decimals_today      | **false** / true                   | Sets card to render todays min and max temperatures to 1 decimal place      |
@@ -225,7 +225,7 @@ show_decimals: false
 | slot_r1                  | **sun_following**                  | Sets the value used in current conditions slot r1 : See slots for more info |
 | slot_r2                  | **humidity**                       | Sets the value used in current conditions slot r2 : See slots for more info |
 | slot_r3                  | **uv_summary**                     | Sets the value used in current conditions slot r3 : See slots for more info |
-| slot_r4                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l5 : See slots for more info |
+| slot_r4                  | **rainfall_in_past_hour**          | Sets the value used in current conditions slot l4 : See slots for more info |
 | slot_r5                  |                                    | Sets the value used in current conditions slot r5 : See slots for more info |
 | slot_r6                  |                                    | Sets the value used in current conditions slot r6 : See slots for more info |
 | slot_r7                  |                                    | Sets the value used in current conditions slot r7 : See slots for more info |
@@ -312,7 +312,7 @@ slots (designated r1 - r8).  There are currently 16 possible values that can be 
 
 If configuring with Slots please ensure to fill all available positions, the slots that you do not need can be filled with "remove" to ensure that they remain blank.
 
-**Section**
+**Sections**
 --------------------------
 ![hko_card_section](https://github.com/aes-alienrip/hko-weather-card/assets/73251414/b102439d-abfe-4651-899f-3786ab405b6a)
 
