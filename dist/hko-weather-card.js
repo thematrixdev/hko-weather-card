@@ -1483,6 +1483,7 @@ style() {
 
 // Forecast blocks
       this.forecast.forEach((daily) => {
+        if (this.config.hide_forecast_section !== true) try {
         root.getElementById("fcast-date-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{month: 'numeric', day: 'numeric'})}`;
         root.getElementById("fcast-weekday-" + daily.dayIndex).textContent = `${(daily.date).toLocaleDateString(this.config.locale,{weekday: 'short'})}`;
         if (this._hass.states[daily.condition] !== undefined) {
@@ -1496,6 +1497,7 @@ style() {
         } catch(e) {}
         if (this.config.entity_pop_1 && this.config.entity_pop_2 && this.config.entity_pop_3 && this.config.entity_pop_4 && this.config.entity_pop_5) root.getElementById("fcast-pop-" + daily.dayIndex).textContent = `${this._hass.states[daily.pop] !== undefined ? this._hass.states[daily.pop].state : "Err"}`;
         root.getElementById("fcast-summary-" + daily.dayIndex).textContent = `${this._hass.states[daily.summary] !== undefined ? this._hass.states[daily.summary].state : "Err"}`;
+        } catch(e) {}
      });
 
 // Optional Entities
