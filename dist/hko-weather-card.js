@@ -5,7 +5,7 @@ import {
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.2.1   `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.2.1b  `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -630,7 +630,7 @@ class HKOWeatherCard extends LitElement {
     var cloudy_icon = `cloudy${this.wts}`;
     var overcast_icon = `overcast${this.wts}`;
     var light_rain_icon = `light-rain${this.wts}`;
-    var rain_icon = `rain-2${this.wrain}${this.wts}`;
+    var rain_icon = `rain${this.wrain}${this.wts}`;
     var heavy_rain_icon = `heavy-rain${this.wrain}${this.wts}`;
     var thunderstorms_icon = `thunderstorms${this.wrain}`;
     var moon_new_icon = `moon-new`;
