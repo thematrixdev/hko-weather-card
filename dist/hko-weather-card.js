@@ -1,11 +1,11 @@
 import {
   LitElement,
   html,
-} from "https://esm.run/lit-element@4.0.6/lit-element.js?module";
+} from "https://esm.run/lit-element@4.1.1/lit-element.js?module";
 
 // #### Add card info to console
 console.info(
-  `%cHKO-WEATHER-CARD\n%cVersion 1.2.1b  `,
+  `%cHKO-WEATHER-CARD\n%cVersion 1.2.2  `,
   "color: #043ff6; font-weight: bold; background: white",
   "color: white; font-weight: bold; background: #043ff6"
 );
@@ -1548,21 +1548,25 @@ style() {
       }
 
 // WarningInfo
+      if (this.config.entity_warnsum) try {
       var wtcsgnl = this._hass.states[this.config.entity_warnsum].attributes.WTCSGNL;
-      if (this.config.entity_warnsum && (root.getElementById("tcws-icon") !== null)) try { root.getElementById("tcws-icon").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[wtcsgnl.code] + this.tcwsStyle + ".svg")})`; } catch(e) {}
+      if (root.getElementById("tcws-icon") !== null) try { root.getElementById("tcws-icon").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[wtcsgnl.code] + this.tcwsStyle + ".png")})` } catch(e) {}
+      } catch (e) {}
+      if (this.config.entity_warninginfo) try {
       var details = this._hass.states[this.config.entity_warninginfo].attributes.details;
-      if (this.config.entity_warninginfo && (root.getElementById("warning-0-icon") !== null)) try { root.getElementById("warning-0-icon").icon = `${details[0].subtype !== undefined ? this.warningIcons[details[0].subtype] : this.warningIcons[details[0].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-1-icon") !== null)) try { root.getElementById("warning-1-icon").icon = `${details[1].subtype !== undefined ? this.warningIcons[details[1].subtype] : this.warningIcons[details[1].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-2-icon") !== null)) try { root.getElementById("warning-2-icon").icon = `${details[2].subtype !== undefined ? this.warningIcons[details[2].subtype] : this.warningIcons[details[2].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-3-icon") !== null)) try { root.getElementById("warning-3-icon").icon = `${details[3].subtype !== undefined ? this.warningIcons[details[3].subtype] : this.warningIcons[details[3].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-4-icon") !== null)) try { root.getElementById("warning-4-icon").icon = `${details[4].subtype !== undefined ? this.warningIcons[details[4].subtype] : this.warningIcons[details[4].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-5-icon") !== null)) try { root.getElementById("warning-5-icon").icon = `${details[5].subtype !== undefined ? this.warningIcons[details[5].subtype] : this.warningIcons[details[5].warningStatementCode]}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-0-text") !== null)) try { root.getElementById("warning-0-text").textContent = `${details[0].contents}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-1-text") !== null)) try { root.getElementById("warning-1-text").textContent = `${details[1].contents}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-2-text") !== null)) try { root.getElementById("warning-2-text").textContent = `${details[2].contents}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-3-text") !== null)) try { root.getElementById("warning-3-text").textContent = `${details[3].contents}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-4-text") !== null)) try { root.getElementById("warning-4-text").textContent = `${details[4].contents}` } catch(e) {}
-      if (this.config.entity_warninginfo && (root.getElementById("warning-5-text") !== null)) try { root.getElementById("warning-5-text").textContent = `${details[5].contents}` } catch(e) {}
+      if (root.getElementById("warning-0-icon") !== null) try { root.getElementById("warning-0-icon").icon = `${details[0].subtype !== undefined ? this.warningIcons[details[0].subtype] : this.warningIcons[details[0].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-1-icon") !== null) try { root.getElementById("warning-1-icon").icon = `${details[1].subtype !== undefined ? this.warningIcons[details[1].subtype] : this.warningIcons[details[1].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-2-icon") !== null) try { root.getElementById("warning-2-icon").icon = `${details[2].subtype !== undefined ? this.warningIcons[details[2].subtype] : this.warningIcons[details[2].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-3-icon") !== null) try { root.getElementById("warning-3-icon").icon = `${details[3].subtype !== undefined ? this.warningIcons[details[3].subtype] : this.warningIcons[details[3].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-4-icon") !== null) try { root.getElementById("warning-4-icon").icon = `${details[4].subtype !== undefined ? this.warningIcons[details[4].subtype] : this.warningIcons[details[4].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-5-icon") !== null) try { root.getElementById("warning-5-icon").icon = `${details[5].subtype !== undefined ? this.warningIcons[details[5].subtype] : this.warningIcons[details[5].warningStatementCode]}` } catch(e) {}
+      if (root.getElementById("warning-0-text") !== null) try { root.getElementById("warning-0-text").textContent = `${details[0].contents}` } catch(e) {}
+      if (root.getElementById("warning-1-text") !== null) try { root.getElementById("warning-1-text").textContent = `${details[1].contents}` } catch(e) {}
+      if (root.getElementById("warning-2-text") !== null) try { root.getElementById("warning-2-text").textContent = `${details[2].contents}` } catch(e) {}
+      if (root.getElementById("warning-3-text") !== null) try { root.getElementById("warning-3-text").textContent = `${details[3].contents}` } catch(e) {}
+      if (root.getElementById("warning-4-text") !== null) try { root.getElementById("warning-4-text").textContent = `${details[4].contents}` } catch(e) {}
+      if (root.getElementById("warning-5-text") !== null) try { root.getElementById("warning-5-text").textContent = `${details[5].contents}` } catch(e) {}
+      } catch (e) {}
     }
   }
 
