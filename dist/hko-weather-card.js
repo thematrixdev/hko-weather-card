@@ -1,7 +1,7 @@
 import {
   LitElement,
   html,
-} from "https://esm.run/lit-element@4.1.1/lit-element.js?module";
+} from "https://esm.run/lit-element@4.2.0/lit-element.js?module";
 
 // #### Add card info to console
 console.info(
@@ -1048,16 +1048,16 @@ style() {
   var tooltipLeftOffset = this.config.tooltip_left_offset || "-12";
   var tooltipVisible = this.config.tooltips ? "visible" : "hidden";
   var warntooltipWidth = this.config.warntooltip_width || "200px";
-  var tempTopMargin = this.config.temp_top_margin || "9px";
+  var tempTopMargin = this.config.temp_top_margin || "-25px";
   var tempFontWeight = this.config.temp_font_weight || "300";
   var tempFontSize = this.config.temp_font_size || "4em";
   var tempRightPos = this.config.temp_right_pos || "0.7em";
-  var tempUOMTopMargin = this.config.temp_uom_top_margin || "-3px";
+  var tempUOMTopMargin = this.config.temp_uom_top_margin || "-8.8px";
   var tempUOMRightMargin = this.config.temp_uom_right_margin || "-4px";
   var topbarTopMargin = this.config.topbar_top_margin || "55px";
   var topbarRightPos =  this.config.topbar_right_pos || "0.3em";
   var topbarRightMargin = this.config.topbar_right_margin || "1em";
-  var currentTextTopMargin = this.config.current_text_top_margin || "0.6em";
+  var currentTextTopMargin = this.config.current_text_top_margin || "0.2em";
   var currentTextLeftPos = this.config.current_text_left_pos || "0px";
   var currentTextFontSize = this.config.current_text_font_size || "2em";
   var currentTextWidth = this.config.current_text_width || "100%";
@@ -1097,7 +1097,7 @@ style() {
       .ha-icon {
         height: 18px;
         margin-right: 5px;
-        color: var(--paper-item-icon-color);
+        color: var(--state-icon-color);
       }
 
       .line {
@@ -1550,7 +1550,7 @@ style() {
 // WarningInfo
       if (this.config.entity_warnsum) try {
       var wtcsgnl = this._hass.states[this.config.entity_warnsum].attributes.WTCSGNL;
-      if (root.getElementById("tcws-icon") !== null) try { root.getElementById("tcws-icon").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[wtcsgnl.code] + this.tcwsStyle + ".png")})` } catch(e) {}
+      if (root.getElementById("tcws-icon") !== null) try { root.getElementById("tcws-icon").style.backgroundImage = `none, url(${this._hass.hassUrl("/local/community/hko-weather-card/weather_icons/warnsum/" + this.warningIcons[wtcsgnl.code] + this.tcwsStyle + ".svg")})` } catch(e) {}
       } catch (e) {}
       if (this.config.entity_warninginfo) try {
       var details = this._hass.states[this.config.entity_warninginfo].attributes.details;
