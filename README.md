@@ -254,11 +254,11 @@ show_decimals: false
 | custom8_icon             | **mdi:help-box** / mdi icon        | Sets the icon to use for slot custom8                                       |
 | custom8_value            | **unknown** / sensor               | Sets the sensor to use for the value of slot custom8                        |
 | custom8_units            | **""** / string                    | Sets the string to use for the units of slot custom8                        |
-| temp_top_margin          | **9px** / px or em value           | Sets the top margin of the Temperature.                                     |
+| temp_top_margin          | **-25px** / px or em value         | Sets the top margin of the Temperature.                                     |
 | temp_font_weight         | **300** / numeric value            | Sets the font weight of the Temperature.                                    |
 | temp_font_size           | **4em** / em value                 | Sets the font size of the Temperature.                                      |
 | temp_right_pos           | **0.7em** / px or em value         | Sets the right position of the Temperature.                                 |
-| temp_uom_top_margin      | **-3px** / px or em value          | Sets the top margin of the Temperature Unit of Meaure.                      |
+| temp_uom_top_margin      | **-8.8px** / px or em value        | Sets the top margin of the Temperature Unit of Measure.                     |
 | temp_uom_right_margin    | **-4px** / px or em value          | Sets the right margin of the Temperature Unit of Measure.                   |
 | large_icon_top_margin    | **-3em** / px or em value          | Sets the top margin of the current conditions icon                          |
 | large_icon_left_pos      | **0px** / px or em value           | Sets the left position of the current conditions icon                       |
@@ -268,7 +268,7 @@ show_decimals: false
 | tcws_top_margin          | **40px** / px or em value          | Sets the top margin of the tropical cyclone warning icon                    |
 | tcws_left_pos            | **0em** / px or em value           | Sets the left position of the tropical cyclone warning icon                 |
 | tcws_left_margin         | **8.2em** / px or em value         | Sets the left margin of the tropical cyclone warning icon                   |
-| current_text_top_margin  | **0.6em** / px or em value         | Sets the top margin of the current text                                     |
+| current_text_top_margin  | **0.2em** / px or em value         | Sets the top margin of the current text                                     |
 | current_text_left_pos    | **0px** / px or em value           | Sets the left position of the current text                                  |
 | current_text_font_size   | **2em** / em value                 | Sets the font size of the current text                                      |
 | current_text_width       | **100%** / px, em or %             | Sets the width of current text                                              |
